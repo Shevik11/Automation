@@ -1,0 +1,2752 @@
+{
+  "name": "247 Linkedin Germany",
+  "nodes": [
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "Vacancy",
+              "field2": "Vacancy"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        -3408,
+        736
+      ],
+      "id": "fd9c8d50-f6f1-47d7-82e9-b1c28be42508",
+      "name": "Compare Datasets"
+    },
+    {
+      "parameters": {
+        "url": "https://www.linkedin.com/jobs/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "keywords",
+              "value": "={{ $json.keywords }}"
+            },
+            {
+              "name": "location",
+              "value": "={{ $json.location }}"
+            },
+            {
+              "name": "geoId",
+              "value": "101282230"
+            },
+            {
+              "name": "trk",
+              "value": "public_jobs_jobs-search-bar_search-submit"
+            },
+            {
+              "name": "position",
+              "value": "1"
+            },
+            {
+              "name": "pageNum",
+              "value": "0"
+            },
+            {
+              "name": "start",
+              "value": "10"
+            },
+            {
+              "name": "sortBy",
+              "value": "DD"
+            },
+            {
+              "name": "f_TPR",
+              "value": "r604800"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            },
+            {
+              "name": "accept-language",
+              "value": "uk,en;q=0.9"
+            },
+            {
+              "name": "cache-control",
+              "value": "max-age=0"
+            },
+            {
+              "name": "priority",
+              "value": "u=0, i"
+            },
+            {
+              "name": "referer",
+              "value": "https://www.linkedin.com/jobs/search?keywords=React%20Developer&location=Ukraine&geoId=102264497&trk=public_jobs_jobs-search-bar_search-submit&position=1&pageNum=0"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"macOS\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "document"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "navigate"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-origin"
+            },
+            {
+              "name": "sec-fetch-user",
+              "value": "?1"
+            },
+            {
+              "name": "upgrade-insecure-requests",
+              "value": "1"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "cookie",
+              "value": "bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&202509231504413dd8f5a6-9f9a-456a-808b-16f35eca9e20AQFm1g9vMYYo1tj4-UNQE-xRiik2gBfb\";li_rm=AQGT9OoWFkzYagAAAZl3GwveClO51FD2JolVl7NF8HEKsw4WR105BI51Lx1aneYlEmSexVdiBWIxPbPbQJM0iM0fg9-Roq_VzSYeFAYc8jCyNn3Nj81MuJkD;timezone=Europe/Kiev;li_theme=light;li_theme_set=app;dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;JSESSIONID=ajax:2140574329282064586;PLAY_LANG=en;lang=v=2&lang=en-US;PLAY_SESSION=eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InNlc3Npb25faWQiOiI1M2RjMDk4Mi0wYjcwLTQ2YjAtODIwZS1jMTM1Mzc5MzRhMTV8MTc1OTQxMzA1OCIsImFsbG93bGlzdCI6Int9IiwicmVjZW50bHktc2VhcmNoZWQiOiIiLCJyZWZlcnJhbC11cmwiOiJodHRwczovL3d3dy5saW5rZWRpbi5jb20vaGVscC9sbXMvYW5zd2VyL2E0MTY5NjA_aW50ZW5kZWRMb2NhbGU9dWstVUEmbGFuZz1lbi11cyIsInJlY2VudGx5LXZpZXdlZCI6IiIsIkNQVC1pZCI6IsKOw4zCusOSXHUwMDBCw5XDisKaXHUwMDE5wpnDrE_DtMKWU1AiLCJleHBlcmllbmNlIjoiIiwidHJrIjoiIn0sIm5iZiI6MTc1OTQxMzA1OCwiaWF0IjoxNzU5NDEzMDU4fQ.7wHnSiI7qfN4v4G1YRig-QAZnDx-OWBP7V0XcPsm7MM;fid=AQE3o7Rph1C2rAAAAZmpR1-jzb6kvmJAqvE6kiTuz2meOJgvJ4arzSWAb6yzJoHM8V4ONeW55CQ1Gw;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";g_state={\"i_p\":1760346453058,\"i_l\":3};UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4768,
+        576
+      ],
+      "id": "5cecc59c-a0b5-4e64-9b57-39b9e8d293ce",
+      "name": "HTTP Request - get vacancies"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "23bceba6-2ddc-49cd-817c-a8788ea2367a",
+              "name": "Site",
+              "value": "=https://www.linkedin.com/jobs/search",
+              "type": "string"
+            },
+            {
+              "id": "89d92975-61cc-45cc-86b2-5ea0f822dc9d",
+              "name": "Service provider",
+              "value": "LinkedIn",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -5152,
+        656
+      ],
+      "id": "1929f084-76dd-4b1a-9038-e6bf08661e25",
+      "name": "Fields - Service provider and website",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code node (JavaScript)\n\nconst html = $json.data || '';\n\n// Регулярний вираз для повних лінок на вакансії LinkedIn (з параметрами)\nconst regex = /https:\\/\\/de\\.linkedin\\.com\\/jobs\\/view\\/[a-z0-9\\-]+/gi;\n\n// Знаходимо всі збіги\nconst matches = html.match(regex) || [];\n\n// Видаляємо дублікати\nconst uniqueLinks = [...new Set(matches)];\n\n// Повертаємо результат у форматі n8n\nreturn uniqueLinks.map(url => ({ json: { link: url } }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4336,
+        576
+      ],
+      "id": "e61cf8d7-5850-49d6-b607-1d9d2f055a79",
+      "name": "Code - find vacancies url",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -4544,
+        880
+      ],
+      "id": "f2737bd3-0953-4b6b-9155-907761b6a5c6",
+      "name": "Sheets - list of vacancies",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bcabcafa-9e17-4ef3-a50c-68c10e0fcfc4",
+              "name": "Vacancy",
+              "value": "={{ $json.Vacancy }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4144,
+        880
+      ],
+      "id": "5380b600-2129-4b94-a879-920e888b5c8d",
+      "name": "Fields - mapping vacancies from sheet"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bab5a91c-c125-4e31-965d-72813e3e3e34",
+              "name": "Vacancy",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3904,
+        576
+      ],
+      "id": "af7c786e-9b93-4110-8c8f-3bfc080e2f60",
+      "name": "Fields - mapping vacancies from code"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Vacancy",
+              "lookupValue": "={{ $json.Vacancy }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -3184,
+        960
+      ],
+      "id": "baf52e21-48b3-4316-8b57-4d7c730a9f63",
+      "name": "Sheets - get vacancies after compare",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "startIndex": "={{ $json.row_number }}"
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2848,
+        928
+      ],
+      "id": "100fb950-ffdc-4e2a-abbb-6ca5de3769b8",
+      "name": "Sheets - delete closed vacancy",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.Vacancy }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            },
+            {
+              "name": "accept-language",
+              "value": "uk,en;q=0.9"
+            },
+            {
+              "name": "cache-control",
+              "value": "max-age=0"
+            },
+            {
+              "name": "priority",
+              "value": "u=0, i"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"macOS\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "document"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "navigate"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "none"
+            },
+            {
+              "name": "sec-fetch-user",
+              "value": "?1"
+            },
+            {
+              "name": "upgrade-insecure-requests",
+              "value": "1"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "cookie",
+              "value": "JSESSIONID=ajax:7570330851119687251;bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -3088,
+        400
+      ],
+      "id": "36a963ca-f665-4252-b2c4-1ae86fb8f762",
+      "name": "HTTP - scrap each vacancy",
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "detail",
+              "cssSelector": ".decorated-job-posting__details",
+              "returnArray": true
+            },
+            {
+              "key": "Title",
+              "cssSelector": "h1",
+              "returnArray": true
+            },
+            {
+              "key": "Company Name",
+              "cssSelector": ".topcard__org-name-link"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -2880,
+        160
+      ],
+      "id": "34800b74-e722-4cde-9a71-397f97259b0e",
+      "name": "HTML - extract vacancy details1",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy": "={{ $('Fields - mapping vacancy detail').item.json.Vacancy }}",
+            "Detail": "={{ $('Fields - mapping vacancy detail').item.json.Detail }}",
+            "Title": "={{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "Company name": "={{ $('Fields - mapping vacancy detail').item.json['Company name'] }}",
+            "Company linkedin page": "={{ $('Fields - mapping vacancy detail').item.json['Company linkedin page'] }}"
+          },
+          "matchingColumns": [
+            "Vacancy"
+          ],
+          "schema": [
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail",
+              "displayName": "Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company linkedin page",
+              "displayName": "Company linkedin page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Hiring Manager",
+              "displayName": "Hiring Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -336,
+        112
+      ],
+      "id": "f2e46881-2236-44ea-935b-91cf4c295d80",
+      "name": "Sheets - write vacancy details",
+      "executeOnce": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $items();\nconst allResults = [];\n\nfor (const item of allItems) {\n  // Знаходимо текст із JSON\n  let raw = null;\n\n  if (Array.isArray(item.json.output)) {\n    const found = item.json.output.find(o => o?.content?.[0]?.text);\n    raw = found ? found.content[0].text : null;\n  } else if (item.json.output?.content?.[0]?.text) {\n    raw = item.json.output.content[0].text;\n  }\n\n  if (!raw) continue;\n\n  // Переконуємось, що це рядок\n  if (typeof raw !== \"string\") {\n    raw = JSON.stringify(raw);\n  }\n\n  // Прибираємо \\n, \\t і зайві пробіли\n  const cleaned = raw.replace(/\\\\n/g, '').replace(/\\\\t/g, '').trim();\n\n  let companies = [];\n  try {\n    companies = JSON.parse(cleaned);\n  } catch (e) {\n    console.log(\"❌ JSON parse error:\", e.message);\n    continue;\n  }\n\n  // Розгортання полів Hiring Manager, якщо їх кілька\n  for (const company of companies) {\n    const names = Array.isArray(company[\"Hiring Manager Name\"])\n      ? company[\"Hiring Manager Name\"]\n      : [company[\"Hiring Manager Name\"]];\n\n    names.forEach((name, i) => {\n      allResults.push({\n        json: {\n          ...company,\n          \"Hiring Manager Name\": name,\n          \"Hiring Manager Position\": Array.isArray(company[\"Hiring Manager Position\"])\n            ? company[\"Hiring Manager Position\"][i]\n            : company[\"Hiring Manager Position\"],\n          \"Hiring Manager Linkedin URL\": Array.isArray(company[\"Hiring Manager Linkedin URL\"])\n            ? company[\"Hiring Manager Linkedin URL\"][i]\n            : company[\"Hiring Manager Linkedin URL\"],\n        },\n      });\n    });\n  }\n}\n\nreturn allResults;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -864,
+        176
+      ],
+      "id": "454d2b6e-f237-49ad-b78f-736b855d7a9f",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/responses",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 700000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1328,
+        176
+      ],
+      "id": "203a256f-a8ff-4b34-9504-c333535bdaf4",
+      "name": "HTTP Request",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VjWAnrNLKLvNUXNR",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Отримуємо потрібні дані з попереднього нода\nconst title = $('Fields - mapping vacancy detail').item.json.Title || '';\nconst company = $('Fields - mapping vacancy detail').item.json['Company name'] || '';\nconst linkedin = $('Fields - mapping vacancy detail').item.json['Company linkedin page'] || '';\n\n// Формуємо чіткий prompt\nconst input = `Find up to 10 possible decision-makers and links to their LinkedIn profiles who may be involved in deciding whether to engage an external marketing agency for the company \"${company}\" for the role \"${title}\".\nHere is the LinkedIn company link: ${linkedin}.\nUse LinkedIn search results and other public sources.\n\nIMPORTANT:\n- Each LinkedIn link MUST be a LinkedIn people-search URL.\n- The link MUST start strictly with: \"https://www.linkedin.com/search/results/people/\"\n- DO NOT output direct profile links (like /in/). Only search-results links are allowed.\n\nDecision-makers who typically approve or influence the hiring of a marketing agency should be prioritized in the following roles:\n\n- CEO\n- Founder / Co-Founder\n- President\n- Managing Director\n- COO\n- Chief Strategy Officer (CSO)\n- CMO (Chief Marketing Officer)\n- VP of Marketing\n- Head of Marketing\n- Marketing Director\n- Brand Director / Head of Brand\n- Head of Communications / Communications Director\n- Chief Revenue Officer (CRO)\n- VP of Sales\n- Sales Director\n- Head of Sales\n- Business Development Director / Lead\n- CPO (Chief Product Officer)\n- VP of Product\n- Head of Product\n- Growth Lead / Growth Director\n- Chief Operating Officer\n- Strategy Director\n\nHR or Talent roles should be included only if the role \"${title}\" directly relates to employer branding.\n\nOnly include roles that could realistically influence or approve working with a marketing agency.\n\nProvide the answer exclusively in JSON format with no additional text:\n[\n  {\n    \"first_name\": \"\",\n    \"last_name\": \"\",\n    \"position\": \"\",\n    \"linkedin\": \"\"\n  }\n]`;\n\n// Повертаємо у форматі n8n з model і tools\nreturn [{\n  json: {\n    model: \"gpt-5\",\n    reasoning: {effort: \"high\"},\n    tools: [{ type: \"web_search\" }],\n    input\n  }\n}];\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        176
+      ],
+      "id": "0cca8cf8-a8b4-48cd-b4bf-eb264257e7fb",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "463ced2a-eb4f-477f-9699-a1347eadf3c3",
+              "name": "Vacancy",
+              "value": "={{ $('Compare Datasets').item.json.Vacancy }}",
+              "type": "string"
+            },
+            {
+              "id": "d1fbfaf4-1664-4584-a408-b2a97374e1c3",
+              "name": "Detail",
+              "value": "={{ $json.detail[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "37ac100f-053a-4a9a-9fa2-93112d3cee29",
+              "name": "Title",
+              "value": "={{ $json[\"Title\"][0].replace(/Oferta pracy/gi, '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "5a822957-1fb1-4b1a-b1e9-a891fda8b7f2",
+              "name": "Company name",
+              "value": "={{ $json['Company Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "2401ca1f-4221-4dce-9be8-302e3c6d0afa",
+              "name": "Company linkedin page",
+              "value": "={{ $('HTTP - scrap each vacancy').item.json.data.match(/https?:\\/\\/(?:[a-z]+\\.)?linkedin\\.com\\/company\\/[a-zA-Z0-9-_]+/)?.[0] || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2672,
+        160
+      ],
+      "id": "26faa2c0-1745-4f30-ad2f-b383019ba041",
+      "name": "Fields - mapping vacancy detail",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "chatId": "-1003322190029",
+        "text": "=*✅ New company has been added in CRM:*\n\n*Company Name:* [{{ $('Fields - mapping vacancy detail').item.json['Company name'] }}]({{ $('Fields - mapping vacancy detail').item.json['Company linkedin page'] }})\n*Title:* [{{ $('Fields - mapping vacancy detail').item.json.Title }}]({{ $('Fields - mapping vacancy detail').item.json.Vacancy }})\n\n*Source:* LinkedIn Germany Jobs",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        -80
+      ],
+      "id": "7868ff95-1a69-4ce4-9ea1-3e6edd9e2ef1",
+      "name": "Send a text message",
+      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "ROwOUMXsZfZ2YTyn",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Отримуємо HTML і базову частину лінки\nconst html = $('HTTP Request - get vacancies').item.json.data || '';\nconst baseLink = $('HTTP - scrap each vacancy').item.json.Vacancy || '';\n\n// Очистимо обидва значення\nconst htmlClean = html.replace(/&amp;/g, '&');\nconst base = baseLink.trim();\n\n// Якщо нема базової лінки — одразу вихід\nif (!base) {\n  return [{ json: { matchedLink: null, reason: 'No base Vacancy link found' } }];\n}\n\n// Шукаємо всі посилання на вакансії\nconst regex = /https?:\\/\\/[a-z]{0,3}\\.?linkedin\\.com\\/jobs\\/view\\/[^\\s\"'<>]+/gi;\nconst matches = htmlClean.match(regex) || [];\n\n// Знаходимо перший URL, який починається з base\nconst matched = matches.find(url => url.startsWith(base)) || null;\n\n// Повертаємо тільки одну знайдену лінку\nreturn [\n  {\n    json: {\n      baseLink: base,\n      matchedLink: matched\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2576,
+        720
+      ],
+      "id": "80d5917d-cc96-411e-8ddf-d6938dc66a7f",
+      "name": "Code - find vacancies url1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "detail",
+              "cssSelector": ".decorated-job-posting__details",
+              "returnArray": true
+            },
+            {
+              "key": "Title",
+              "cssSelector": "h1",
+              "returnArray": true
+            },
+            {
+              "key": "Company Name",
+              "cssSelector": ".topcard__org-name-link"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -2192,
+        736
+      ],
+      "id": "84c79880-63a0-4db3-a8db-e2bcb06fc85c",
+      "name": "HTML - extract vacancy details",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "463ced2a-eb4f-477f-9699-a1347eadf3c3",
+              "name": "Vacancy",
+              "value": "={{ $('Compare Datasets').item.json.Vacancy }}",
+              "type": "string"
+            },
+            {
+              "id": "d1fbfaf4-1664-4584-a408-b2a97374e1c3",
+              "name": "Detail",
+              "value": "={{ $json.detail[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "37ac100f-053a-4a9a-9fa2-93112d3cee29",
+              "name": "Title",
+              "value": "={{ $json[\"Title\"][0].replace(/Oferta pracy/gi, '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "5a822957-1fb1-4b1a-b1e9-a891fda8b7f2",
+              "name": "Company name",
+              "value": "={{ $json['Company Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "2401ca1f-4221-4dce-9be8-302e3c6d0afa",
+              "name": "Company linkedin page",
+              "value": "={{ $('HTTP - scrap each vacancy1').item.json.data.match(/https?:\\/\\/(?:[a-z]+\\.)?linkedin\\.com\\/company\\/[a-zA-Z0-9-_]+/)?.[0] || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2048,
+        736
+      ],
+      "id": "ceffd2e6-92de-46fb-b1f9-8eabc86b39dc",
+      "name": "Fields - mapping vacancy detail1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy": "={{ $('Fields - mapping vacancy detail1').item.json.Vacancy }}",
+            "Detail": "={{ $('Fields - mapping vacancy detail1').item.json.Detail }}",
+            "Title": "={{ $('Fields - mapping vacancy detail1').item.json.Title }}",
+            "Company name": "={{ $('Fields - mapping vacancy detail1').item.json['Company name'] }}",
+            "Company linkedin page": "={{ $('Fields - mapping vacancy detail1').item.json['Company linkedin page'] }}"
+          },
+          "matchingColumns": [
+            "Vacancy"
+          ],
+          "schema": [
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail",
+              "displayName": "Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company linkedin page",
+              "displayName": "Company linkedin page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        384,
+        656
+      ],
+      "id": "bf432e56-e10e-484a-a0ac-db531cd72227",
+      "name": "Sheets - write vacancy details1",
+      "executeOnce": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "-1003322190029",
+        "text": "=*✅ New company has been added in CRM:*\n\n*Company Name:* [{{ $('Fields - mapping vacancy detail1').item.json['Company name'] }}]({{ $('Fields - mapping vacancy detail1').item.json['Company linkedin page'] }})\n*Title:* [{{ $('Fields - mapping vacancy detail1').item.json.Title }}]({{ $('Code - find vacancies url1').item.json.matchedLink }})\n\n*Source:* LinkedIn Germany Jobs",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        656
+      ],
+      "id": "769ae981-c124-4c00-8762-90637d1e6a7b",
+      "name": "Send a text message1",
+      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "executeOnce": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "ROwOUMXsZfZ2YTyn",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.matchedLink }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            },
+            {
+              "name": "accept-language",
+              "value": "uk,en;q=0.9"
+            },
+            {
+              "name": "cache-control",
+              "value": "max-age=0"
+            },
+            {
+              "name": "priority",
+              "value": "u=0, i"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"Google Chrome\";v=\"140\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"macOS\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "document"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "navigate"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "none"
+            },
+            {
+              "name": "sec-fetch-user",
+              "value": "?1"
+            },
+            {
+              "name": "upgrade-insecure-requests",
+              "value": "1"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "cookie",
+              "value": "JSESSIONID=ajax:7570330851119687251;bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2416,
+        720
+      ],
+      "id": "01cf59aa-a850-4b6f-bf79-b090b93759fe",
+      "name": "HTTP - scrap each vacancy1",
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "retryOnFail": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Cформуй масив об'єктів у форматі JSON, де кожен об'єкт — це один хайрінг менеджер з такими полями:\n\nDate — {{ (() => { const d = new Date($now); const months = [\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"]; return `${months[d.getMonth()]} ${d.getDate()}`; })() }}\n\nCompany Name — {{ $('Fields - mapping vacancy detail').item.json['Company name'] }}\n\nLinkedIn Company Page URL — {{ $('Fields - mapping vacancy detail').item.json['Company linkedin page'] }}\n\nVacancy Link - {{ $('Fields - mapping vacancy detail').item.json.Vacancy }}\nVacancy Title - {{ $('Fields - mapping vacancy detail').item.json.Title }}\nHiring Manager Name: дістань всіх Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\nHiring Manager Position: дістань позиції Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\nHiring Manager Linkedin URL: дістань посилання на Linkedin Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\n\nПриклад відповіді:\n\n[\n  {\n    \"Date\": \"Jul 09\",\n    \"Company Name\": \"Rocket Lawyer\",\n    \"LinkedIn Company Page URL\": \"https://www.linkedin.com/company/rocket-lawyer-inc/\",\n    \"Vacancy Link\": \"https://www.j-labs.pl/oferta-it/senior-java-developer-32/\",\n    \"Vacancy Title\": \"Senior Java Developer\",\n    \"Hiring Manager Name\": \"Jérôme Hess\",\n    \"Hiring Manager Position\": \"Head Of Business Development\",\n    \"Hiring Manager Linkedin URL\": \"https://www.linkedin.com/in/j%C3%A9r%C3%B4me-hess-22b3838/\"\n  },\n  {\n    \"Date\": \"Jul 09\",\n    \"Company Name\": \"Benomad\",\n    \"LinkedIn Company Page URL\": \"https://www.linkedin.com/company/benomad/\",\n    \"Vacancy Link\": \"https://www.j-labs.pl/oferta-it/senior-java-developer-32/\",\n    \"Vacancy Title\": \"Senior Java Developer\",\n    \"Hiring Manager Name\": \"Stefan J. Klauser\",\n    \"Hiring Manager Position\": \"Chief Executive Officer & Co-Founder\",\n    \"Hiring Manager Linkedin URL\": \"https://www.linkedin.com/in/stefan-j-klauser\"\n  }\n]\nВідповідай лише масивом об'єктів у форматі JSON, без додаткового тексту!\nКожну компанію — в окремий об'єкт масиву.\nКожного Hiring Manager - в окремий об'єкт масиву.  Якщо для однієї компанії декілька Hiring Managers то повторюй компанії.\nOutput має починатись з \"\"[\\n {\\n \"Date\":\"\""
+            }
+          ]
+        },
+        "simplify": false,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1136,
+        176
+      ],
+      "id": "dafe8791-aa0f-4276-ad96-923e6dd685ff",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "8yhjWtJMPLwq3B6r",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 127179383,
+          "mode": "list",
+          "cachedResultName": "automation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw/edit#gid=127179383"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $json.Date }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "LinkedIn Company Page URL": "={{ $json['LinkedIn Company Page URL'] }}",
+            "Vacancy Link": "={{ $json['Vacancy Link'] }}",
+            "Vacancy Title": "={{ $json['Vacancy Title'] }}",
+            "Hiring Manager Name": "={{ $json['Hiring Manager Name'] }}",
+            "Hiring Manager Position": "={{ $json['Hiring Manager Position'] }}",
+            "Hiring Manager Linkedin URL": "={{ $json['Hiring Manager Linkedin URL'] }}",
+            "Source": "LJ DE"
+          },
+          "matchingColumns": [
+            "Vacancy Link"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LinkedIn Company Page URL",
+              "displayName": "LinkedIn Company Page URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Vacancy Link",
+              "displayName": "Vacancy Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vacancy Title",
+              "displayName": "Vacancy Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Name",
+              "displayName": "Hiring Manager Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Position",
+              "displayName": "Hiring Manager Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Linkedin URL",
+              "displayName": "Hiring Manager Linkedin URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -592,
+        128
+      ],
+      "id": "cb6e4d4e-e4cb-4980-94dd-dcac53bbe5af",
+      "name": "Sheets - write vacancy details2",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const allItems = $items();\nconst allResults = [];\n\nfor (const item of allItems) {\n  // Знаходимо текст із JSON\n  let raw = null;\n\n  if (Array.isArray(item.json.output)) {\n    const found = item.json.output.find(o => o?.content?.[0]?.text);\n    raw = found ? found.content[0].text : null;\n  } else if (item.json.output?.content?.[0]?.text) {\n    raw = item.json.output.content[0].text;\n  }\n\n  if (!raw) continue;\n\n  // Переконуємось, що це рядок\n  if (typeof raw !== \"string\") {\n    raw = JSON.stringify(raw);\n  }\n\n  // Прибираємо \\n, \\t і зайві пробіли\n  const cleaned = raw.replace(/\\\\n/g, '').replace(/\\\\t/g, '').trim();\n\n  let companies = [];\n  try {\n    companies = JSON.parse(cleaned);\n  } catch (e) {\n    console.log(\"❌ JSON parse error:\", e.message);\n    continue;\n  }\n\n  // Розгортання полів Hiring Manager, якщо їх кілька\n  for (const company of companies) {\n    const names = Array.isArray(company[\"Hiring Manager Name\"])\n      ? company[\"Hiring Manager Name\"]\n      : [company[\"Hiring Manager Name\"]];\n\n    names.forEach((name, i) => {\n      allResults.push({\n        json: {\n          ...company,\n          \"Hiring Manager Name\": name,\n          \"Hiring Manager Position\": Array.isArray(company[\"Hiring Manager Position\"])\n            ? company[\"Hiring Manager Position\"][i]\n            : company[\"Hiring Manager Position\"],\n          \"Hiring Manager Linkedin URL\": Array.isArray(company[\"Hiring Manager Linkedin URL\"])\n            ? company[\"Hiring Manager Linkedin URL\"][i]\n            : company[\"Hiring Manager Linkedin URL\"],\n        },\n      });\n    });\n  }\n}\n\nreturn allResults;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -176,
+        768
+      ],
+      "id": "2ced69e8-9737-4f1c-bf08-08adc167f78e",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/responses",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 700000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -672,
+        800
+      ],
+      "id": "7dad7842-11da-43ee-8fa4-8c58a3687533",
+      "name": "HTTP Request1",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VjWAnrNLKLvNUXNR",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Отримуємо потрібні дані з попереднього нода\nconst title = $('Fields - mapping vacancy detail1').item.json.Title || '';\nconst company = $('Fields - mapping vacancy detail1').item.json['Company name'] || '';\nconst linkedin = $('Fields - mapping vacancy detail1').item.json['Company linkedin page'] || '';\n\n// Формуємо чіткий prompt\nconst input = `Find up to 10 possible decision-makers and links to their LinkedIn profiles who may be involved in deciding whether to engage an external marketing agency for the company \"${company}\" for the role \"${title}\".\nHere is the LinkedIn company link: ${linkedin}.\nUse LinkedIn search results and other public sources.\n\nIMPORTANT:\n- Each LinkedIn link MUST be a LinkedIn people-search URL.\n- The link MUST start strictly with: \"https://www.linkedin.com/search/results/people/\"\n- DO NOT output direct profile links (like /in/). Only search-results links are allowed.\n\nDecision-makers who typically approve or influence the hiring of a marketing agency should be prioritized in the following roles:\n\n- CEO\n- Founder / Co-Founder\n- President\n- Managing Director\n- COO\n- Chief Strategy Officer (CSO)\n- CMO (Chief Marketing Officer)\n- VP of Marketing\n- Head of Marketing\n- Marketing Director\n- Brand Director / Head of Brand\n- Head of Communications / Communications Director\n- Chief Revenue Officer (CRO)\n- VP of Sales\n- Sales Director\n- Head of Sales\n- Business Development Director / Lead\n- CPO (Chief Product Officer)\n- VP of Product\n- Head of Product\n- Growth Lead / Growth Director\n- Chief Operating Officer\n- Strategy Director\n\nHR or Talent roles should be included only if the role \"${title}\" directly relates to employer branding.\n\nOnly include roles that could realistically influence or approve working with a marketing agency.\n\nProvide the answer exclusively in JSON format with no additional text:\n[\n  {\n    \"first_name\": \"\",\n    \"last_name\": \"\",\n    \"position\": \"\",\n    \"linkedin\": \"\"\n  }\n]`;\n\n// Повертаємо у форматі n8n з model і tools\nreturn [{\n  json: {\n    model: \"gpt-5\",\n    reasoning: {effort: \"high\"},\n    tools: [{ type: \"web_search\" }],\n    input\n  }\n}];\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        800
+      ],
+      "id": "c4f45b69-a724-403c-ab0f-9437a575e42f",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=Cформуй масив об'єктів у форматі JSON, де кожен об'єкт — це один хайрінг менеджер з такими полями:\n\nDate — {{ (() => { const d = new Date($now); const months = [\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"]; return `${months[d.getMonth()]} ${d.getDate()}`; })() }}\n\nCompany Name — {{ $('Fields - mapping vacancy detail1').item.json['Company name'] }}\n\nLinkedIn Company Page URL — {{ $('Fields - mapping vacancy detail1').item.json['Company linkedin page'] }}\n\nVacancy Link - {{ $('Fields - mapping vacancy detail1').item.json.Vacancy }}\nVacancy Title - {{ $('Fields - mapping vacancy detail1').item.json.Title }}\nHiring Manager Name: дістань всіх Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\nHiring Manager Position: дістань позиції Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\nHiring Manager Linkedin URL: дістань посилання на Linkedin Hiring Managers. Дані візьми звідси {{ $json.output[$json.output.length - 1].content[0].text }}\n\nПриклад відповіді:\n\n[\n  {\n    \"Date\": \"Jul 09\",\n    \"Company Name\": \"Rocket Lawyer\",\n    \"LinkedIn Company Page URL\": \"https://www.linkedin.com/company/rocket-lawyer-inc/\",\n    \"Vacancy Link\": \"https://www.j-labs.pl/oferta-it/senior-java-developer-32/\",\n    \"Vacancy Title\": \"Senior Java Developer\",\n    \"Hiring Manager Name\": \"Jérôme Hess\",\n    \"Hiring Manager Position\": \"Head Of Business Development\",\n    \"Hiring Manager Linkedin URL\": \"https://www.linkedin.com/in/j%C3%A9r%C3%B4me-hess-22b3838/\"\n  },\n  {\n    \"Date\": \"Jul 09\",\n    \"Company Name\": \"Benomad\",\n    \"LinkedIn Company Page URL\": \"https://www.linkedin.com/company/benomad/\",\n    \"Vacancy Link\": \"https://www.j-labs.pl/oferta-it/senior-java-developer-32/\",\n    \"Vacancy Title\": \"Senior Java Developer\",\n    \"Hiring Manager Name\": \"Stefan J. Klauser\",\n    \"Hiring Manager Position\": \"Chief Executive Officer & Co-Founder\",\n    \"Hiring Manager Linkedin URL\": \"https://www.linkedin.com/in/stefan-j-klauser\"\n  }\n]\nВідповідай лише масивом об'єктів у форматі JSON, без додаткового тексту!\nКожну компанію — в окремий об'єкт масиву.\nКожного Hiring Manager - в окремий об'єкт масиву.  Якщо для однієї компанії декілька Hiring Managers то повторюй компанії.\nOutput має починатись з \"\"[\\n {\\n \"Date\":\"\""
+            }
+          ]
+        },
+        "simplify": false,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        784
+      ],
+      "id": "aacda655-af41-4fa0-8b7a-30e860a9fbc2",
+      "name": "Message a model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "8yhjWtJMPLwq3B6r",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 127179383,
+          "mode": "list",
+          "cachedResultName": "automation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw/edit#gid=127179383"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy Link": "={{ $json['Vacancy Link'] }}",
+            "Date": "={{ $json.Date }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "LinkedIn Company Page URL": "={{ $json['LinkedIn Company Page URL'] }}",
+            "Vacancy Title": "={{ $json['Vacancy Title'] }}",
+            "Hiring Manager Name": "={{ $json['Hiring Manager Name'] }}",
+            "Hiring Manager Position": "={{ $json['Hiring Manager Position'] }}",
+            "Hiring Manager Linkedin URL": "={{ $json['Hiring Manager Linkedin URL'] }}",
+            "Source": "LJ DE"
+          },
+          "matchingColumns": [
+            "Vacancy Link"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LinkedIn Company Page URL",
+              "displayName": "LinkedIn Company Page URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Vacancy Link",
+              "displayName": "Vacancy Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vacancy Title",
+              "displayName": "Vacancy Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Name",
+              "displayName": "Hiring Manager Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Position",
+              "displayName": "Hiring Manager Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hiring Manager Linkedin URL",
+              "displayName": "Hiring Manager Linkedin URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        112,
+        736
+      ],
+      "id": "59ae0a7f-2a8e-4261-901b-26ed50f2653f",
+      "name": "Sheets - write vacancy details3",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy": "={{ $('HTTP - scrap each vacancy').item.json.Vacancy }}"
+          },
+          "matchingColumns": [
+            "Vacancy"
+          ],
+          "schema": [
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail",
+              "displayName": "Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company linkedin page",
+              "displayName": "Company linkedin page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -2208,
+        1328
+      ],
+      "id": "dab8cb7f-9242-4284-9fef-d3135e11c41b",
+      "name": "Sheets - write vacancy details4",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 127179383,
+          "mode": "list",
+          "cachedResultName": "automation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw/edit#gid=127179383"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy Link": "={{ $json.Vacancy }}"
+          },
+          "matchingColumns": [
+            "Vacancy Link"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "LinkedIn Company Page URL",
+              "displayName": "LinkedIn Company Page URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Vacancy Link",
+              "displayName": "Vacancy Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vacancy Title",
+              "displayName": "Vacancy Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Hiring Manager Name",
+              "displayName": "Hiring Manager Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Hiring Manager Position",
+              "displayName": "Hiring Manager Position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Hiring Manager Linkedin URL",
+              "displayName": "Hiring Manager Linkedin URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1872,
+        1392
+      ],
+      "id": "e1eeda65-4615-4f16-b873-25dc44bdc06d",
+      "name": "Sheets - write vacancy details5",
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chatId": "-1003322190029",
+        "text": "=*✅ New company has been added in CRM:*\n\n*Title:* {{ $json['Vacancy Link'] }}\n\n*Source:* LinkedIn Germany Jobs",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1568,
+        1408
+      ],
+      "id": "d0296b6e-0f26-4f14-bd08-f018dc77de4d",
+      "name": "Send a text message2",
+      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "credentials": {
+        "telegramApi": {
+          "id": "ROwOUMXsZfZ2YTyn",
+          "name": "Telegram account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a classifier. Analyze the following job posting and respond ONLY in valid JSON.\n\nJOB TITLE: {{ $('Fields - mapping vacancy detail').item.json.Title }}\nJOB DESCRIPTION: {{ $('Fields - mapping vacancy detail').item.json.Detail }}\nCOMPANY SIZE: the number of employees in the company (if possible, take it from LinkedIn {{ $('Fields - mapping vacancy detail').item.json['Company linkedin page'] }}). If you cannot find the company’s employee count, leave the value empty.\n\nReturn JSON with these fields:\n\n{\n  \"isMarketingorDesignRole\": true/false,\n  \"isAgencyBlocked\": true/false,\n  \"isTooBigCompany\": true/false,\n  \"isMarketingServiceCompany\": true/false\n  \"isStaffingOrRecruitingForClient\": true/false\n}\n\nRules:\n\n1. \"isMarketingorDesignRole\" = true if the job title OR job description refers to marketing, creative, or design roles. Examples include (but are not limited to):\n   - \"Marketing\"\n   - \"Digital Marketing\"\n   - \"Marketing Manager\"\n   - \"Growth Marketer\"\n   - \"PPC\"\n   - \"SEO\"\n   - \"SMM\"\n   - \"Content\"\n   - \"Copywriter\"\n   - \"Brand Manager\"\n   - \"Creative\"\n   - \"Designer\"\n   - \"Graphic Designer\"\n   - \"UI/UX\"\n   - \"Art Director\"\n   - \"Creative Director\"\n   - \"Performance Marketing\"\n   - \"Email Marketing\"\n   - \"Social Media Manager\"\n   - \"Content Creator\"\n   - \"Media Buyer\"\n\n2. \"isAgencyBlocked\" = true if the job description contains any text such as:\n   - \"no marketing agencies\"\n   - \"we do not work with agencies\"\n   - \"third-party agencies not accepted\"\n\n3. \"isTooBigCompany\" = true if companySize > 500.\n\n4. \"isMarketingServiceCompany\" = true if the company appears to provide marketing, design, branding, or creative services. Set it to true if the company’s industry, description, website, or LinkedIn profile indicates one of the following:\n   - \"Marketing Agency\"\n   - \"Digital Marketing Agency\"\n   - \"Creative Agency\"\n   - \"Advertising Agency\"\n   - \"Branding Agency\"\n   - \"Design Agency\"\n   - \"SEO Agency\"\n   - \"PPC Agency\"\n   - \"Social Media Agency\"\n   - \"Content Marketing Agency\"\n   - \"Creative Studio\"\n   - \"Marketing Services\"\n   - \"Growth Marketing Services\"\n   - \"Creative Services\"\n   Otherwise, set \"isMarketingServiceCompany\" = false.\n\n5. \"isStaffingOrRecruitingForClient\" = true ONLY IF BOTH CONDITIONS ARE MET:\n   (A) The company’s industry is:\n       - \"Staffing and Recruiting\"\n       - \"Recruitment\"\n       - \"Talent Acquisition\"\n       - \"HR Consulting\"\n   AND\n   (B) The job description explicitly indicates the role is for a client, using phrases such as:\n       - \"for our client\"\n       - \"on behalf of our client\"\n       - \"we are recruiting for a client\"\n       - \"our customer\"\n       - \"client project\"\n   If the company is staffing/recruiting BUT the job is clearly for their own internal team, return false.\n   If the job mentions “client” but the company is NOT a staffing/recruiting company, return false.\n\nRespond ONLY with JSON. No explanation.\nRespond ONLY with raw JSON.\nDo NOT add backslashes, newlines, quotes around the entire response, explanations, or markdown formatting.\nReturn the JSON object directly.\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -2208,
+        112
+      ],
+      "id": "60f3b397-121d-4cc6-8432-1e91e47a1e26",
+      "name": "Message a model2",
+      "alwaysOutputData": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "8yhjWtJMPLwq3B6r",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed1cd860-e55e-47bd-9fa5-44d1014c1958",
+              "leftValue": "={{ $json.output[0].content[0].text.isMarketingorDesignRole }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "5b61a0ff-8702-457e-bc74-f3b5f993c752",
+              "leftValue": "={{ $json.output[0].content[0].text.isAgencyBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "11e3699a-4858-4e00-b12d-60880b5301d3",
+              "leftValue": "={{ $json.output[0].content[0].text.isTooBigCompany }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "426caab9-0ed7-4a2e-a838-cfea0f3e3499",
+              "leftValue": "={{ $json.output[0].content[0].text.isMarketingServiceCompany }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "60ad2509-903e-48dc-84b2-0741c6794f8d",
+              "leftValue": "={{ $json.output[0].content[0].text.isStaffingOrRecruitingForClient }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1792,
+        96
+      ],
+      "id": "0319db57-5962-48e5-8317-f7e1ee71cded",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fc4c6a12-4e19-4450-a5c6-d6fbc56bc982",
+              "leftValue": "={{ $('Get row(s) in sheet1').item.json['Company Name'] }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2320,
+        496
+      ],
+      "id": "d5ec26be-82c3-45a8-b7f6-61c3a795c2f7",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1500549207,
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw/edit#gid=1500549207"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Company Name",
+              "lookupValue": "={{ $json['Company name'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2464,
+        224
+      ],
+      "id": "0d1f5557-ed06-4222-9ef2-5ae584b17648",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy": "={{ $('Fields - mapping vacancy detail').item.json.Vacancy }}",
+            "Detail": "={{ $('Fields - mapping vacancy detail').item.json.Detail }}",
+            "Title": "={{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "Company name": "={{ $('Fields - mapping vacancy detail').item.json['Company name'] }}"
+          },
+          "matchingColumns": [
+            "Vacancy"
+          ],
+          "schema": [
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail",
+              "displayName": "Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company linkedin page",
+              "displayName": "Company linkedin page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Hiring Manager",
+              "displayName": "Hiring Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1680,
+        448
+      ],
+      "id": "e1e4e22a-3588-46ff-b4b0-627feb72c28c",
+      "name": "Sheets - write vacancy details7",
+      "executeOnce": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are a classifier. Analyze the following job posting and respond ONLY in valid JSON.\n\nJOB TITLE: {{ $('Fields - mapping vacancy detail1').item.json.Title }}\nJOB DESCRIPTION: {{ $('Fields - mapping vacancy detail1').item.json.Detail }}\nCOMPANY SIZE: the number of employees in the company (if possible, take it from LinkedIn {{ $('Fields - mapping vacancy detail1').item.json['Company linkedin page'] }}). If you cannot find the company’s employee count, leave the value empty.\n\nReturn JSON with these fields:\n\n{\n  \"isMarketingorDesignRole\": true/false,\n  \"isAgencyBlocked\": true/false,\n  \"isTooBigCompany\": true/false,\n  \"isMarketingServiceCompany\": true/false\n  \"isStaffingOrRecruitingForClient\": true/false\n}\n\nRules:\n\n1. \"isMarketingorDesignRole\" = true if the job title OR job description refers to marketing, creative, or design roles. Examples include (but are not limited to):\n   - \"Marketing\"\n   - \"Digital Marketing\"\n   - \"Marketing Manager\"\n   - \"Growth Marketer\"\n   - \"PPC\"\n   - \"SEO\"\n   - \"SMM\"\n   - \"Content\"\n   - \"Copywriter\"\n   - \"Brand Manager\"\n   - \"Creative\"\n   - \"Designer\"\n   - \"Graphic Designer\"\n   - \"UI/UX\"\n   - \"Art Director\"\n   - \"Creative Director\"\n   - \"Performance Marketing\"\n   - \"Email Marketing\"\n   - \"Social Media Manager\"\n   - \"Content Creator\"\n\n2. \"isAgencyBlocked\" = true if the job description contains any text such as:\n   - \"no marketing agencies\"\n   - \"we do not work with agencies\"\n   - \"third-party agencies not accepted\"\n\n3. \"isTooBigCompany\" = true if companySize > 500.\n\n4. \"isMarketingServiceCompany\" = true if the company appears to provide marketing, design, branding, or creative services. Set it to true if the company’s industry, description, website, or LinkedIn profile indicates one of the following:\n   - \"Marketing Agency\"\n   - \"Digital Marketing Agency\"\n   - \"Creative Agency\"\n   - \"Advertising Agency\"\n   - \"Branding Agency\"\n   - \"Design Agency\"\n   - \"SEO Agency\"\n   - \"PPC Agency\"\n   - \"Social Media Agency\"\n   - \"Content Marketing Agency\"\n   - \"Creative Studio\"\n   - \"Marketing Services\"\n   - \"Growth Marketing Services\"\n   - \"Creative Services\"\n   Otherwise, set \"isMarketingServiceCompany\" = false.\n\n5. \"isStaffingOrRecruitingForClient\" = true ONLY IF BOTH CONDITIONS ARE MET:\n   (A) The company’s industry is:\n       - \"Staffing and Recruiting\"\n       - \"Recruitment\"\n       - \"Talent Acquisition\"\n       - \"HR Consulting\"\n   AND\n   (B) The job description explicitly indicates the role is for a client, using phrases such as:\n       - \"for our client\"\n       - \"on behalf of our client\"\n       - \"we are recruiting for a client\"\n       - \"our customer\"\n       - \"client project\"\n   If the company is staffing/recruiting BUT the job is clearly for their own internal team, return false.\n   If the job mentions “client” but the company is NOT a staffing/recruiting company, return false.\n\nRespond ONLY with JSON. No explanation.\nRespond ONLY with raw JSON.\nDo NOT add backslashes, newlines, quotes around the entire response, explanations, or markdown formatting.\nReturn the JSON object directly."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1488,
+        720
+      ],
+      "id": "4fc731c4-b1eb-4c21-bf89-73cdd6a23a79",
+      "name": "Message a model3",
+      "alwaysOutputData": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "8yhjWtJMPLwq3B6r",
+          "name": "OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ed1cd860-e55e-47bd-9fa5-44d1014c1958",
+              "leftValue": "={{ $json.output[0].content[0].text.isMarketingorDesignRole }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "5b61a0ff-8702-457e-bc74-f3b5f993c752",
+              "leftValue": "={{ $json.output[0].content[0].text.isAgencyBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "11e3699a-4858-4e00-b12d-60880b5301d3",
+              "leftValue": "={{ $json.output[0].content[0].text.isTooBigCompany }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "426caab9-0ed7-4a2e-a838-cfea0f3e3499",
+              "leftValue": "={{ $json.output[0].content[0].text.isMarketingServiceCompany }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6284aedd-2434-437b-8a67-3a17c291118a",
+              "leftValue": "={{ $json.output[0].content[0].text.isStaffingOrRecruitingForClient }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1072,
+        800
+      ],
+      "id": "e450dcb0-ac76-425b-8fe1-73302227c5aa",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fc4c6a12-4e19-4450-a5c6-d6fbc56bc982",
+              "leftValue": "={{ $('Get row(s) in sheet').item.json['Company Name'] }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1728,
+        1008
+      ],
+      "id": "d32f4850-9804-4172-af8d-e37ca8c9b301",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1500549207,
+          "mode": "list",
+          "cachedResultName": "CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VGr1qLXtql1RO6aejpS9uCNeP1lXBcRwFgZS5Ym5zUw/edit#gid=1500549207"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Company Name",
+              "lookupValue": "={{ $json['Company name'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1856,
+        720
+      ],
+      "id": "73c61d54-f221-4ce2-bbca-41dbb1e3662a",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Linkedin Germany",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FBda1nDojsEW1aiHqjDWsRqTitM4ktwOqQ-uEEKgUC4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Vacancy": "={{ $('Fields - mapping vacancy detail1').item.json.Vacancy }}",
+            "Detail": "={{ $('Fields - mapping vacancy detail1').item.json.Detail }}",
+            "Title": "={{ $('Fields - mapping vacancy detail1').item.json.Title }}",
+            "Company name": "={{ $('Fields - mapping vacancy detail1').item.json['Company name'] }}"
+          },
+          "matchingColumns": [
+            "Vacancy"
+          ],
+          "schema": [
+            {
+              "id": "Vacancy",
+              "displayName": "Vacancy",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Detail",
+              "displayName": "Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company linkedin page",
+              "displayName": "Company linkedin page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Hiring Manager",
+              "displayName": "Hiring Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -896,
+        1072
+      ],
+      "id": "db52f461-de64-4f01-a0f9-6940cf3a48da",
+      "name": "Sheets - write vacancy details8",
+      "executeOnce": true,
+      "credentials": {
+        "googleApi": {
+          "id": "ZN0GSxEvFmLWDsFh",
+          "name": "247MarketingGoogleAcc"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "triggerAtMinute": 14
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -5456,
+        320
+      ],
+      "id": "d5a1a548-6599-44b1-95f4-af1daedf62a0",
+      "name": "Schedule Trigger1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Compare Datasets": {
+      "main": [
+        [
+          {
+            "node": "HTTP - scrap each vacancy",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [
+          {
+            "node": "Sheets - get vacancies after compare",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - get vacancies": {
+      "main": [
+        [
+          {
+            "node": "Code - find vacancies url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields - Service provider and website": {
+      "main": [
+        [
+          {
+            "node": "Sheets - list of vacancies",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request - get vacancies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - find vacancies url": {
+      "main": [
+        [
+          {
+            "node": "Fields - mapping vacancies from code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - list of vacancies": {
+      "main": [
+        [
+          {
+            "node": "Fields - mapping vacancies from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields - mapping vacancies from sheet": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Fields - mapping vacancies from code": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - get vacancies after compare": {
+      "main": [
+        [
+          {
+            "node": "Sheets - delete closed vacancy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - scrap each vacancy": {
+      "main": [
+        [
+          {
+            "node": "HTML - extract vacancy details1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - find vacancies url1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML - extract vacancy details1": {
+      "main": [
+        [
+          {
+            "node": "Fields - mapping vacancy detail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Sheets - write vacancy details2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields - mapping vacancy detail": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - find vacancies url1": {
+      "main": [
+        [
+          {
+            "node": "HTTP - scrap each vacancy1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML - extract vacancy details": {
+      "main": [
+        [
+          {
+            "node": "Fields - mapping vacancy detail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields - mapping vacancy detail1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - scrap each vacancy1": {
+      "main": [
+        [
+          {
+            "node": "HTML - extract vacancy details",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets - write vacancy details4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details2": {
+      "main": [
+        [
+          {
+            "node": "Sheets - write vacancy details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Sheets - write vacancy details3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details3": {
+      "main": [
+        [
+          {
+            "node": "Sheets - write vacancy details1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details4": {
+      "main": [
+        [
+          {
+            "node": "Sheets - write vacancy details5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets - write vacancy details5": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model2": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets - write vacancy details7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets - write vacancy details7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets - write vacancy details8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Message a model3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets - write vacancy details8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Fields - Service provider and website",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "56db763e-7221-41a8-bf91-f7837e6d7b29",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5927f46dd257f09db65b35605841f40836469ce4fa8917d990162d4d8e24dbe1"
+  },
+  "id": "HktEMZCrvc7shbAF",
+  "tags": []
+}
