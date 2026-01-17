@@ -4,12 +4,78 @@ File service for managing static workflow files
 from typing import Dict, Any, List
 from pathlib import Path
 import json
+import logging
 from utils.workflow_validator import validate_workflow_for_import, WorkflowImportError
+
+logger = logging.getLogger(__name__)
+
+
+def _sanitize_filename(filename: str) -> str:
+    """
+    Sanitize filename to prevent path traversal attacks
+    
+    Args:
+        filename: Raw filename to sanitize
+        
+    Returns:
+        Sanitized filename
+        
+    Raises:
+        ValueError: If filename contains invalid path components
+    """
+    # Reject absolute paths
+    if filename.startswith('/') or filename.startswith('\\'):
+        raise ValueError(f"Absolute paths not allowed: {filename}")
+    
+    # Reject directory traversal attempts
+    if '..' in filename or filename.startswith('.'):
+        raise ValueError(f"Path traversal not allowed: {filename}")
+    
+    # Reject null bytes
+    if '\x00' in filename:
+        raise ValueError(f"Null bytes not allowed: {filename}")
+    
+    return filename
 
 
 def get_static_directory() -> Path:
     """Get the static directory path"""
     return Path(__file__).parent.parent / "static"
+
+
+def _validate_file_path(filename: str) -> Path:
+    """
+    Validate filename and return safe file path within static directory
+    
+    Args:
+        filename: Name of the file to validate
+        
+    Returns:
+        Safe Path object within static directory
+        
+    Raises:
+        ValueError: If filename contains invalid path components or would escape static directory
+    """
+    # Sanitize filename to prevent basic path traversal
+    filename = _sanitize_filename(filename)
+    
+    static_dir = get_static_directory()
+    file_path = static_dir / filename
+    
+    # Resolve both paths to handle symlinks and relative components
+    try:
+        static_dir_resolved = static_dir.resolve()
+        file_path_resolved = file_path.resolve()
+    except (OSError, RuntimeError) as e:
+        raise ValueError(f"Invalid path: {e}")
+    
+    # Ensure file_path is inside static_dir (prevent path traversal)
+    try:
+        file_path_resolved.relative_to(static_dir_resolved)
+    except ValueError:
+        raise ValueError(f"Path traversal not allowed: {filename}")
+    
+    return file_path
 
 
 def read_json_from_static(filename: str) -> Dict[str, Any]:
@@ -26,9 +92,10 @@ def read_json_from_static(filename: str) -> Dict[str, Any]:
         FileNotFoundError: If file doesn't exist
         json.JSONDecodeError: If file contains invalid JSON
         WorkflowImportError: If workflow validation fails
+        ValueError: If filename is invalid
     """
-    static_dir = get_static_directory()
-    file_path = static_dir / filename
+    # Validate filename and get safe file path
+    file_path = _validate_file_path(filename)
     
     if not file_path.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
@@ -85,18 +152,31 @@ def save_json_to_static(filename: str, data: Dict[str, Any]) -> bool:
         True if successful, False otherwise
         
     Raises:
-        ValueError: If filename is not a JSON file
+        ValueError: If filename is not a JSON file or contains invalid path components
         WorkflowImportError: If saving fails
     """
+    # Reject absolute paths and filenames containing parent segments
+    if filename.startswith('/') or filename.startswith('\\'):
+        raise ValueError(f"Absolute paths not allowed: {filename}")
+    if '..' in filename or filename.startswith('.'):
+        raise ValueError(f"Path traversal not allowed: {filename}")
+    
+    # Compute target_path
+    static_dir = get_static_directory()
+    target_path = (static_dir.resolve() / filename).resolve()
+    
+    # Verify target_path is within static directory
+    if not target_path.is_relative_to(static_dir.resolve()):
+        raise ValueError(f"Path traversal not allowed: {filename}")
+    
+    # Replace file_path with target_path
+    file_path = target_path
+    
     if not filename.endswith('.json'):
         raise ValueError(f"Filename must end with .json: {filename}")
     
-    static_dir = get_static_directory()
-    
     # Create static directory if it doesn't exist
     static_dir.mkdir(parents=True, exist_ok=True)
-    
-    file_path = static_dir / filename
     
     try:
         # If it looks like a workflow JSON, validate it before saving
@@ -122,9 +202,12 @@ def file_exists_in_static(filename: str) -> bool:
         
     Returns:
         True if file exists, False otherwise
+        
+    Raises:
+        ValueError: If filename contains invalid path components
     """
-    static_dir = get_static_directory()
-    file_path = static_dir / filename
+    # Validate filename and get safe file path
+    file_path = _validate_file_path(filename)
     return file_path.exists() and file_path.is_file()
 
 
@@ -137,16 +220,28 @@ def delete_file_from_static(filename: str) -> bool:
         
     Returns:
         True if successful, False otherwise
+        
+    Raises:
+        ValueError: If filename contains invalid path components
     """
-    static_dir = get_static_directory()
-    file_path = static_dir / filename
+    # Validate filename and get safe file path
+    file_path = _validate_file_path(filename)
     
     if not file_path.exists():
+        logger.warning(f"File does not exist, cannot delete: {filename}")
         return False
     
     try:
         file_path.unlink()
+        logger.info(f"Successfully deleted file: {filename}")
         return True
-    except Exception:
+    except PermissionError as e:
+        logger.error(f"Permission denied when deleting file {filename}: {str(e)}")
+        return False
+    except OSError as e:
+        logger.error(f"OS error when deleting file {filename}: {str(e)}")
+        return False
+    except Exception as e:
+        logger.error(f"Unexpected error when deleting file {filename}: {str(e)}", exc_info=True)
         return False
 

@@ -51,8 +51,11 @@ async def get_workflows(
             workflows = [default_workflow]
         except Exception as e:
             logger.exception(f"Could not auto-create default workflow for user {current_user.id}: {str(e)}")
-            # Return empty list if default workflow creation fails
-            workflows = []
+            # Raise HTTPException instead of silently returning empty list
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create default workflow. Please try again or contact support."
+            )
     
     return workflows
 
@@ -195,13 +198,12 @@ async def initialize_default_presets(
             from services.workflow_service import create_default_workflow_for_user
             default_workflow = create_default_workflow_for_user(db, current_user)
 
-        # Check if user already has presets
+        # Check if user already has presets - make initialization idempotent
         existing_presets = get_saved_presets_by_user(db, current_user.id)
-        if existing_presets:
-            return {"message": "Presets already exist", "count": len(existing_presets)}
+        existing_preset_names = {preset.preset_name for preset in existing_presets}
 
-        # Create default presets
-        default_presets = [
+        # Define expected default presets
+        expected_presets = [
             {
                 "preset_name": "Пошук вакансій у Києві",
                 "workflow_config_id": default_workflow.id,
@@ -228,13 +230,24 @@ async def initialize_default_presets(
             }
         ]
 
+        # Filter to only create missing presets
+        presets_to_create = [
+            preset for preset in expected_presets
+            if preset["preset_name"] not in existing_preset_names
+        ]
+
+        if not presets_to_create:
+            return {"message": "All default presets already exist", "count": len(existing_presets)}
+
+        # Create missing presets
         created_presets = []
-        for preset_data in default_presets:
+        for preset_data in presets_to_create:
             preset_create = SavedPresetCreate(**preset_data)
             preset = create_saved_preset(db, current_user, preset_create)
             created_presets.append(preset)
 
-        return {"message": "Default presets created", "count": len(created_presets)}
+        total_presets = len(existing_presets) + len(created_presets)
+        return {"message": f"Created {len(created_presets)} missing presets", "count": total_presets}
 
     except Exception as e:
         raise HTTPException(

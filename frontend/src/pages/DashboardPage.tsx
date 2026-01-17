@@ -77,9 +77,9 @@ export const WorkflowPage: React.FC = () => {
         isClosable: true,
       });
     }
-  };
+  }, [workflowService, setDefaultWorkflow, toast, navigate]);
 
-  const fetchDefaultWorkflow = async () => {
+  const fetchDefaultWorkflow = useCallback(async () => {
     try {
       const workflow = await workflowService.getDefaultWorkflow();
       setDefaultWorkflow(workflow);
@@ -93,7 +93,7 @@ export const WorkflowPage: React.FC = () => {
         isClosable: true,
       });
     }
-  }, [toast]);
+  }, [workflowService, setDefaultWorkflow, toast]);
 
   const fetchPresets = useCallback(async () => {
     setPresetsLoading(true);

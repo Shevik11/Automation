@@ -13,6 +13,7 @@ from app.config import settings
 from models.user import User
 from models.workflow import WorkflowConfig, SavedPreset
 from models.execution import WorkflowExecution
+from models.linkedin_result import LinkedinResult
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

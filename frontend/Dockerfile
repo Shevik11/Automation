@@ -3,11 +3,12 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json ./
+# Copy package files (both package.json and package-lock.json for reproducible builds)
+COPY package.json package-lock.json ./
 
-# Install dependencies (using install instead of ci to handle lock file mismatch)
-RUN npm install --legacy-peer-deps
+# Install dependencies using npm ci for deterministic, reproducible builds
+# npm ci (clean install) respects the exact versions in package-lock.json
+RUN npm ci --legacy-peer-deps
 
 # Copy source code
 COPY . .

@@ -12,6 +12,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def _mask_email(email: str) -> str:
+    """Mask email for logging to avoid PII exposure"""
+    if "@" not in email:
+        return "***@***"
+    username, domain = email.split("@", 1)
+    if len(username) <= 2:
+        masked_username = "*" * len(username)
+    else:
+        masked_username = username[0] + "*" * (len(username) - 2) + username[-1]
+    return f"{masked_username}@{domain}"
+
+
 def get_user_by_email(db: Session, email: str) -> User | None:
     """Get user by email"""
     return db.query(User).filter(User.email == email).first()
@@ -20,25 +32,25 @@ def get_user_by_email(db: Session, email: str) -> User | None:
 def create_user(db: Session, user_data: UserCreate) -> User:
     """Create a new user and automatically create default workflow"""
     try:
-        logger.info(f"Creating user: {user_data.email}")
+        logger.info(f"Creating user: {_mask_email(user_data.email)}")
         
         # Check if user already exists
         existing_user = get_user_by_email(db, user_data.email)
         if existing_user:
-            logger.warning(f"User already exists: {user_data.email}")
+            logger.warning(f"User already exists: {_mask_email(user_data.email)}")
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Email already registered"
             )
         
         # Create new user
-        logger.info(f"Hashing password for: {user_data.email}")
+        logger.info(f"Hashing password for: {_mask_email(user_data.email)}")
         hashed_password = get_password_hash(user_data.password)
         db_user = User(
             email=user_data.email,
             password_hash=hashed_password
         )
-        logger.info(f"Saving user to DB: {user_data.email}")
+        logger.info(f"Saving user to DB: {_mask_email(user_data.email)}")
         db.add(db_user)
         db.commit()
         db.refresh(db_user)

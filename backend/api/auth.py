@@ -6,7 +6,8 @@ from utils.dependencies import get_current_user
 from services.auth_service import (
     create_user,
     authenticate_user,
-    create_token_for_user
+    create_token_for_user,
+    _mask_email
 )
 from schemas.auth import (
     LoginRequest,
@@ -31,8 +32,7 @@ async def register(
 ):
     """Register a new user"""
     try:
-        logger.info(f"Register attempt for email: {user_data.email}")
-        logger.debug(f"Request body: {user_data.dict()}")
+        logger.info(f"Register attempt for email: {_mask_email(user_data.email)}")
         user = create_user(db, user_data)
         access_token = create_token_for_user(user)
         logger.info(f"User registered successfully: {user.id}")
@@ -66,10 +66,10 @@ async def login(
 ):
     """Login user and return JWT token"""
     try:
-        logger.info(f"Login attempt for email: {credentials.email}")
+        logger.info(f"Login attempt for email: {_mask_email(credentials.email)}")
         user = authenticate_user(db, credentials.email, credentials.password)
         if not user:
-            logger.warning(f"Login failed - invalid credentials for: {credentials.email}")
+            logger.warning(f"Login failed - invalid credentials for: {_mask_email(credentials.email)}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email or password",

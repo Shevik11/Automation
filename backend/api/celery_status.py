@@ -6,6 +6,7 @@ from api.auth import get_current_user
 from models.user import User
 import redis
 import os
+import logging
 
 router = APIRouter()
 
@@ -24,7 +25,10 @@ async def check_celery_status(
         redis_client.ping()
         redis_status = "connected"
     except Exception as e:
-        redis_status = f"error: {str(e)}"
+        redis_status = "connection_failed"
+        # Log the actual error for debugging but don't expose it
+        logger = logging.getLogger(__name__)
+        logger.error(f"Redis connection failed: {str(e)}")
     
     try:
         # Check if Celery worker is registered
@@ -41,15 +45,17 @@ async def check_celery_status(
             worker_count = 0
             
     except Exception as e:
-        worker_status = f"error: {str(e)}"
+        worker_status = "connection_failed"
         worker_count = 0
         active_workers = None
         registered_workers = None
+        # Log the actual error for debugging but don't expose it
+        logger = logging.getLogger(__name__)
+        logger.error(f"Celery worker check failed: {str(e)}")
     
     return {
         "redis": {
-            "status": redis_status,
-            "url": redis_url
+            "status": redis_status
         },
         "celery_worker": {
             "status": worker_status,
@@ -81,8 +87,11 @@ async def get_celery_tasks(
             "reserved": reserved_tasks or {}
         }
     except Exception as e:
+        # Log the actual error for debugging but don't expose it in the API response
+        logger = logging.getLogger(__name__)
+        logger.error(f"Failed to get Celery tasks: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get Celery tasks: {str(e)}"
+            detail="Failed to retrieve Celery task information"
         )
 

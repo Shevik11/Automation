@@ -91,16 +91,10 @@ def check_and_trigger_n8n_workflows(self):
                     f"(n8n_id: {workflow.n8n_workflow_id}, webhook_path: {workflow.webhook_path or 'none'})"
                 )
                 
-                # Run async function in sync context
-                # Create new event loop for this task
+                # Run async function in sync context using asyncio.run()
+                # asyncio.run() properly manages event loop lifecycle (Python 3.10+ compatible)
                 try:
-                    loop = asyncio.get_event_loop()
-                except RuntimeError:
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                
-                try:
-                    execution = loop.run_until_complete(
+                    execution = asyncio.run(
                         create_execution(db, user, execution_data)
                     )
                     

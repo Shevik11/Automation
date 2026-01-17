@@ -6,6 +6,7 @@ from app.database import get_db
 from utils.dependencies import get_current_user
 from models.user import User
 from models.linkedin_result import LinkedinResult
+from models.execution import WorkflowExecution
 from schemas.linkedin import LinkedinResultResponse
 
 
@@ -18,12 +19,18 @@ async def get_linkedin_results(
     db: Session = Depends(get_db),
 ):
     """
-    Повертає всі рядки з таблиці linkedin_results.
+    Повертає всі рядки з таблиці linkedin_results для поточного користувача.
 
-    Наразі таблиця не має user_id, тому фільтрація по користувачу неможлива.
-    Вважаємо, що дані належать поточному користувачу (система single-tenant).
+    Фільтрує результати через зв'язок з WorkflowExecution, щоб гарантувати
+    ізоляцію даних між користувачами.
     """
-    results = db.query(LinkedinResult).order_by(LinkedinResult.id).all()
+    results = (
+        db.query(LinkedinResult)
+        .join(LinkedinResult.execution)  # Join with WorkflowExecution
+        .filter(WorkflowExecution.user_id == current_user.id)  # Filter by current user
+        .order_by(LinkedinResult.id)
+        .all()
+    )
     return results
 
 

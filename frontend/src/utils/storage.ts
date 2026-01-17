@@ -18,7 +18,18 @@ export const storage = {
   // User data management
   getUser(): any | null {
     const userData = localStorage.getItem(USER_KEY);
-    return userData ? JSON.parse(userData) : null;
+    if (!userData) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(userData);
+    } catch (error) {
+      console.warn('Failed to parse user data from localStorage:', error);
+      // Clear corrupted data to prevent future errors
+      this.removeUser();
+      return null;
+    }
   },
 
   setUser(user: any): void {

@@ -55,8 +55,16 @@ class N8NService:
         if not webhook_path and workflow_json:
             webhook_path = self._extract_webhook_path_from_json(workflow_json)
         
+        # Build webhook suffix from extracted path or use workflow_id as fallback
+        webhook_suffix = webhook_path or workflow_id
+        
         execute_url = f"{self.base_url}/api/v1/workflows/{workflow_id}/execute"
         webhook_url = self.webhook_url
+        
+        # Append webhook suffix to complete the webhook URL
+        if webhook_url and webhook_suffix:
+            # Ensure proper URL construction (handle trailing/leading slashes)
+            webhook_url = webhook_url.rstrip('/') + '/' + webhook_suffix.lstrip('/')
 
         # Avoid logging full API key; log length only
         headers_to_log = dict(self.headers)
@@ -64,9 +72,10 @@ class N8NService:
             headers_to_log["X-N8N-API-KEY"] = f"***len={len(self.api_key)}***"
 
         logger.info(
-            "n8n execute start. url=%s webhook_url=%s data=%s headers=%s",
+            "n8n execute start. url=%s webhook_url=%s webhook_suffix=%s data=%s headers=%s",
             execute_url,
             webhook_url,
+            webhook_suffix,
             data,
             headers_to_log,
         )

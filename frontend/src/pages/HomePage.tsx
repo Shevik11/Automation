@@ -23,26 +23,49 @@ import type { WorkflowConfig } from '../types';
 const WorkflowCard = React.memo<{
   workflow: WorkflowConfig;
   onClick: (id: number) => void;
-}>(({ workflow, onClick }) => (
-  <Card
-    shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-    borderRadius="2xl"
-    border="1px solid"
-    borderColor="gray.200"
-    bg="white"
-    cursor="pointer"
-    transition="all 0.3s ease"
-    _hover={{
-      shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      transform: 'translateY(-4px)',
-      borderColor: 'red.300',
-    }}
-    onClick={() => onClick(workflow.id)}
-    h="100%"
-    display="flex"
-    flexDirection="column"
-  >
-    <CardBody p={6}>
+}>(({ workflow, onClick }) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Activate card on Enter or Space key press (WCAG 2.1 SC 2.1.1)
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick(workflow.id);
+    }
+  };
+
+  return (
+    <Card
+      as="button"
+      shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+      borderRadius="2xl"
+      border="1px solid"
+      borderColor="gray.200"
+      bg="white"
+      cursor="pointer"
+      transition="all 0.3s ease"
+      _hover={{
+        shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        transform: 'translateY(-4px)',
+        borderColor: 'red.300',
+      }}
+      _focus={{
+        outline: 'none',
+        boxShadow: '0 0 0 3px rgba(229, 62, 62, 0.1), 0 0 0 5px rgba(229, 62, 62, 0.5)',
+        borderColor: 'red.500',
+      }}
+      _focusVisible={{
+        outline: 'none',
+        boxShadow: '0 0 0 3px rgba(229, 62, 62, 0.1), 0 0 0 5px rgba(229, 62, 62, 0.5)',
+        borderColor: 'red.500',
+      }}
+      onClick={() => onClick(workflow.id)}
+      onKeyDown={handleKeyDown}
+      h="100%"
+      display="flex"
+      flexDirection="column"
+      textAlign="left"
+      aria-label={`Open ${workflow.workflow_name} workflow`}
+    >
+      <CardBody p={6}>
       <VStack align="stretch" spacing={4} h="100%">
         <HStack justify="space-between" align="start">
           <Box
@@ -94,7 +117,8 @@ const WorkflowCard = React.memo<{
       </VStack>
     </CardBody>
   </Card>
-));
+  );
+});
 WorkflowCard.displayName = 'WorkflowCard';
 
 export const HomePage: React.FC = () => {
