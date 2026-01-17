@@ -24,7 +24,7 @@ import { useExecutionStatus } from '../hooks/useExecutionStatus';
 import { workflowService } from '../services/workflow.service';
 import type { WorkflowConfig, WorkflowPreset, Execution, ExecutionCreate } from '../types';
 
-export const WorkflowPage: React.FC = () => {
+export const DashboardPage: React.FC = () => {
   const { workflowId } = useParams<{ workflowId: string }>();
   const navigate = useNavigate();
   const [defaultWorkflow, setDefaultWorkflow] = useState<WorkflowConfig | null>(null);
