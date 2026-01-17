@@ -54,7 +54,7 @@ async def register(
         logger.error(f"Traceback: {traceback.format_exc()}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Registration failed: {str(e)}"
+            detail="Registration failed"
         )
 
 
@@ -94,7 +94,7 @@ async def login(
         logger.exception(f"Login error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Login failed: {str(e)}"
+            detail="Login failed"
         )
 
 

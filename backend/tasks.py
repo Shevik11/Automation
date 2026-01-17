@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Any
 from celery_app import celery_app
 from app.database import SessionLocal
@@ -36,7 +36,7 @@ def check_and_trigger_n8n_workflows(self):
     db = None
     try:
         db = get_db_session()
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         
         # Find all active workflows that need to run
         # A workflow needs to run if:

@@ -217,7 +217,6 @@ export const WorkflowPage: React.FC = () => {
   const handleCancelExecution = useCallback(async () => {
     if (currentExecution) {
       try {
-        await workflowService.cancelExecution(currentExecution.id);
         await cancelExecution();
         toast({
           title: 'Скасовано',

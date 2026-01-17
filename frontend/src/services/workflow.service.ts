@@ -12,8 +12,8 @@ import type {
 
 export const workflowService = {
   // Workflow Configs
-  async getWorkflows(): Promise<WorkflowConfig[]> {
-    const response = await api.get<WorkflowConfig[]>('/workflows');
+  async getWorkflows(signal?: AbortSignal): Promise<WorkflowConfig[]> {
+    const response = await api.get<WorkflowConfig[]>('/workflows', { signal });
     return response.data;
   },
 
@@ -106,8 +106,8 @@ export const workflowService = {
     return response.data.workflow_json;
   },
 
-  async importWorkflowFromFile(filename: string = 'automation.json'): Promise<WorkflowConfig> {
-    const response = await api.post<WorkflowConfig>('/workflows/import-file', { filename });
+  async importWorkflowFromFile(filename: string = 'automation.json', signal?: AbortSignal): Promise<WorkflowConfig> {
+    const response = await api.post<WorkflowConfig>('/workflows/import-file', { filename }, { signal });
     return response.data;
   },
 

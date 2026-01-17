@@ -16,9 +16,11 @@ class Settings(BaseSettings):
     N8N_API_KEY: Optional[str] = None
     N8N_WEBHOOK_URL: str
     
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": True,
+        "extra": "ignore"  # Allow extra environment variables
+    }
 
 
 settings = Settings()

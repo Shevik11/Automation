@@ -105,7 +105,7 @@ def create_user(db: Session, user_data: UserCreate) -> User:
         logger.exception(f"Create user error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Registration failed: {str(e)}"
+            detail="Registration failed"
         )
 
 

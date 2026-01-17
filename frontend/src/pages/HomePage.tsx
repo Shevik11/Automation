@@ -127,16 +127,16 @@ export const HomePage: React.FC = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const fetchWorkflows = useCallback(async () => {
+  const fetchWorkflows = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
     try {
-      const data = await workflowService.getWorkflows();
+      const data = await workflowService.getWorkflows(signal);
       setWorkflows(data);
 
       // If no workflows exist, try to initialize default one
       if (data.length === 0) {
         try {
-          await workflowService.importWorkflowFromFile();
+          await workflowService.importWorkflowFromFile('automation.json', signal);
           toast({
             title: 'Ініціалізація',
             description: 'Дефолтна автоматизація була створена',
@@ -145,9 +145,12 @@ export const HomePage: React.FC = () => {
             isClosable: true,
           });
           // Fetch workflows again
-          const updatedData = await workflowService.getWorkflows();
+          const updatedData = await workflowService.getWorkflows(signal);
           setWorkflows(updatedData);
         } catch (initError: any) {
+          if (initError.name === 'AbortError') {
+            return; // Skip toasts/logs for aborted requests
+          }
           console.error('Failed to initialize default workflow:', initError);
           toast({
             title: 'Помилка ініціалізації',
@@ -159,6 +162,9 @@ export const HomePage: React.FC = () => {
         }
       }
     } catch (error: any) {
+      if (error.name === 'AbortError') {
+        return; // Skip toasts/logs for aborted requests
+      }
       console.error('Failed to fetch workflows:', error);
       toast({
         title: 'Помилка',
@@ -173,7 +179,12 @@ export const HomePage: React.FC = () => {
   }, [toast]);
 
   useEffect(() => {
-    fetchWorkflows();
+    const controller = new AbortController();
+    fetchWorkflows(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
   }, [fetchWorkflows]);
 
   const handleWorkflowClick = useCallback((workflowId: number) => {
