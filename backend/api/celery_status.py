@@ -16,6 +16,7 @@ async def check_celery_status(current_user: User = Depends(get_current_user)):
     """
     Check Celery worker and Redis connection status
     """
+    redis_client = None
     try:
         # Check Redis connection
         redis_url = os.getenv("CELERY_BROKER_URL")
@@ -27,6 +28,13 @@ async def check_celery_status(current_user: User = Depends(get_current_user)):
         # Log the actual error for debugging but don't expose it
         logger = logging.getLogger(__name__)
         logger.error(f"Redis connection failed: {str(e)}")
+    finally:
+        # Ensure Redis client is properly closed to prevent connection pool exhaustion
+        if redis_client:
+            try:
+                redis_client.close()
+            except Exception as close_error:
+                logger.warning(f"Failed to close Redis client: {str(close_error)}")
 
     try:
         # Check if Celery worker is registered

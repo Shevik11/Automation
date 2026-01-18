@@ -59,7 +59,7 @@ async def get_executions_data(
     rows: list[ExecutionDataRow] = []
 
     # Get data from database executions
-    executions = get_executions_by_user(db, current_user.id)
+    executions = ExecutionService.get_user_executions(db, current_user)
     for ex in executions:
         # We only return rows where there is some result JSON
         if not ex.result:
@@ -114,7 +114,7 @@ async def create_execution_endpoint(
         f"user_id={current_user.id}, keywords='{execution_data.keywords}', location='{execution_data.location}'"
     )
     try:
-        execution = await create_execution(db, current_user, execution_data)
+        execution = ExecutionService.create_execution(db, execution_data, current_user)
         execution_logger.log_operation(
             "execution_creation",
             "successful",
@@ -133,7 +133,7 @@ async def cancel_execution_endpoint(
     db: Session = Depends(get_db),
 ):
     """Cancel an execution"""
-    execution = await cancel_execution(db, execution_id, current_user.id)
+    execution = ExecutionService.cancel_execution(db, execution_id, current_user)
     return execution
 
 
@@ -145,8 +145,8 @@ async def update_execution_status_endpoint(
     db: Session = Depends(get_db),
 ):
     """Update execution status (used by webhooks or background tasks)"""
-    execution = await update_execution_status(
-        db, execution_id, current_user.id, status_update
+    execution = ExecutionService.update_execution_status(
+        db, execution_id, status_update, current_user
     )
     return execution
 

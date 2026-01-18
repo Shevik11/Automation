@@ -1,7 +1,7 @@
 from typing import List
 
 from app.database import get_db
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from models.user import User
 from schemas.workflow import SavedPresetCreate, SavedPresetResponse
 from services.workflow_service import (
@@ -41,8 +41,8 @@ async def create_preset(
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Failed to create preset: {str(e)}",
-        )
+            detail="Failed to create preset.",
+        ) from e
 
 
 

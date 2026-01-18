@@ -31,14 +31,13 @@ async def register(
         raise
     except Exception as e:
         auth_logger.log_error(e, "user registration")
-raise_registration_error("Registration failed")
+        raise_registration_error("Registration failed")
 
 
 @router.post("/login", response_model=dict)
 async def login(credentials: LoginRequest, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     try:
-        auth_logger.log_auth_attempt(credentials.email, success=False)  # Will be success if login works
         result = AuthService.login_user(db, credentials.email, credentials.password)
         if not result:
             auth_logger.log_auth_attempt(credentials.email, success=False)

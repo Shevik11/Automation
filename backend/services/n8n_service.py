@@ -53,20 +53,6 @@ class N8NService:
             # Ensure proper URL construction (handle trailing/leading slashes)
             webhook_url = webhook_url.rstrip("/") + "/" + webhook_suffix.lstrip("/")
 
-        # Avoid logging full API key; log length only
-        headers_to_log = dict(self.headers)
-        if "X-N8N-API-KEY" in headers_to_log:
-            headers_to_log["X-N8N-API-KEY"] = f"***len={len(self.api_key)}***"
-
-        logger.info(
-            "n8n execute start. url=%s webhook_url=%s webhook_suffix=%s data=%s headers=%s",
-            execute_url,
-            webhook_url,
-            webhook_suffix,
-            data,
-            headers_to_log,
-        )
-
         async with httpx.AsyncClient() as client:
             # First, try to verify workflow exists
             workflow_check = await self.get_workflow(workflow_id)

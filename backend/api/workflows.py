@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from app.database import get_db
@@ -12,7 +13,7 @@ from schemas.workflow import (
     WorkflowJsonExport,
 )
 from services.file_service import list_static_json_files
-from services.workflow_service import WorkflowService
+from services.workflow_service import WorkflowService, update_default_workflow_from_file
 from sqlalchemy.orm import Session
 from utils.dependencies import get_current_user
 
@@ -64,10 +65,12 @@ async def get_static_files(
         files = list_static_json_files()
         return StaticFilesList(files=files)
     except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.exception("Failed to list static files")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to list static files: {str(e)}",
-        )
+            detail="Internal server error while listing static files",
+        ) from e
 
 
 @router.post(
@@ -96,10 +99,12 @@ async def import_workflow_from_file(
     except HTTPException:
         raise  # Re-raise HTTP exceptions
     except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.exception("Failed to import workflow from file")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to import workflow: {str(e)}",
-        )
+            detail="Internal server error importing workflow from file",
+        ) from e
 
 @router.get("/{workflow_id}/json", response_model=WorkflowJsonExport)
 async def get_workflow_json(

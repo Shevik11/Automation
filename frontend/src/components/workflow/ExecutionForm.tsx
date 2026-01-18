@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FormControl,
   FormLabel,
@@ -31,12 +31,22 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
   loading = false,
 }) => {
   const [formData, setFormData] = useState<ExecutionCreate>({
-    keywords: initialData?.keywords || '',
-    location: initialData?.location || '',
-    save_as_preset: false,
-    preset_name: '',
+    keywords: initialData?.keywords ?? '',
+    location: initialData?.location ?? '',
+    save_as_preset: initialData?.save_as_preset ?? false,
+    preset_name: initialData?.preset_name ?? '',
   });
   const [keywordInput, setKeywordInput] = useState('');
+
+  // Sync form data when initialData changes
+  useEffect(() => {
+    setFormData(prev => ({
+      keywords: initialData?.keywords ?? prev.keywords,
+      location: initialData?.location ?? prev.location,
+      save_as_preset: initialData?.save_as_preset ?? prev.save_as_preset,
+      preset_name: initialData?.preset_name ?? prev.preset_name,
+    }));
+  }, [initialData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -14,6 +14,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text, func
 from utils.errors import (
     app_exception_handler,
+    create_error_response,
     generic_exception_handler,
     validation_exception_handler,
 )

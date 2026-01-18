@@ -1,10 +1,10 @@
 import logging
 from datetime import timedelta
+from fastapi import HTTPException, status
 
 from app.config import settings
 from models.user import User
 from schemas.auth import UserCreate, UserResponse
-from services.workflow_service import create_default_workflow_for_user
 from sqlalchemy.orm import Session
 from utils.exceptions import raise_user_already_exists_error, raise_default_workflow_creation_error
 from utils.logger import auth_logger
