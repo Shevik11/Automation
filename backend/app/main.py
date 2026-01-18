@@ -1,105 +1,106 @@
-from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+from urllib.parse import urlparse
+from typing import List
+
+from api import auth, celery_status, executions, linkedin_results, presets, workflows
 from app.config import settings
-from api import auth, workflows, executions, celery_status, linkedin_results
+from app.database import engine, get_db
+from models.user import User
+from models.workflow import WorkflowConfig
+from models.execution import WorkflowExecution
+from models.linkedin_result import LinkedinResult
+from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from sqlalchemy import text, func
+from utils.errors import (
+    app_exception_handler,
+    generic_exception_handler,
+    validation_exception_handler,
+)
+from utils.logger import setup_logging
 from utils.workflow_validator import (
     InvalidWorkflowJsonError,
+    N8NWorkflowError,
     WorkflowImportError,
-    N8NWorkflowError
 )
-import logging
-import sys
 
-# Configure logging to output to console
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
+logger = setup_logging()
+logger.info("🔧 API modules imported successfully")
 
 app = FastAPI(
     title="N8N Automation API",
     description="API for managing n8n workflow executions",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",  # Vite dev server
-        "http://localhost:5173",  # Vite default port
-        "http://localhost:80",    # Production nginx
-        "http://localhost",       # Production nginx (no port)
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:80",
+        "http://localhost",
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(auth.router, prefix="/api")
-app.include_router(workflows.router, prefix="/api")
-app.include_router(executions.router, prefix="/api")
-app.include_router(linkedin_results.router, prefix="/api")
-app.include_router(celery_status.router, prefix="/api")
+# Register API routers
+routers = [
+    (auth.router, "auth"),
+    (workflows.router, "workflows"),
+    (presets.router, "presets"),
+    (executions.router, "executions"),
+    (linkedin_results.router, "linkedin_results"),
+    (celery_status.router, "celery_status"),
+]
+
+for router, name in routers:
+    app.include_router(router, prefix="/api")
+
+logger.info(f"🔧 Registered {len(routers)} API routers successfully")
 
 
 # Exception handlers
 from fastapi.exceptions import RequestValidationError
 
-logger = logging.getLogger(__name__)
+# Register exception handlers
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(Exception, generic_exception_handler)
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    """Handle validation errors"""
-    logger.error(f"Validation error for {request.url.path}: {exc.errors()}")
-    return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content={
-            "error": "Validation Error",
-            "details": exc.errors()
-        }
-    )
-
-
+# Keep specific workflow exception handlers for backward compatibility
 @app.exception_handler(InvalidWorkflowJsonError)
-async def invalid_workflow_json_handler(request: Request, exc: InvalidWorkflowJsonError):
+async def invalid_workflow_json_handler(
+    request: Request, exc: InvalidWorkflowJsonError
+):
     """Handle invalid workflow JSON errors"""
-    return JSONResponse(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        content={
-            "error": "Invalid Workflow JSON",
-            "message": exc.message,
-            "errors": exc.errors
-        }
+    return create_error_response(
+        status.HTTP_400_BAD_REQUEST,
+        exc.message,
+        "Invalid Workflow JSON",
+        {"errors": exc.errors}
     )
 
 
 @app.exception_handler(WorkflowImportError)
 async def workflow_import_error_handler(request: Request, exc: WorkflowImportError):
     """Handle workflow import errors"""
-    return JSONResponse(
-        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        content={
-            "error": "Workflow Import Error",
-            "message": str(exc)
-        }
+    return create_error_response(
+        status.HTTP_500_INTERNAL_SERVER_ERROR,
+        str(exc),
+        "Workflow Import Error"
     )
 
 
 @app.exception_handler(N8NWorkflowError)
 async def n8n_workflow_error_handler(request: Request, exc: N8NWorkflowError):
     """Handle n8n workflow errors"""
-    return JSONResponse(
-        status_code=status.HTTP_502_BAD_GATEWAY,
-        content={
-            "error": "N8N Workflow Error",
-            "message": str(exc)
-        }
+    return create_error_response(
+        status.HTTP_502_BAD_GATEWAY,
+        str(exc),
+        "N8N Workflow Error"
     )
 
 
@@ -112,3 +113,8 @@ async def root():
 async def health():
     return {"status": "healthy"}
 
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info(" Starting N8N Automation API...")
+    logger.info(" API ready to work!")

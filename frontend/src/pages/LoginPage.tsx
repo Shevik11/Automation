@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
                   fontWeight="500"
                   transition="all 0.2s"
                 >
-                  Вхід
+                  Login
                 </Tab>
                 <Tab
                   _selected={{ 
@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
                   fontWeight="500"
                   transition="all 0.2s"
                 >
-                  Реєстрація
+                  Registration
                 </Tab>
               </TabList>
               <TabPanels>

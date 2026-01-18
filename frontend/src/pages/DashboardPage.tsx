@@ -59,8 +59,8 @@ export const DashboardPage: React.FC = () => {
         setDefaultWorkflow(workflow);
       } else {
         toast({
-          title: 'Помилка',
-          description: 'Workflow не знайдено',
+          title: 'Error',
+          description: 'Workflow not found',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -70,8 +70,8 @@ export const DashboardPage: React.FC = () => {
     } catch (error: any) {
       console.error('Failed to fetch workflow:', error);
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося завантажити workflow',
+        title: 'Error',
+        description: error.message || 'Failed to fetch workflow',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -86,8 +86,8 @@ export const DashboardPage: React.FC = () => {
     } catch (error: any) {
       console.error('Failed to fetch default workflow:', error);
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося завантажити workflow',
+        title: 'Error',
+        description: error.message || 'Failed to fetch workflow',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -165,8 +165,8 @@ export const DashboardPage: React.FC = () => {
           workflowToUse = defaultWorkflow;
         } else {
           toast({
-            title: 'Помилка',
-            description: 'Workflow не знайдено. Будь ласка, оновіть сторінку',
+            title: 'Error',
+            description: 'Workflow not found. Please update the page',
             status: 'error',
             duration: 5000,
             isClosable: true,
@@ -190,16 +190,16 @@ export const DashboardPage: React.FC = () => {
       await fetchRecentExecutions();
       
       toast({
-        title: 'Запущено!',
-        description: 'Автоматизацію успішно запущено',
+        title: 'Success!',
+        description: 'Automation successfully started',
         status: 'success',
         duration: 3000,
         isClosable: true,
       });
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося запустити автоматизацію',
+        title: 'Error',
+        description: error.message || 'Failed to start automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -219,16 +219,16 @@ export const DashboardPage: React.FC = () => {
       try {
         await cancelExecution();
         toast({
-          title: 'Скасовано',
-          description: 'Execution скасовано',
+          title: 'Cancelled',
+          description: 'Execution cancelled',
           status: 'info',
           duration: 3000,
           isClosable: true,
         });
       } catch (error: any) {
         toast({
-          title: 'Помилка',
-          description: error.message || 'Не вдалося скасувати execution',
+          title: 'Error',
+          description: error.message || 'Failed to cancel execution',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -281,7 +281,7 @@ export const DashboardPage: React.FC = () => {
                 {defaultWorkflow?.workflow_name || 'Workflow'}
               </Heading>
               <Text color="gray.600" fontSize="md">
-                Керуйте автоматизацією та запускайте виконання
+                Manage automation and run executions
               </Text>
             </Box>
             <Button
@@ -290,7 +290,7 @@ export const DashboardPage: React.FC = () => {
               colorScheme="gray"
               size="sm"
             >
-              ← Назад до списку
+              ← Back to list
             </Button>
           </HStack>
         </Box>
@@ -306,10 +306,10 @@ export const DashboardPage: React.FC = () => {
             >
               <CardBody>
                 <Heading size="md" mb={3} color="gray.800">
-                  Дані виконань
+                  Execution data
                 </Heading>
                 <Text color="gray.600" mb={4}>
-                  Переглянь історію запусків та завантаж CSV/Excel з БД.
+                  Review execution history and download CSV/Excel from the database.
                 </Text>
                 <HStack>
                   <Button
@@ -318,7 +318,7 @@ export const DashboardPage: React.FC = () => {
                     colorScheme="red"
                     variant="solid"
                   >
-                    Переглянути дані
+                    View data
                   </Button>
                 </HStack>
               </CardBody>
@@ -345,7 +345,7 @@ export const DashboardPage: React.FC = () => {
               >
                 <HStack justify="space-between" align="center">
                   <Heading size="md" color="gray.800" fontWeight="600">
-                    Запустити Workflow
+                    Run Workflow
                   </Heading>
                   <Button
                     size="sm"
@@ -366,7 +366,7 @@ export const DashboardPage: React.FC = () => {
                     transition="all 0.2s"
                     onClick={handleTogglePresets}
                   >
-                    {showPresets ? 'Сховати' : 'Показати'} Presets
+                    {showPresets ? 'Hide' : 'Show'} Presets
                   </Button>
                 </HStack>
               </CardHeader>
@@ -413,7 +413,7 @@ export const DashboardPage: React.FC = () => {
                 bgGradient="linear(to-r, white, gray.50)"
               >
                 <Heading size="md" color="gray.800" fontWeight="600">
-                  Мої Workflows
+                  My Workflows
                 </Heading>
               </CardHeader>
               <CardBody>
@@ -442,7 +442,7 @@ export const DashboardPage: React.FC = () => {
               >
                 <HStack justify="space-between" align="center">
                   <Heading size="md" color="gray.800" fontWeight="600">
-                    Останні виконання
+                    Recent executions
                   </Heading>
                   <Button
                     size="sm"
@@ -463,16 +463,16 @@ export const DashboardPage: React.FC = () => {
                     transition="all 0.2s"
                     onClick={handleToggleRecentExecutions}
                   >
-                    {showRecentExecutions ? 'Сховати' : 'Подивитися'}
+                    {showRecentExecutions ? 'Hide' : 'View'}
                   </Button>
                 </HStack>
               </CardHeader>
               {showRecentExecutions && (
                 <CardBody>
                   {executionsLoading ? (
-                    <Text color="gray.500">Завантаження...</Text>
+                    <Text color="gray.500">Loading...</Text>
                   ) : !hasRecentExecutions ? (
-                    <Text color="gray.500">Немає виконань</Text>
+                    <Text color="gray.500">No executions</Text>
                   ) : (
                     <VStack spacing={3} align="stretch">
                       {recentExecutions.map((exec) => (

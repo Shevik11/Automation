@@ -138,8 +138,8 @@ export const HomePage: React.FC = () => {
         try {
           await workflowService.importWorkflowFromFile('automation.json', signal);
           toast({
-            title: 'Ініціалізація',
-            description: 'Дефолтна автоматизація була створена',
+            title: 'Initialization',
+            description: 'Default automation was created',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -153,8 +153,8 @@ export const HomePage: React.FC = () => {
           }
           console.error('Failed to initialize default workflow:', initError);
           toast({
-            title: 'Помилка ініціалізації',
-            description: 'Не вдалося створити дефолтну автоматизацію',
+            title: 'Initialization error',
+            description: 'Failed to create default automation',
             status: 'warning',
             duration: 5000,
             isClosable: true,
@@ -167,8 +167,8 @@ export const HomePage: React.FC = () => {
       }
       console.error('Failed to fetch workflows:', error);
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося завантажити автоматизації',
+        title: 'Error',
+        description: error.message || 'Failed to fetch automations',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -205,22 +205,22 @@ export const HomePage: React.FC = () => {
             fontWeight="700"
             letterSpacing="-0.5px"
           >
-            Автоматизація пошуку вакансій
+            Automation for job search
           </Heading>
           <Text color="gray.600" fontSize="md">
-            Оберіть варіант пошуку або заповніть форму самостійно
+            Choose a search option or fill the form yourself
           </Text>
         </Box>
 
         {loading ? (
           <Box textAlign="center" py={20}>
             <Spinner size="xl" color="red.500" thickness="4px" />
-            <Text mt={4} color="gray.600">Завантаження автоматизацій...</Text>
+            <Text mt={4} color="gray.600">Loading automations...</Text>
           </Box>
         ) : !hasWorkflows ? (
           <Box textAlign="center" py={20}>
             <Text fontSize="lg" color="gray.500">
-              Немає автоматизацій. Створюємо дефолтну...
+              No automations. Creating default...
             </Text>
           </Box>
         ) : (

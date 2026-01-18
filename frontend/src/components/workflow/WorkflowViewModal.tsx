@@ -35,14 +35,14 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
       <ModalContent>
         <ModalHeader>
           <HStack spacing={3}>
-            <Text>Параметри автоматизації</Text>
+            <Text>Automation parameters</Text>
             <Badge
               colorScheme={workflow.is_active ? 'green' : 'gray'}
               borderRadius="full"
               px={3}
               py={1}
             >
-              {workflow.is_active ? 'Активна' : 'Неактивна'}
+              {workflow.is_active ? 'Active' : 'Inactive'}
             </Badge>
           </HStack>
         </ModalHeader>
@@ -51,7 +51,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
           <VStack spacing={4} align="stretch">
             <Box>
               <Text fontSize="sm" color="gray.600" mb={1}>
-                Назва
+                Name
               </Text>
               <Text fontWeight="600" fontSize="md">
                 {workflow.workflow_name}
@@ -62,7 +62,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
 
             <Box>
               <Text fontSize="sm" color="gray.600" mb={1}>
-                N8N Workflow ID
+                N8N Workflow ID or webhook path
               </Text>
               <Code p={2} borderRadius="md" fontSize="sm">
                 {workflow.n8n_workflow_id}
@@ -87,10 +87,10 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
 
             <Box>
               <Text fontSize="sm" color="gray.600" mb={1}>
-                Інтервал виконання
+                Execution interval
               </Text>
               <Text fontWeight="500">
-                {workflow.run_interval_minutes} хвилин
+                {workflow.run_interval_minutes} minutes
               </Text>
             </Box>
 
@@ -99,7 +99,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
                 <Divider />
                 <Box>
                   <Text fontSize="sm" color="gray.600" mb={1}>
-                    Опис
+                    Description
                   </Text>
                   <Text>{workflow.description}</Text>
                 </Box>
@@ -111,7 +111,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
                 <Divider />
                 <Box>
                   <Text fontSize="sm" color="gray.600" mb={1}>
-                    Версія
+                    Version
                   </Text>
                   <Code p={2} borderRadius="md" fontSize="sm">
                     {workflow.workflow_version}
@@ -125,7 +125,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
                 <Divider />
                 <Box>
                   <Text fontSize="sm" color="gray.600" mb={1}>
-                    Файл джерела
+                    Source file
                   </Text>
                   <Text>{workflow.source_file}</Text>
                 </Box>
@@ -136,7 +136,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
 
             <Box>
               <Text fontSize="sm" color="gray.600" mb={1}>
-                Створено
+                Created
               </Text>
               <Text>
                 {new Date(workflow.created_at).toLocaleString('uk-UA')}
@@ -148,7 +148,7 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
                 <Divider />
                 <Box>
                   <Text fontSize="sm" color="gray.600" mb={1}>
-                    Останній запуск
+                    Last run
                   </Text>
                   <Text>
                     {new Date(workflow.last_run_at).toLocaleString('uk-UA')}

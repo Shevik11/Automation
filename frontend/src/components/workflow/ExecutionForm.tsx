@@ -81,7 +81,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
               value={keywordInput}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setKeywordInput(e.target.value)}
               onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && (e.preventDefault(), addKeyword())}
-              placeholder="Додати keyword і натиснути Enter"
+              placeholder="Add keyword and press Enter"
               isRequired={false}
               required={false}
               size="md"
@@ -110,7 +110,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
                   bg: 'red.600',
                 }}
               >
-                Додати
+                Add
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -128,7 +128,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             name="keywords"
             value={formData.keywords}
             onChange={handleChange}
-            placeholder="Keywords (через кому або JSON)"
+            placeholder="Keywords (comma or JSON)"
             rows={3}
             mt={2}
             borderRadius="lg"
@@ -145,9 +145,9 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            <strong>Призначення:</strong> Ключові слова для пошуку вакансій (наприклад: "React Developer", "Legal", "Java"). 
-            Використовується для фільтрації вакансій за посадою або навичками. 
-            Можна вводити кілька значень через кому або як JSON масив.
+            <strong>Purpose:</strong> Keywords for job search (e.g. "React Developer", "Legal", "Java"). 
+            Used to filter jobs by position or skills. 
+            Can enter multiple values through comma or as a JSON array.
           </FormHelperText>
         </FormControl>
 
@@ -158,7 +158,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="наприклад: Ukraine, Kyiv"
+            placeholder="e.g. Ukraine, Kyiv"
             size="md"
             borderRadius="lg"
             border="1px solid"
@@ -174,10 +174,10 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            <strong>Призначення:</strong> Географічна локація для пошуку вакансій. 
-            <strong>Впливає на:</strong> Фільтрує вакансії за місцем роботи. 
-            <strong>Як вводити:</strong> Вкажіть країну або місто (наприклад: "Ukraine", "Kyiv", "Lviv", "Remote"). 
-            Автоматизація шукатиме вакансії тільки в зазначеній локації.
+            <strong>Purpose:</strong> Geographic location for job search. 
+            <strong>Affects:</strong> Filters jobs by location. 
+            <strong>How to enter:</strong> Specify country or city (e.g. "Ukraine", "Kyiv", "Lviv", "Remote"). 
+            Automation will only search for jobs in the specified location.
           </FormHelperText>
         </FormControl>
 
@@ -233,23 +233,23 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             }}
           >
             <Text as="span" fontWeight="600" color="gray.800" fontSize="md">
-              Зберегти параметри як preset
+              Save parameters as preset
             </Text>
           </Checkbox>
           <Text color="gray.600" fontSize="sm" mt={1} mb={formData.save_as_preset ? 2 : 0}>
-            <strong>Призначення:</strong> Зберігає поточні параметри (keywords, location) для швидкого повторного використання. 
-            <strong>Впливає на:</strong> Дозволяє швидко запускати автоматизацію з тими ж параметрами без повторного введення. 
-            Збережені presets можна вибрати зі списку при наступному запуску.
+            <strong>Purpose:</strong> Saves current parameters (keywords, location) for quick reuse. 
+            <strong>Affects:</strong> Allows quickly running automation with the same parameters without re-entering. 
+            Saved presets can be selected from the list when running next.
           </Text>
           {formData.save_as_preset && (
             <FormControl mt={2}>
-              <FormLabel fontSize="sm">Назва preset</FormLabel>
+              <FormLabel fontSize="sm">Preset name</FormLabel>
             <Input
               type="text"
               name="preset_name"
               value={formData.preset_name || ''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, preset_name: e.target.value }))}
-              placeholder="наприклад: React Ukraine Daily"
+              placeholder="e.g. React Ukraine Daily"
               size="sm"
               borderRadius="lg"
               border="1px solid"
@@ -265,8 +265,8 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
               }}
             />
               <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-                <strong>Призначення:</strong> Назва для ідентифікації preset. 
-                <strong>Як вводити:</strong> Введіть зрозумілу назву, яка описує параметри (наприклад: "React Ukraine Daily", "Java Remote Weekly").
+                <strong>Purpose:</strong> Name for identifying preset. 
+                <strong>How to enter:</strong> Enter a clear name that describes the parameters (e.g. "React Ukraine Daily", "Java Remote Weekly").
               </FormHelperText>
             </FormControl>
           )}
@@ -279,7 +279,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
           size="md"
           width="full"
           isLoading={loading}
-          loadingText="Запуск..."
+          loadingText="Running..."
           borderRadius="lg"
           fontWeight="600"
           _hover={{
@@ -292,7 +292,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
           }}
           transition="all 0.2s"
         >
-          Запустити автоматизацію
+          Run automation
         </Button>
       </VStack>
     </form>

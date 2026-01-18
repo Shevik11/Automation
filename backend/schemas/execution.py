@@ -1,10 +1,13 @@
-from typing import Optional, Any, Dict
-from pydantic import BaseModel
 from datetime import datetime
+from typing import Any, Dict, Optional
+
+from pydantic import BaseModel
 
 
 class WorkflowExecutionBase(BaseModel):
-    workflow_config_id: Optional[int] = None  # Optional - will use default if not provided
+    workflow_config_id: Optional[int] = (
+        None  # Optional - will use default if not provided
+    )
     keywords: str  # JSON або текст
     location: str
     save_as_preset: bool = False  # Save parameters as preset after execution
@@ -39,9 +42,10 @@ class ExecutionStatusUpdate(BaseModel):
 
 class ExecutionDataRow(BaseModel):
     """
-    Simplified view of data that was saved for a particular execution.
-    Used for endpoints that return 'business data' instead of full execution metadata.
+    Simplified view of data that was saved for a particular execution
+    Used for endpoints that return 'business data' instead of full execution metadata
     """
+
     execution_id: int
     workflow_config_id: int
     created_at: datetime
@@ -51,4 +55,3 @@ class ExecutionDataRow(BaseModel):
 
     class Config:
         from_attributes = True
-

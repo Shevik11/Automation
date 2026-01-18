@@ -42,14 +42,14 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
       <VStack spacing={4} align="stretch">
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Назва Workflow
+            Workflow name
           </FormLabel>
           <Input
             type="text"
             name="workflow_name"
             value={formData.workflow_name}
             onChange={handleChange}
-            placeholder="My N8N Workflow"
+            placeholder="e.g. My N8N Workflow"
             size="md"
             borderRadius="lg"
             border="1px solid"
@@ -75,7 +75,7 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             name="n8n_workflow_id"
             value={formData.n8n_workflow_id}
             onChange={handleChange}
-            placeholder="n8n workflow ID або webhook path"
+            placeholder="n8n workflow ID or webhook path"
             size="md"
             borderRadius="lg"
             border="1px solid"
@@ -91,13 +91,13 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            Введіть ID workflow в n8n або webhook path
+            Enter n8n workflow ID or webhook path
           </FormHelperText>
         </FormControl>
 
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Інтервал виконання (хвилин)
+            Execution interval (minutes)
           </FormLabel>
           <Input
             type="number"
@@ -121,7 +121,7 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            Як часто запускати workflow автоматично (через скільки хвилин)
+            How often to run workflow automatically (every how many minutes)
           </FormHelperText>
         </FormControl>
 
@@ -132,7 +132,7 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
           size="md"
           width="full"
           isLoading={loading}
-          loadingText="Збереження..."
+          loadingText="Saving..."
           borderRadius="lg"
           fontWeight="600"
           _hover={{
@@ -145,7 +145,7 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
           }}
           transition="all 0.2s"
         >
-          Зберегти Workflow Config
+          Save Workflow Config
         </Button>
       </VStack>
     </form>

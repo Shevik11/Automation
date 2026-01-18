@@ -1,14 +1,13 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from typing import List
 
 from app.database import get_db
-from utils.dependencies import get_current_user
-from models.user import User
+from fastapi import APIRouter, Depends
 from models.linkedin_result import LinkedinResult
-from models.execution import WorkflowExecution
+from models.user import User
 from schemas.linkedin import LinkedinResultResponse
-
+from services.linkedin_service import LinkedinService
+from sqlalchemy.orm import Session
+from utils.dependencies import get_current_user
 
 router = APIRouter(prefix="/linkedin-results", tags=["linkedin_results"])
 
@@ -17,20 +16,20 @@ router = APIRouter(prefix="/linkedin-results", tags=["linkedin_results"])
 async def get_linkedin_results(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
-):
+    limit: int = 50,
+    offset: int = 0,
+) -> List[LinkedinResult]:
     """
-    Повертає всі рядки з таблиці linkedin_results для поточного користувача.
-
-    Фільтрує результати через зв'язок з WorkflowExecution, щоб гарантувати
-    ізоляцію даних між користувачами.
+    Get LinkedIn results for the current user with pagination
     """
-    results = (
-        db.query(LinkedinResult)
-        .join(LinkedinResult.execution)  # Join with WorkflowExecution
-        .filter(WorkflowExecution.user_id == current_user.id)  # Filter by current user
-        .order_by(LinkedinResult.id)
-        .all()
+    return LinkedinService.get_user_linkedin_results(
+        db=db, user=current_user, limit=limit, offset=offset
     )
-    return results
 
 
+@router.get("/debug")
+async def get_all_linkedin_results_debug(db: Session = Depends(get_db)) -> List[LinkedinResult]:
+    """
+    Get all LinkedIn results for debugging purposes
+    """
+    return LinkedinService.get_all_linkedin_results(db=db)

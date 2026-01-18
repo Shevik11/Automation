@@ -30,10 +30,10 @@ const statusColors: Record<Status, string> = {
 };
 
 const statusLabels: Record<Status, string> = {
-  pending: 'Очікує',
-  running: 'Виконується',
-  success: 'Успішно',
-  error: 'Помилка',
+  pending: 'Pending',
+  running: 'Running',
+  success: 'Success',
+  error: 'Error',
 };
 
 export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
@@ -55,7 +55,7 @@ export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
     return (
       <Card>
         <CardBody>
-          <Text>Немає даних про execution</Text>
+          <Text>No data about execution</Text>
         </CardBody>
       </Card>
     );
@@ -68,7 +68,7 @@ export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
       <CardHeader>
         <HStack justify="space-between" align="center">
           <Heading size="md" color="gray.700">
-            Статус Execution
+            Execution status
           </Heading>
           <Badge colorScheme={statusColors[execution.status]} fontSize="md" px={3} py={1} borderRadius="full">
             {statusLabels[execution.status]}
@@ -92,13 +92,13 @@ export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
           <HStack spacing={4}>
             {execution.created_at && (
               <Box>
-                <Text fontSize="sm" color="gray.600" mb={1}>Створено:</Text>
+                <Text fontSize="sm" color="gray.600" mb={1}>Created:</Text>
                 <Text fontSize="sm">{new Date(execution.created_at).toLocaleString('uk-UA')}</Text>
               </Box>
             )}
             {execution.completed_at && (
               <Box>
-                <Text fontSize="sm" color="gray.600" mb={1}>Завершено:</Text>
+                <Text fontSize="sm" color="gray.600" mb={1}>Completed:</Text>
                 <Text fontSize="sm">{new Date(execution.completed_at).toLocaleString('uk-UA')}</Text>
               </Box>
             )}
@@ -113,7 +113,7 @@ export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
 
           {execution.result && (
             <Box>
-              <Text fontSize="sm" color="gray.600" mb={2}>Результат:</Text>
+              <Text fontSize="sm" color="gray.600" mb={2}>Result:</Text>
               <Box
                 p={4}
                 bg={execution.status === 'error' ? 'red.50' : 'green.50'}
@@ -135,7 +135,7 @@ export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({
               onClick={onCancel}
               size="md"
             >
-              Скасувати Execution
+              Cancel Execution
             </Button>
           )}
         </VStack>

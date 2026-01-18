@@ -63,8 +63,8 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
     try {
       await onSave(workflow.id, formData);
       toast({
-        title: 'Успішно!',
-        description: 'Автоматизацію оновлено',
+        title: 'Success!',
+        description: 'Automation updated',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -72,8 +72,8 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
       onClose();
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося оновити автоматизацію',
+        title: 'Error',
+        description: error.message || 'Failed to update automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -100,12 +100,12 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
       <ModalOverlay />
       <form onSubmit={handleSubmit}>
         <ModalContent>
-          <ModalHeader>Редагувати автоматизацію</ModalHeader>
+          <ModalHeader>Edit automation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel>Назва Workflow</FormLabel>
+                <FormLabel>Workflow name</FormLabel>
                 <Input
                   name="workflow_name"
                   value={formData.workflow_name}
@@ -120,12 +120,12 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
                   name="n8n_workflow_id"
                   value={formData.n8n_workflow_id}
                   onChange={handleChange}
-                  placeholder="n8n workflow ID або webhook path"
+                  placeholder="n8n workflow ID or webhook path"
                 />
               </FormControl>
 
               <FormControl>
-                <FormLabel>Webhook Path (опціонально)</FormLabel>
+                <FormLabel>Webhook Path (optional)</FormLabel>
                 <Input
                   name="webhook_path"
                   value={formData.webhook_path}
@@ -135,7 +135,7 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
               </FormControl>
 
               <FormControl isRequired>
-                <FormLabel>Інтервал виконання (хвилин)</FormLabel>
+                <FormLabel>Execution interval (minutes)</FormLabel>
                 <Input
                   type="number"
                   name="run_interval_minutes"
@@ -147,17 +147,17 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
                   cursor="not-allowed"
                 />
                 <FormHelperText color="gray.500" fontSize="xs" mt={1}>
-                  Інтервал виконання не можна редагувати
+                  Execution interval cannot be edited
                 </FormHelperText>
               </FormControl>
 
               <FormControl>
-                <FormLabel>Опис</FormLabel>
+                <FormLabel>Description</FormLabel>
                 <Textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  placeholder="Опис автоматизації"
+                  placeholder="Automation description"
                   rows={3}
                 />
               </FormControl>
@@ -166,17 +166,17 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
 
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onClose}>
-              Скасувати
+              Cancel
             </Button>
             <Button
               type="submit"
               bg="red.500"
               color="white"
               isLoading={loading}
-              loadingText="Збереження..."
+              loadingText="Saving..."
               _hover={{ bg: 'red.600' }}
             >
-              Зберегти
+              Save
             </Button>
           </ModalFooter>
         </ModalContent>

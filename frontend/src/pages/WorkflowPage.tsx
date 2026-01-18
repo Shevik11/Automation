@@ -147,8 +147,8 @@ export const WorkflowPage: React.FC = () => {
   const handleUnifiedSubmit = useCallback(async (data: { workflow_name: string; keywords: string; location: string }) => {
     if (!defaultWorkflow) {
       toast({
-        title: 'Помилка',
-        description: 'Workflow не завантажено. Будь ласка, оновіть сторінку',
+        title: 'Error',
+        description: 'Workflow not loaded. Please update the page',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -173,16 +173,16 @@ export const WorkflowPage: React.FC = () => {
       await fetchRecentExecutions();
       
       toast({
-        title: 'Запущено!',
-        description: 'Автоматизацію успішно запущено',
+        title: 'Success!',
+        description: 'Automation successfully started',
         status: 'success',
         duration: 3000,
         isClosable: true,
       });
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося запустити автоматизацію',
+        title: 'Error',
+        description: error.message || 'Failed to start automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -202,16 +202,16 @@ export const WorkflowPage: React.FC = () => {
       try {
         await cancelExecution();
         toast({
-          title: 'Скасовано',
-          description: 'Execution скасовано',
+          title: 'Cancelled',
+          description: 'Execution cancelled',
           status: 'info',
           duration: 3000,
           isClosable: true,
         });
       } catch (error: any) {
         toast({
-          title: 'Помилка',
-          description: error.message || 'Не вдалося скасувати execution',
+          title: 'Error',
+          description: error.message || 'Failed to cancel execution',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -245,8 +245,8 @@ export const WorkflowPage: React.FC = () => {
     try {
       await workflowService.deleteWorkflow(deleteWorkflowId);
       toast({
-        title: 'Успішно!',
-        description: 'Автоматизацію видалено',
+        title: 'Success!',
+        description: 'Automation deleted',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -256,8 +256,8 @@ export const WorkflowPage: React.FC = () => {
       navigate('/');
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося видалити автоматизацію',
+        title: 'Error',
+        description: error.message || 'Failed to delete automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -272,16 +272,16 @@ export const WorkflowPage: React.FC = () => {
       const updated = await workflowService.updateWorkflowActiveStatus(defaultWorkflow.id, !defaultWorkflow.is_active);
       setDefaultWorkflow(updated);
       toast({
-        title: 'Успішно!',
-        description: `Автоматизацію ${updated.is_active ? 'активовано' : 'деактивовано'}`,
+        title: 'Success!',
+        description: `Automation ${updated.is_active ? 'activated' : 'deactivated'}`,
         status: 'success',
         duration: 3000,
         isClosable: true,
       });
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося змінити статус',
+        title: 'Error',
+        description: error.message || 'Failed to change status',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -294,8 +294,8 @@ export const WorkflowPage: React.FC = () => {
       const updated = await workflowService.updateWorkflow(id, data);
       setDefaultWorkflow(updated);
       toast({
-        title: 'Успішно!',
-        description: 'Автоматизацію оновлено',
+        title: 'Success!',
+        description: 'Automation updated',
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -303,8 +303,8 @@ export const WorkflowPage: React.FC = () => {
       onEditClose();
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося оновити автоматизацію',
+        title: 'Error',
+        description: error.message || 'Failed to update automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -357,7 +357,7 @@ export const WorkflowPage: React.FC = () => {
                 {defaultWorkflow?.workflow_name || 'Workflow'}
               </Heading>
               <Text color="gray.600" fontSize="md">
-                Керуйте автоматизацією та запускайте виконання
+                Manage automation and run executions
               </Text>
             </Box>
             <Button
@@ -366,7 +366,7 @@ export const WorkflowPage: React.FC = () => {
               colorScheme="gray"
               size="sm"
             >
-              ← Назад до списку
+              ← Back to list
             </Button>
           </HStack>
         </Box>
@@ -382,10 +382,10 @@ export const WorkflowPage: React.FC = () => {
             >
               <CardBody>
                 <Heading size="md" mb={3} color="gray.800">
-                  Дані виконань
+                  Execution data
                 </Heading>
                 <Text color="gray.600" mb={4}>
-                  Переглянь історію запусків та завантаж CSV/Excel з БД.
+                  Review execution history and download CSV/Excel from the database.
                 </Text>
                 <HStack>
                   <Button
@@ -394,7 +394,7 @@ export const WorkflowPage: React.FC = () => {
                     colorScheme="red"
                     variant="solid"
                   >
-                    Переглянути дані
+                    View data
                   </Button>
                 </HStack>
               </CardBody>
@@ -421,7 +421,7 @@ export const WorkflowPage: React.FC = () => {
               >
                 <HStack justify="space-between" align="center">
                   <Heading size="md" color="gray.800" fontWeight="600">
-                    Запустити Workflow
+                    Run Workflow
                   </Heading>
                   <Button
                     size="sm"
@@ -442,7 +442,7 @@ export const WorkflowPage: React.FC = () => {
                     transition="all 0.2s"
                     onClick={handleTogglePresets}
                   >
-                    {showPresets ? 'Сховати' : 'Показати'} Presets
+                    {showPresets ? 'Hide' : 'Show'} Presets
                   </Button>
                 </HStack>
               </CardHeader>
@@ -489,7 +489,7 @@ export const WorkflowPage: React.FC = () => {
                 bgGradient="linear(to-r, white, gray.50)"
               >
                 <Heading size="md" color="gray.800" fontWeight="600">
-                  Мої Workflows
+                  My Workflows
                 </Heading>
               </CardHeader>
               <CardBody>
@@ -509,25 +509,25 @@ export const WorkflowPage: React.FC = () => {
                             fontSize="xs"
                             fontWeight="600"
                           >
-                            {defaultWorkflow.is_active ? 'АКТИВНИЙ' : 'НЕАКТИВНИЙ'}
+                            {defaultWorkflow.is_active ? 'ACTIVE' : 'INACTIVE'}
                           </Badge>
                         </HStack>
                         <HStack spacing={4} fontSize="sm" color="gray.600">
                           <HStack spacing={1}>
                             <TimeIcon boxSize={4} />
-                            <Text>Кожні {defaultWorkflow.run_interval_minutes} хв</Text>
+                            <Text>Every {defaultWorkflow.run_interval_minutes} minutes</Text>
                           </HStack>
                           <Text>
-                            Останнє виконання: {defaultWorkflow.last_run_at 
+                            Last execution: {defaultWorkflow.last_run_at 
                               ? new Date(defaultWorkflow.last_run_at).toLocaleDateString('uk-UA')
-                              : 'Ще не виконувався'}
+                              : 'Not executed yet'}
                           </Text>
                         </HStack>
                       </VStack>
                       <HStack spacing={2}>
-                        <Tooltip label="Переглянути параметри">
+                        <Tooltip label="View parameters">
                           <IconButton
-                            aria-label="Переглянути"
+                            aria-label="View"
                             icon={<ViewIcon />}
                             size="sm"
                             variant="outline"
@@ -535,9 +535,9 @@ export const WorkflowPage: React.FC = () => {
                             onClick={handleView}
                           />
                         </Tooltip>
-                        <Tooltip label="Редагувати">
+                        <Tooltip label="Edit">
                           <IconButton
-                            aria-label="Редагувати"
+                            aria-label="Edit"
                             icon={<EditIcon />}
                             size="sm"
                             variant="outline"
@@ -545,9 +545,9 @@ export const WorkflowPage: React.FC = () => {
                             onClick={handleEdit}
                           />
                         </Tooltip>
-                        <Tooltip label={defaultWorkflow.is_active ? 'Деактивувати' : 'Активувати'}>
+                        <Tooltip label={defaultWorkflow.is_active ? 'Deactivate' : 'Activate'}>
                           <IconButton
-                            aria-label={defaultWorkflow.is_active ? 'Деактивувати' : 'Активувати'}
+                            aria-label={defaultWorkflow.is_active ? 'Deactivate' : 'Activate'}
                             icon={defaultWorkflow.is_active ? <CloseIcon /> : <CheckIcon />}
                             size="sm"
                             variant={defaultWorkflow.is_active ? 'outline' : 'solid'}
@@ -555,9 +555,9 @@ export const WorkflowPage: React.FC = () => {
                             onClick={handleToggleActive}
                           />
                         </Tooltip>
-                        <Tooltip label="Видалити">
+                        <Tooltip label="Delete">
                           <IconButton
-                            aria-label="Видалити"
+                            aria-label="Delete"
                             icon={<DeleteIcon />}
                             size="sm"
                             variant="outline"
@@ -570,7 +570,7 @@ export const WorkflowPage: React.FC = () => {
                   </Box>
                 ) : (
                   <Text color="gray.500" fontSize="md">
-                    Workflow не завантажено
+                    Workflow not loaded
                   </Text>
                 )}
               </CardBody>
@@ -593,7 +593,7 @@ export const WorkflowPage: React.FC = () => {
               >
                 <HStack justify="space-between" align="center">
                   <Heading size="md" color="gray.800" fontWeight="600">
-                    Останні виконання
+                    Recent executions
                   </Heading>
                   <Button
                     size="sm"
@@ -614,16 +614,16 @@ export const WorkflowPage: React.FC = () => {
                     transition="all 0.2s"
                     onClick={handleToggleRecentExecutions}
                   >
-                    {showRecentExecutions ? 'Сховати' : 'Подивитися'}
+                    {showRecentExecutions ? 'Hide' : 'View'}
                   </Button>
                 </HStack>
               </CardHeader>
               {showRecentExecutions && (
                 <CardBody>
                   {executionsLoading ? (
-                    <Text color="gray.500">Завантаження...</Text>
+                    <Text color="gray.500">Loading...</Text>
                   ) : !hasRecentExecutions ? (
-                    <Text color="gray.500">Немає виконань</Text>
+                    <Text color="gray.500">No executions</Text>
                   ) : (
                     <VStack spacing={3} align="stretch">
                       {recentExecutions.map((exec) => (
@@ -702,21 +702,21 @@ export const WorkflowPage: React.FC = () => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Видалити автоматизацію?
+              Delete automation?
             </AlertDialogHeader>
             <AlertDialogBody>
-              Ви впевнені? Цю дію неможливо скасувати. Всі дані, пов'язані з цією автоматизацією, будуть видалені.
+              Are you sure? This action cannot be undone. All data associated with this automation will be deleted.
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onDeleteClose}>
-                Скасувати
+                Cancel
               </Button>
               <Button
                 colorScheme="red"
                 onClick={handleDeleteConfirm}
                 ml={3}
               >
-                Видалити
+                Delete
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

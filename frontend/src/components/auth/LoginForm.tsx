@@ -38,7 +38,7 @@ export const LoginForm: React.FC = () => {
       await login(credentials);
       navigate('/');
     } catch (err: any) {
-      setError(err.message || 'Помилка входу');
+      setError(err.message || 'Login error');
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export const LoginForm: React.FC = () => {
           fontWeight="600"
           letterSpacing="-0.5px"
         >
-          Вітаємо!
+          Welcome!
         </Heading>
 
         {error && (
@@ -103,7 +103,7 @@ export const LoginForm: React.FC = () => {
 
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Пароль
+            Password
           </FormLabel>
           <InputGroup size="lg">
             <Input
@@ -111,7 +111,7 @@ export const LoginForm: React.FC = () => {
               name="password"
               value={credentials.password}
               onChange={handleChange}
-              placeholder="Введіть пароль"
+              placeholder="Enter password"
               borderRadius="lg"
               border="1px solid"
               borderColor="gray.300"
@@ -127,7 +127,7 @@ export const LoginForm: React.FC = () => {
             />
             <InputRightElement width="4.5rem">
               <IconButton
-                aria-label={showPassword ? 'Приховати пароль' : 'Показати пароль'}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={() => setShowPassword(!showPassword)}
                 variant="ghost"
@@ -149,7 +149,7 @@ export const LoginForm: React.FC = () => {
           size="lg"
           width="full"
           isLoading={loading}
-          loadingText="Вхід..."
+          loadingText="Login..."
           borderRadius="lg"
           fontWeight="600"
           _hover={{
@@ -162,7 +162,7 @@ export const LoginForm: React.FC = () => {
           }}
           transition="all 0.2s"
         >
-          Увійти
+          Login
         </Button>
       </VStack>
     </Box>

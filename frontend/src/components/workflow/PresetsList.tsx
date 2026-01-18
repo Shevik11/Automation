@@ -34,7 +34,7 @@ export const PresetsList: React.FC<PresetsListProps> = ({
   if (presets.length === 0) {
     return (
       <Box textAlign="center" py={8}>
-        <Text color="gray.500">Немає збережених presets</Text>
+        <Text color="gray.500">No saved presets</Text>
       </Box>
     );
   }
@@ -47,7 +47,7 @@ export const PresetsList: React.FC<PresetsListProps> = ({
         fontWeight="600"
         mb={2}
       >
-        Збережені Presets
+        Saved Presets
       </Heading>
       {presets.map((preset) => (
         <Card
@@ -112,7 +112,7 @@ export const PresetsList: React.FC<PresetsListProps> = ({
                 </Text>
               </Box>
               <Text fontSize="xs" color="gray.500" fontStyle="italic">
-                Створено: {new Date(preset.created_at).toLocaleDateString('uk-UA', {
+                Created: {new Date(preset.created_at).toLocaleDateString('uk-UA', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'

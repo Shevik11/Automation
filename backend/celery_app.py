@@ -1,15 +1,12 @@
 import os
+
 from celery import Celery
 
 # Get broker URL from environment or use default
 broker_url = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 backend_url = os.getenv("CELERY_RESULT_BACKEND", broker_url)
 
-celery_app = Celery(
-    "automation",
-    broker=broker_url,
-    backend=backend_url
-)
+celery_app = Celery("automation", broker=broker_url, backend=backend_url)
 
 # Celery configuration
 celery_app.conf.update(
@@ -29,9 +26,8 @@ celery_app.conf.beat_schedule = {
     },
 }
 
-# Import tasks module to register them with celery  
+# Import tasks module to register them with celery
 try:
     from tasks import check_and_trigger_n8n_workflows
 except ImportError:
     pass  # Tasks will be registered when imported by worker
-

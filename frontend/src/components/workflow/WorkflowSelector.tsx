@@ -21,11 +21,11 @@ export const WorkflowSelector: React.FC<WorkflowSelectorProps> = ({
 
   return (
     <FormControl>
-      <FormLabel>Виберіть Workflow</FormLabel>
+      <FormLabel>Select Workflow</FormLabel>
       <Select
         value={selectedWorkflowId || ''}
         onChange={(e) => onSelect(Number(e.target.value))}
-        placeholder="-- Виберіть workflow --"
+        placeholder="-- Select workflow --"
         size="md"
         borderRadius="md"
         focusBorderColor="blue.500"

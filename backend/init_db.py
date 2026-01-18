@@ -1,20 +1,16 @@
 """
-Script для ініціалізації бази даних.
-Використання: python init_db.py
+Script for initializing the database.
+Usage: python init_db.py
 """
-from app.database import engine, Base
-from models.user import User
-from models.workflow import WorkflowConfig, SavedPreset
-from models.execution import WorkflowExecution
 
+from app.database import Base, engine
 
 def init_db():
-    """Створює всі таблиці в базі даних"""
-    print("Створення таблиць в базі даних...")
+    """Creating all tables in database"""
+    print("Creating tables in database...")
     Base.metadata.create_all(bind=engine)
-    print("Таблиці успішно створені!")
+    print("Tables created successfully!")
 
 
 if __name__ == "__main__":
     init_db()
-

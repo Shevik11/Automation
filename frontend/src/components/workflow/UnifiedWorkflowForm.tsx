@@ -116,7 +116,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
       <VStack spacing={4} align="stretch">
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Назва Workflow
+            Workflow name
           </FormLabel>
           <Input
             type="text"
@@ -139,20 +139,20 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            Назва вашого workflow для ідентифікації
+            Name of your workflow for identification
           </FormHelperText>
         </FormControl>
 
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Ключові слова
+            Keywords
           </FormLabel>
           <InputGroup>
             <Input
               value={keywordInput}
               onChange={handleKeywordInputChange}
               onKeyPress={handleKeywordKeyPress}
-              placeholder="Додати keyword і натиснути Enter"
+              placeholder="Add keyword and press Enter"
               size="md"
               borderRadius="lg"
               border="1px solid"
@@ -179,7 +179,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
                   bg: 'red.600',
                 }}
               >
-                Додати
+                Add
               </Button>
             </InputRightElement>
           </InputGroup>
@@ -199,7 +199,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
             name="keywords"
             value={formData.keywords}
             onChange={handleChange}
-            placeholder="Keywords (через кому або JSON)"
+            placeholder="Keywords (comma or JSON)"
             rows={3}
             mt={2}
             borderRadius="lg"
@@ -216,21 +216,21 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            Ключові слова для пошуку вакансій (наприклад: "React Developer", "Legal", "Java"). 
-            Можна вводити кілька значень через кому або як JSON масив.
+            Keywords for job search (e.g. "React Developer", "Legal", "Java"). 
+            Can enter multiple values through comma or as a JSON array.
           </FormHelperText>
         </FormControl>
 
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Локація
+            Location
           </FormLabel>
           <Input
             type="text"
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="наприклад: Ukraine, Kyiv"
+            placeholder="e.g. Ukraine, Kyiv"
             size="md"
             borderRadius="lg"
             border="1px solid"
@@ -246,7 +246,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
-            Географічна локація для пошуку вакансій (наприклад: "Ukraine", "Kyiv", "Lviv", "Remote")
+            Geographic location for job search (e.g. "Ukraine", "Kyiv", "Lviv", "Remote")
           </FormHelperText>
         </FormControl>
 
@@ -257,7 +257,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
           size="md"
           width="full"
           isLoading={loading}
-          loadingText="Запуск..."
+          loadingText="Running..."
           borderRadius="lg"
           fontWeight="600"
           _hover={{
@@ -270,7 +270,7 @@ export const UnifiedWorkflowForm: React.FC<UnifiedWorkflowFormProps> = ({
           }}
           transition="all 0.2s"
         >
-          Запустити автоматизацію
+          Run automation
         </Button>
       </VStack>
     </form>

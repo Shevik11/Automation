@@ -1,190 +1,53 @@
-# N8N Automation Platform
+# Automation Project
 
-MVP платформа для запуску n8n автоматизацій через веб-інтерфейс.
+## 🔍 Діагностика проблем з відображенням даних
 
-## Технології
+### При запуску бекенду:
+Перевіряйте логи при старті - там буде інформація про:
+- ✅ Підключення до бази даних
+- 📊 Кількість записів у таблицях
+- 👥 Список користувачів
+- 📋 Версія PostgreSQL
 
-- **Backend**: FastAPI + SQLAlchemy + PostgreSQL
-- **Frontend**: React + TypeScript + Vite
-- **Автентифікація**: JWT
-- **Інтеграція**: N8N API
-- **Docker**: Повна докеризація проекту
+### Якщо дані є в базі, але не відображаються:
 
-## Швидкий старт з Docker
+1. **Перевірте логи бекенду** при запиті до `/api/linkedin-results`
+2. **Натисніть кнопку "Debug Mode"** на сторінці - це покаже ваші дані або перші 5 записів для діагностики
+3. **Якщо в Debug режимі дані є** - проблема в правах доступу або зв'язках між таблицями
+4. **Якщо даних немає навіть в Debug** - проблема в даних або API
 
-### Production
-
-1. Скопіюйте `.env.example` в `.env` та налаштуйте змінні:
-```bash
-cp .env.example .env
-# Відредагуйте .env файл
+### Логи для перевірки:
+```
+🔍 API linkedin-results: користувач user@example.com (ID: 1)
+📊 Загальна кількість linkedin_results: 70
+📊 Кількість виконань користувача: 5
+📋 Повертаємо 25 записів для користувача user@example.com
 ```
 
-2. Запустіть всі сервіси:
-```bash
-docker-compose up -d
-```
+## Налаштування для зовнішньої бази даних
 
-3. Перевірте статус:
-```bash
-docker-compose ps
-```
-
-4. Доступ до сервісів:
-   - Frontend: http://localhost
-   - Backend API: http://localhost:8000
-   - API Docs: http://localhost:8000/docs
-
-### Development
-
-Для розробки з hot-reload:
-```bash
-docker-compose -f docker-compose.dev.yml up
-```
-
-## Ручне налаштування (без Docker)
-
-### Backend
-
-1. Встановіть залежності:
-```bash
-cd backend
-pip install -r requirements.txt
-```
-
-2. Створіть файл `.env`:
-```env
-DATABASE_URL=postgresql://user:password@localhost/automation_db
-SECRET_KEY=your-secret-key-min-32-chars
-N8N_API_URL=http://localhost:5678
-N8N_API_KEY=your-n8n-api-key
-```
-
-3. Створіть базу даних та застосуйте міграції:
-```bash
-# Створіть базу даних PostgreSQL
-createdb automation_db
-
-# Застосуйте міграції
-alembic revision --autogenerate -m "Initial migration"
-alembic upgrade head
-```
-
-4. Запустіть сервер:
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### Frontend
-
-1. Встановіть залежності:
-```bash
-cd frontend
-npm install
-```
-
-2. Запустіть dev сервер:
-```bash
-npm run dev
-```
-
-## Структура проекту
-
-```
-.
-├── backend/          # FastAPI backend
-│   ├── api/         # API endpoints
-│   ├── models/      # SQLAlchemy models
-│   ├── schemas/     # Pydantic schemas
-│   ├── services/    # Business logic
-│   └── utils/       # Utilities
-├── frontend/        # React frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── hooks/
-│   └── nginx.conf   # Nginx config for production
-├── docker-compose.yml        # Production Docker Compose
-├── docker-compose.dev.yml    # Development Docker Compose
-└── .env.example              # Environment variables example
-```
-
-## Використання
-
-1. **Реєстрація/Логін**: Створіть акаунт або увійдіть
-2. **Створення Workflow Config**: Додайте конфігурацію n8n workflow (ID або webhook path)
-3. **Створення Preset** (опціонально): Збережіть часто використовувані параметри
-4. **Запуск Execution**: Виберіть workflow, введіть keywords, frequency, location та запустіть
-
-## API Endpoints
-
-### Auth
-- `POST /api/auth/register` - Реєстрація
-- `POST /api/auth/login` - Логін
-- `GET /api/auth/me` - Поточний користувач
-
-### Workflows
-- `GET /api/workflows` - Список workflow configs
-- `POST /api/workflows` - Створити workflow config
-- `GET /api/workflows/presets` - Список presets
-- `POST /api/workflows/presets` - Створити preset
-
-### Executions
-- `GET /api/executions` - Список executions
-- `POST /api/executions` - Створити execution (запускає n8n)
-- `GET /api/executions/{id}` - Деталі execution
-- `POST /api/executions/{id}/cancel` - Скасувати execution
-
-## База даних
-
-### Таблиці:
-- `users` - Користувачі
-- `workflow_configs` - Конфігурації n8n workflows
-- `workflow_executions` - Виконання workflows
-- `saved_presets` - Збережені пресети для швидкого запуску
-
-## Docker команди
+### Створіть файл `.env` в кореневій директорії з наступним вмістом:
 
 ```bash
-# Запустити всі сервіси
-docker-compose up -d
+# Database Configuration (для зовнішньої БД)
+# Замініть на дані вашої задеплоєної бази даних
+DATABASE_URL=postgresql://username:password@your-db-host:5432/your-database-name
 
-# Зупинити всі сервіси
-docker-compose down
+# Security
+SECRET_KEY=your-super-secret-key-change-this-in-production
 
-# Переглянути логи
-docker-compose logs -f
+# N8N Configuration
+N8N_API_URL=http://host.docker.internal:5678/api/v1
+N8N_API_KEY=your-n8n-api-key-here
+N8N_WEBHOOK_URL=http://backend:8000
 
-# Перебудувати образи
-docker-compose build --no-cache
-
-# Видалити volumes (очистити БД)
-docker-compose down -v
-
-# Запустити міграції вручну
-docker-compose exec backend alembic upgrade head
+# Flower Authentication (optional)
+FLOWER_BASIC_AUTH=admin:admin
 ```
 
-## N8N Інтеграція
+### Запуск:
 
-Backend відправляє JSON до n8n з наступними полями:
-```json
-{
-  "keywords": "keyword1, keyword2",
-  "frequency": "daily",
-  "location": "Ukraine, Kyiv",
-  "execution_id": "123"
-}
+```bash
+# Перевірити, що .env файл створений
+docker-compose up --build
 ```
-
-N8N workflow повинен приймати ці дані через webhook або API.
-
-**Важливо**: Якщо n8n запущений на хост-машині, використовуйте `host.docker.internal` в `N8N_API_URL` для доступу з Docker контейнера.
-
-## Примітки
-
-- Для production змініть `SECRET_KEY` на безпечний випадковий ключ
-- Налаштуйте CORS для production
-- Додайте rate limiting та інші заходи безпеки
-- Для production використовуйте окремі .env файли та не комітьте їх в git

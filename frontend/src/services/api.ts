@@ -4,7 +4,7 @@ import { storage } from '../utils/storage';
 
 // Create axios instance
 const api: AxiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:8000/api',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,6 +1,7 @@
-from typing import Optional, List, Dict, Any
-from pydantic import BaseModel
 from datetime import datetime
+from typing import Any, Dict, List, Optional
+
+from pydantic import BaseModel
 
 
 class WorkflowConfigBase(BaseModel):
@@ -37,7 +38,7 @@ class WorkflowConfigResponse(WorkflowConfigBase):
 
 class SavedPresetBase(BaseModel):
     preset_name: str
-    keywords: str  # JSON або текст
+    keywords: str
     location: str
     workflow_config_id: int
 
@@ -74,4 +75,3 @@ class WorkflowActivate(BaseModel):
 
 class StaticFilesList(BaseModel):
     files: List[str]
-

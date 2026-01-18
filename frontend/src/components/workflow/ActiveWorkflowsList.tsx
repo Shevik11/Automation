@@ -16,32 +16,7 @@ import {
 import { CheckCircleIcon, TimeIcon, CloseIcon } from '@chakra-ui/icons';
 import type { WorkflowConfig } from '../../types';
 import { workflowService } from '../../services/workflow.service';
-// Simple date formatting without date-fns
-const formatDateDistance = (dateStr?: string): string => {
-  if (!dateStr) {
-    return 'Ще не виконувався';
-  }
-  try {
-    const date = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffMins < 1) {
-      return 'щойно';
-    } else if (diffMins < 60) {
-      return `${diffMins} хв тому`;
-    } else if (diffHours < 24) {
-      return `${diffHours} год тому`;
-    } else {
-      return `${diffDays} дн тому`;
-    }
-  } catch {
-    return 'Невідомо';
-  }
-};
+import { formatDateDistance, formatInterval } from '../../utils/date';
 
 interface ActiveWorkflowsListProps {
   workflows: WorkflowConfig[];
@@ -74,8 +49,8 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
       setLocalWorkflows(updatedWorkflows);
       
       toast({
-        title: newActiveStatus ? 'Активовано' : 'Деактивовано',
-        description: `Workflow "${workflow.workflow_name}" ${newActiveStatus ? 'активовано' : 'деактивовано'}`,
+        title: newActiveStatus ? 'Activated' : 'Deactivated',
+        description: `Workflow "${workflow.workflow_name}" ${newActiveStatus ? 'Activated' : 'Deactivated'}`,
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -86,24 +61,13 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
       }
     } catch (error: any) {
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося оновити статус workflow',
+        title: 'Error',
+        description: error.message || 'Failed to update workflow status',
         status: 'error',
         duration: 5000,
         isClosable: true,
       });
     }
-  };
-  const formatInterval = (minutes: number): string => {
-    if (minutes < 60) {
-      return `${minutes} хв`;
-    }
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    if (mins === 0) {
-      return `${hours} год`;
-    }
-    return `${hours} год ${mins} хв`;
   };
 
 
@@ -119,7 +83,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
     return (
       <Box textAlign="center" py={8}>
         <Text color="gray.500" fontSize="md">
-          Немає workflows
+          No workflows
         </Text>
       </Box>
     );
@@ -152,7 +116,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
                       <HStack spacing={1}>
                         <CheckCircleIcon boxSize={3} />
                         <Text fontSize="xs" fontWeight="600">
-                          Активний
+                          Active
                         </Text>
                       </HStack>
                     </Badge>
@@ -162,7 +126,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
                       <HStack spacing={1}>
                         <CloseIcon boxSize={3} />
                         <Text fontSize="xs" fontWeight="600">
-                          Неактивний
+                          Inactive
                         </Text>
                       </HStack>
                     </Badge>
@@ -171,17 +135,17 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
 
                 {workflow.is_active ? (
                   <HStack spacing={4} flexWrap="wrap">
-                    <Tooltip label={`Workflow буде запускатися кожні ${formatInterval(workflow.run_interval_minutes)}`}>
+                    <Tooltip label={`Workflow will be run every ${formatInterval(workflow.run_interval_minutes)}`}>
                       <HStack spacing={2} color="gray.600">
                         <TimeIcon boxSize={4} />
                         <Text fontSize="sm" fontWeight="500">
-                          Кожні {formatInterval(workflow.run_interval_minutes)}
+                          Every {formatInterval(workflow.run_interval_minutes)}
                         </Text>
                       </HStack>
                     </Tooltip>
 
                     <HStack spacing={2} color="gray.600">
-                      <Text fontSize="sm">Останнє виконання:</Text>
+                      <Text fontSize="sm">Last execution:</Text>
                       <Text fontSize="sm" fontWeight="500" color="gray.800">
                         {formatDateDistance(workflow.last_run_at)}
                       </Text>
@@ -189,7 +153,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
                   </HStack>
                 ) : (
                   <Text fontSize="sm" color="gray.500" fontStyle="italic">
-                    Workflow деактивовано. Натисніть "Активувати" щоб увімкнути автоматичні запуски.
+                    Workflow deactivated. Click "Activate" to enable automatic runs.
                   </Text>
                 )}
 
@@ -211,7 +175,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
                 }}
                 transition="all 0.2s"
               >
-                {workflow.is_active ? 'Деактивувати' : 'Активувати'}
+                {workflow.is_active ? 'Deactivate' : 'Activate'}
               </Button>
             </HStack>
           </CardBody>

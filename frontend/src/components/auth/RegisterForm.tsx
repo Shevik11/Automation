@@ -38,7 +38,7 @@ export const RegisterForm: React.FC = () => {
       await register(formData);
       navigate('/');
     } catch (err: any) {
-      setError(err.message || 'Помилка реєстрації');
+      setError(err.message || 'Registration error');
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export const RegisterForm: React.FC = () => {
           fontWeight="600"
           letterSpacing="-0.5px"
         >
-          Створіть акаунт
+          Create account
         </Heading>
 
         {error && (
@@ -103,7 +103,7 @@ export const RegisterForm: React.FC = () => {
 
         <FormControl isRequired>
           <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
-            Пароль
+            Password
           </FormLabel>
           <InputGroup size="lg">
             <Input
@@ -111,7 +111,7 @@ export const RegisterForm: React.FC = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Мінімум 6 символів"
+              placeholder="Minimum 6 characters"
               borderRadius="lg"
               border="1px solid"
               borderColor="gray.300"
@@ -127,7 +127,7 @@ export const RegisterForm: React.FC = () => {
             />
             <InputRightElement width="4.5rem">
               <IconButton
-                aria-label={showPassword ? 'Приховати пароль' : 'Показати пароль'}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={() => setShowPassword(!showPassword)}
                 variant="ghost"
@@ -149,7 +149,7 @@ export const RegisterForm: React.FC = () => {
           size="lg"
           width="full"
           isLoading={loading}
-          loadingText="Реєстрація..."
+          loadingText="Registration..."
           borderRadius="lg"
           fontWeight="600"
           _hover={{
@@ -162,7 +162,7 @@ export const RegisterForm: React.FC = () => {
           }}
           transition="all 0.2s"
         >
-          Зареєструватися
+          Register
         </Button>
       </VStack>
     </Box>
