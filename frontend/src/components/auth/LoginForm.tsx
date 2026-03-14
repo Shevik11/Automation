@@ -1,0 +1,171 @@
+import React, { useState } from 'react';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Alert,
+  AlertIcon,
+  VStack,
+  Heading,
+  InputGroup,
+  InputRightElement,
+  IconButton,
+} from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import type { LoginCredentials } from '../../types';
+
+export const LoginForm: React.FC = () => {
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      await login(credentials);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || 'Login error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials(prev => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <Box as="form" onSubmit={handleSubmit}>
+      <VStack spacing={6} align="stretch">
+        <Heading 
+          size="lg" 
+          textAlign="center" 
+          bgGradient="linear(to-r, brand.600, accent.600)"
+          bgClip="text"
+          fontWeight="700"
+          letterSpacing="-0.5px"
+        >
+          Welcome!
+        </Heading>
+
+        {error && (
+          <Alert 
+            status="error" 
+            borderRadius="xl"
+            bg="red.50"
+            border="1px solid"
+            borderColor="red.200"
+          >
+            <AlertIcon color="red.500" />
+            <Box color="red.700" fontSize="sm">{error}</Box>
+          </Alert>
+        )}
+
+        <FormControl isRequired>
+          <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
+            Email
+          </FormLabel>
+          <Input
+            type="email"
+            name="email"
+            value={credentials.email}
+            onChange={handleChange}
+            placeholder="your@email.com"
+            size="lg"
+            borderRadius="lg"
+            border="1px solid"
+            borderColor="gray.300"
+            bg="white"
+            focusBorderColor="brand.500"
+            _hover={{
+              borderColor: 'gray.400',
+            }}
+            _focus={{
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
+            }}
+          />
+        </FormControl>
+
+        <FormControl isRequired>
+          <FormLabel color="gray.700" fontWeight="500" fontSize="sm" mb={2}>
+            Password
+          </FormLabel>
+          <InputGroup size="lg">
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              borderRadius="lg"
+              border="1px solid"
+              borderColor="gray.300"
+              bg="white"
+              focusBorderColor="brand.500"
+              _hover={{
+                borderColor: 'gray.400',
+              }}
+              _focus={{
+                borderColor: 'brand.500',
+                boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
+              }}
+            />
+            <InputRightElement width="4.5rem">
+              <IconButton
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                onClick={() => setShowPassword(!showPassword)}
+                variant="ghost"
+                size="sm"
+                color="gray.500"
+                _hover={{
+                  bg: 'gray.100',
+                  color: 'brand.500',
+                }}
+              />
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+
+        <Button
+          type="submit"
+          bgGradient="linear(to-r, brand.500, brand.600)"
+          color="white"
+          size="lg"
+          width="full"
+          isLoading={loading}
+          loadingText="Login..."
+          borderRadius="xl"
+          fontWeight="600"
+          _hover={{
+            bgGradient: 'linear(to-r, brand.600, brand.700)',
+            transform: 'translateY(-1px)',
+            shadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
+          }}
+          _active={{
+            transform: 'translateY(0)',
+          }}
+          transition="all 0.2s"
+        >
+          Login
+        </Button>
+      </VStack>
+    </Box>
+  );
+};
