@@ -694,15 +694,18 @@ class N8NService:
     @staticmethod
     def inject_user_id_into_workflow(workflow_json: Dict[str, Any], user_id: int) -> Dict[str, Any]:
         """
-        Replace the `={{ $json.user_id }}` N8N expression in every Postgres upsert node
-        with the actual integer user_id before uploading the workflow instance to N8N.
+        Set the actual integer ``user_id`` on every Postgres upsert node that
+        targets the ``linkedin_results`` table.
 
-        This ensures the Schedule Trigger (which has no webhook context) still writes
-        the correct user_id into linkedin_results without needing any post-processing.
+        If the node already contains a ``user_id`` placeholder expression it is
+        replaced; if ``user_id`` is missing from the column values it is added.
+
+        This ensures the Schedule Trigger (which has no webhook context) still
+        writes the correct user_id into linkedin_results without needing any
+        post-processing.
 
         Returns a deep copy — the original dict is never mutated.
         """
-        _USER_ID_EXPR = "={{ $json.user_id }}"
         workflow = copy.deepcopy(workflow_json)
         for node in workflow.get("nodes", []):
             if node.get("type") != "n8n-nodes-base.postgres":
@@ -710,9 +713,13 @@ class N8NService:
             params = node.get("parameters", {})
             if params.get("operation") != "upsert":
                 continue
-            value = params.get("columns", {}).get("value", {})
-            if value.get("user_id") == _USER_ID_EXPR:
-                value["user_id"] = user_id
+            table = params.get("table", {})
+            table_name = table.get("value", "") if isinstance(table, dict) else table
+            if table_name != "linkedin_results":
+                continue
+            columns = params.get("columns", {})
+            value = columns.get("value", {})
+            value["user_id"] = user_id
         return workflow
 
     def validate_workflow_json(

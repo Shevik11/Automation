@@ -1,5 +1,5 @@
 {
-  "name": "247 Linkedin Germany",
+  "name": "Test_workflow_Postgre",
   "nodes": [
     {
       "parameters": {
@@ -16,10 +16,10 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.3,
       "position": [
-        -3408,
-        736
+        -3344,
+        816
       ],
-      "id": "fd9c8d50-f6f1-47d7-82e9-b1c28be42508",
+      "id": "60ee3154-ddeb-458d-8ba3-ef7093dc8fb5",
       "name": "Compare Datasets"
     },
     {
@@ -30,11 +30,11 @@
           "parameters": [
             {
               "name": "keywords",
-              "value": "={{ $json.keywords }}"
+              "value": "Python developer"
             },
             {
               "name": "location",
-              "value": "={{ $json.location }}"
+              "value": "Germany"
             },
             {
               "name": "geoId",
@@ -127,7 +127,7 @@
             },
             {
               "name": "cookie",
-              "value": "{{LINKEDIN_COOKIE}}"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&202509231504413dd8f5a6-9f9a-456a-808b-16f35eca9e20AQFm1g9vMYYo1tj4-UNQE-xRiik2gBfb\";li_rm=AQGT9OoWFkzYagAAAZl3GwveClO51FD2JolVl7NF8HEKsw4WR105BI51Lx1aneYlEmSexVdiBWIxPbPbQJM0iM0fg9-Roq_VzSYeFAYc8jCyNn3Nj81MuJkD;timezone=Europe/Kiev;li_theme=light;li_theme_set=app;dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;JSESSIONID=ajax:2140574329282064586;PLAY_LANG=en;lang=v=2&lang=en-US;PLAY_SESSION=eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InNlc3Npb25faWQiOiI1M2RjMDk4Mi0wYjcwLTQ2YjAtODIwZS1jMTM1Mzc5MzRhMTV8MTc1OTQxMzA1OCIsImFsbG93bGlzdCI6Int9IiwicmVjZW50bHktc2VhcmNoZWQiOiIiLCJyZWZlcnJhbC11cmwiOiJodHRwczovL3d3dy5saW5rZWRpbi5jb20vaGVscC9sbXMvYW5zd2VyL2E0MTY5NjA_aW50ZW5kZWRMb2NhbGU9dWstVUEmbGFuZz1lbi11cyIsInJlY2VudGx5LXZpZXdlZCI6IiIsIkNQVC1pZCI6IsKOw4zCusOSXHUwMDBCw5XDisKaXHUwMDE5wpnDrE_DtMKWU1AiLCJleHBlcmllbmNlIjoiIiwidHJrIjoiIn0sIm5iZiI6MTc1OTQxMzA1OCwiaWF0IjoxNzU5NDEzMDU4fQ.7wHnSiI7qfN4v4G1YRig-QAZnDx-OWBP7V0XcPsm7MM;fid=AQE3o7Rph1C2rAAAAZmpR1-jzb6kvmJAqvE6kiTuz2meOJgvJ4arzSWAb6yzJoHM8V4ONeW55CQ1Gw;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";g_state={\"i_p\":1760346453058,\"i_l\":3};UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+              "value": "bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&202509231504413dd8f5a6-9f9a-456a-808b-16f35eca9e20AQFm1g9vMYYo1tj4-UNQE-xRiik2gBfb\";li_rm=AQGT9OoWFkzYagAAAZl3GwveClO51FD2JolVl7NF8HEKsw4WR105BI51Lx1aneYlEmSexVdiBWIxPbPbQJM0iM0fg9-Roq_VzSYeFAYc8jCyNn3Nj81MuJkD;timezone=Europe/Kiev;li_theme=light;li_theme_set=app;dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;JSESSIONID=ajax:2140574329282064586;PLAY_LANG=en;lang=v=2&lang=en-US;PLAY_SESSION=eyJhbGciOiJIUzI1NiJ9.eyJkYXRhIjp7InNlc3Npb25faWQiOiI1M2RjMDk4Mi0wYjcwLTQ2YjAtODIwZS1jMTM1Mzc5MzRhMTV8MTc1OTQxMzA1OCIsImFsbG93bGlzdCI6Int9IiwicmVjZW50bHktc2VhcmNoZWQiOiIiLCJyZWZlcnJhbC11cmwiOiJodHRwczovL3d3dy5saW5rZWRpbi5jb20vaGVscC9sbXMvYW5zd2VyL2E0MTY5NjA_aW50ZW5kZWRMb2NhbGU9dWstVUEmbGFuZz1lbi11cyIsInJlY2VudGx5LXZpZXdlZCI6IiIsIkNQVC1pZCI6IsKOw4zCusOSXHUwMDBCw5XDisKaXHUwMDE5wpnDrE_DtMKWU1AiLCJleHBlcmllbmNlIjoiIiwidHJrIjoiIn0sIm5iZiI6MTc1OTQxMzA1OCwiaWF0IjoxNzU5NDEzMDU4fQ.7wHnSiI7qfN4v4G1YRig-QAZnDx-OWBP7V0XcPsm7MM;fid=AQE3o7Rph1C2rAAAAZmpR1-jzb6kvmJAqvE6kiTuz2meOJgvJ4arzSWAb6yzJoHM8V4ONeW55CQ1Gw;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";g_state={\"i_p\":1760346453058,\"i_l\":3};UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
             }
           ]
         },
@@ -136,10 +136,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -4768,
-        576
+        -4704,
+        656
       ],
-      "id": "5cecc59c-a0b5-4e64-9b57-39b9e8d293ce",
+      "id": "efe23ada-4bae-4134-8287-508308115b6f",
       "name": "HTTP Request - get vacancies"
     },
     {
@@ -165,10 +165,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -5152,
-        656
+        -5088,
+        736
       ],
-      "id": "1929f084-76dd-4b1a-9038-e6bf08661e25",
+      "id": "84d0476c-8679-411e-a449-72c2f9d05fb9",
       "name": "Fields - Service provider and website",
       "executeOnce": false
     },
@@ -179,10 +179,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -4336,
-        576
+        -4272,
+        656
       ],
-      "id": "e61cf8d7-5850-49d6-b607-1d9d2f055a79",
+      "id": "bbdf47ef-e3f3-421e-8f07-5c8bfd5f5207",
       "name": "Code - find vacancies url",
       "executeOnce": false
     },
@@ -193,7 +193,7 @@
             {
               "id": "bcabcafa-9e17-4ef3-a50c-68c10e0fcfc4",
               "name": "Vacancy",
-              "value": "={{ $json.Vacancy }}",
+              "value": "={{ $json.vacancy_link }}",
               "type": "string"
             }
           ]
@@ -203,10 +203,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -4144,
-        880
+        -4080,
+        960
       ],
-      "id": "5380b600-2129-4b94-a879-920e888b5c8d",
+      "id": "165ad1fe-c2f3-403c-8f64-4d0bfafccdf5",
       "name": "Fields - mapping vacancies from sheet"
     },
     {
@@ -226,10 +226,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3904,
-        576
+        -3840,
+        656
       ],
-      "id": "af7c786e-9b93-4110-8c8f-3bfc080e2f60",
+      "id": "bc6c5dd9-67e2-4d5c-8892-a81e9e9686c4",
       "name": "Fields - mapping vacancies from code"
     },
     {
@@ -292,7 +292,7 @@
             },
             {
               "name": "cookie",
-              "value": "JSESSIONID=ajax:7570330851119687251;{{LINKEDIN_COOKIE}}"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+              "value": "JSESSIONID=ajax:7570330851119687251;bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
             }
           ]
         },
@@ -301,10 +301,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -3088,
-        400
+        -3024,
+        480
       ],
-      "id": "36a963ca-f665-4252-b2c4-1ae86fb8f762",
+      "id": "fc529481-c202-4f9e-b2ea-083438bf29c2",
       "name": "HTTP - scrap each vacancy",
       "executeOnce": true,
       "alwaysOutputData": false,
@@ -337,10 +337,10 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        -2880,
-        160
+        -2816,
+        240
       ],
-      "id": "34800b74-e722-4cde-9a71-397f97259b0e",
+      "id": "111c1ebc-ffb6-4d9d-a855-006a54ab5672",
       "name": "HTML - extract vacancy details1",
       "alwaysOutputData": false,
       "onError": "continueRegularOutput"
@@ -352,10 +352,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -864,
-        176
+        -800,
+        256
       ],
-      "id": "454d2b6e-f237-49ad-b78f-736b855d7a9f",
+      "id": "15258b10-08f8-4b33-b80b-4d414344822f",
       "name": "Code"
     },
     {
@@ -374,10 +374,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1328,
-        176
+        -1264,
+        256
       ],
-      "id": "203a256f-a8ff-4b34-9504-c333535bdaf4",
+      "id": "2122ec9e-8113-45aa-9c2a-a5780a4e864d",
       "name": "HTTP Request",
       "retryOnFail": false,
       "waitBetweenTries": 5000,
@@ -395,10 +395,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1536,
-        176
+        -1472,
+        256
       ],
-      "id": "0cca8cf8-a8b4-48cd-b4bf-eb264257e7fb",
+      "id": "028dd2f5-ea24-4604-894f-acba6c7895cf",
       "name": "Code2"
     },
     {
@@ -442,10 +442,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2672,
-        160
+        -2608,
+        240
       ],
-      "id": "26faa2c0-1745-4f30-ad2f-b383019ba041",
+      "id": "228d0645-fc67-4f69-b174-02503c1e7153",
       "name": "Fields - mapping vacancy detail",
       "alwaysOutputData": false
     },
@@ -458,19 +458,20 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -64,
-        -80
+        0,
+        0
       ],
-      "id": "7868ff95-1a69-4ce4-9ea1-3e6edd9e2ef1",
+      "id": "d4eb4ffa-eaf4-43cb-8ad9-4a5348dea137",
       "name": "Send a text message",
-      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "webhookId": "7bbee617-c947-4408-a392-a76054dcc710",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
           "id": "ROwOUMXsZfZ2YTyn",
           "name": "Telegram account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -479,10 +480,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2576,
-        720
+        -2512,
+        800
       ],
-      "id": "80d5917d-cc96-411e-8ddf-d6938dc66a7f",
+      "id": "60e95d1a-7c3d-4e4b-8a20-07ea0f1103dc",
       "name": "Code - find vacancies url1",
       "executeOnce": false
     },
@@ -512,10 +513,10 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        -2192,
-        736
+        -2128,
+        816
       ],
-      "id": "84c79880-63a0-4db3-a8db-e2bcb06fc85c",
+      "id": "5f553cf8-5874-48ba-bd30-98235e5e812b",
       "name": "HTML - extract vacancy details",
       "alwaysOutputData": false,
       "onError": "continueRegularOutput"
@@ -561,10 +562,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2048,
-        736
+        -1984,
+        816
       ],
-      "id": "ceffd2e6-92de-46fb-b1f9-8eabc86b39dc",
+      "id": "1da80e49-a08f-45b9-a75f-fd9c3c7b6aef",
       "name": "Fields - mapping vacancy detail1",
       "alwaysOutputData": false
     },
@@ -577,19 +578,20 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        608,
-        656
+        672,
+        736
       ],
-      "id": "769ae981-c124-4c00-8762-90637d1e6a7b",
+      "id": "b2ea3114-a441-437b-b5f3-e4a65d1b6859",
       "name": "Send a text message1",
-      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "webhookId": "2eeb6761-b810-4268-8ad9-991fc14bd9c9",
       "executeOnce": true,
       "credentials": {
         "telegramApi": {
           "id": "ROwOUMXsZfZ2YTyn",
           "name": "Telegram account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -651,7 +653,7 @@
             },
             {
               "name": "cookie",
-              "value": "JSESSIONID=ajax:7570330851119687251;{{LINKEDIN_COOKIE}}"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
+              "value": "JSESSIONID=ajax:7570330851119687251;bcookie=\"v=2&9eb429c8-f6ac-4395-825f-9649acf49c26\";bscookie=\"v=1&20250923150438c2726f5c-ccee-4dae-8ba3-746dc1482db6AQHuNRpZRuBUiOnO6Ybt0Iut-6U-CHt9\";dfpfpt=f69805235ba64ff6a455c9cc69be10d6;fptctx2=taBcrIH61PuCVH7eNCyH0B9zcK90d%252bIeoo1r5v7Zc251LHPu0N0VCZS%252fptdB7JJ3EkU010habYGS3vg098YZl9eWMhvN2hQL%252fyiJyIPgqvhSkMwpUAEFwxaGdRv689VoZoh4qpU0BAQP03V%252fgCF73OGfG7iXWs4Oh8Qb6RCWpD1MS4bmZgLLmF2Ppiqj3wH9S%252fPEZdVSqRNY08LxUgJhRf4h%252f54fPbNAVMUG7GFr%252fjSdQLpGGE79VAgLRv4td1cxSd1nVKvamHZppF1Bp7KftYgxWPKPPKzVDHfUY0E6caxC%252byO1p45jL4hoTCfkWrIsbeKAPx3nSCpgz%252bS9CEl%252fqz2Pvtmj%252bZ8XsCYM7YVR%252bPM%253d;visit=v=1&M;lang=v=2&lang=en-US;li_sugr=bd4263a7-ff64-4043-9a8e-4380df182dc8;lidc=\"b=VGST09:s=V:r=V:a=V:p=V:g=3310:u=1:x=1:i=1759741630:t=1759828030:v=2:sig=AQGn51dKjVt12TVj1l1O-IqInEDdRxqD\";UserMatchHistory=AQJJKlyRXt46HAAAAZm4ywGyGtWYC-58hBqJCOOxvbfy25aatSx6uGUGjdFUgeQGHxTnReQPI-oC-U1c3TtGsq6IGCnJr5EMNZi2nTEkIfby1vDJ3g4mRuBbI96xqS-erNayMHxLEYAUf3oHPRh3CiGSQKEf405ZXEG1u6SpiWicyEX024K8-YgYTAwH-kDrLbKwPTbf5567W-NpLbpCEqW9gx49qDoi0Y-PvySUHdHVW6CXaY5A6Kf7iX6L2Xc2i4UcvCsPmtsIFvCeGt80-AtfHwA-MyYO3jHDsGetBLhhOJFtOt7v2isC4k1EuZrnhscTqZVOizYXtEVk4JcqGPqGcyvp0IqJpsSekdAOc-nQzVfxXg;AnalyticsSyncHistory=AQJ0pxMJMMxEwQAAAZm4ywGymj2BsPNHtsgqontmOo2fhgrgrrhWmTTUcwnCMGAMspBSYRG1JCrOzAYZKyERGw;AMCVS_14215E3D5995C57C0A495C55%40AdobeOrg=1;AMCV_14215E3D5995C57C0A495C55%40AdobeOrg=-637568504%7CMCIDTS%7C20368%7CMCMID%7C21289826565780076134042509865972823915%7CMCAAMLH-1760347376%7C6%7CMCAAMB-1760347376%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1759749776s%7CNONE%7CvVersion%7C5.1.1;aam_uuid=21089570998440596384095687903091393696;_gcl_au=1.1.1119245246.1759742577;__cf_bm=zhF9RCP1.lCUNsMifvQZItannCwtH4DCOV27KMgIsXc-1759743679-1.0.1.1-1cHIRMie7meFicaYFnG8VOJiT5lzfse.iH6N_errLx_m0RqTmyAMWoFZltJlNNwMLaLdL3Q44eVLqrxayyXy4BhmrMal1gUMMkQw7aiA.ME;g_state={\"i_p\":1759751150902,\"i_l\":1};_uetsid=0b9b5ce0a29611f08d881b22c95857d7;_uetvid=0b9b8dd0a29611f08f6b319d657a9634;"
             }
           ]
         },
@@ -660,10 +662,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -2416,
-        720
+        -2352,
+        800
       ],
-      "id": "01cf59aa-a850-4b6f-bf79-b090b93759fe",
+      "id": "9308cd25-acd5-49cc-9ccb-0b05854f6b01",
       "name": "HTTP - scrap each vacancy1",
       "executeOnce": true,
       "alwaysOutputData": false,
@@ -692,10 +694,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        -1136,
-        176
+        -1072,
+        256
       ],
-      "id": "dafe8791-aa0f-4276-ad96-923e6dd685ff",
+      "id": "3da6ada3-442e-4aca-bb66-9726827a2522",
       "name": "Message a model",
       "credentials": {
         "openAiApi": {
@@ -711,10 +713,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -176,
-        768
+        -112,
+        848
       ],
-      "id": "2ced69e8-9737-4f1c-bf08-08adc167f78e",
+      "id": "3ca8c850-1871-4350-970a-83c206c0b7cf",
       "name": "Code1"
     },
     {
@@ -733,10 +735,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -672,
-        800
+        -608,
+        880
       ],
-      "id": "7dad7842-11da-43ee-8fa4-8c58a3687533",
+      "id": "47fb409e-3853-4adf-bbcc-56242d205cf5",
       "name": "HTTP Request1",
       "retryOnFail": false,
       "waitBetweenTries": 5000,
@@ -754,10 +756,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -848,
-        800
+        -784,
+        880
       ],
-      "id": "c4f45b69-a724-403c-ab0f-9437a575e42f",
+      "id": "f0d0fc28-6f2a-4df5-8a70-95b4f0a6f071",
       "name": "Code3"
     },
     {
@@ -782,10 +784,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        -480,
-        784
+        -416,
+        864
       ],
-      "id": "aacda655-af41-4fa0-8b7a-30e860a9fbc2",
+      "id": "d5d1e5e8-d36f-4b4f-ac28-a5a6419f7272",
       "name": "Message a model1",
       "credentials": {
         "openAiApi": {
@@ -803,12 +805,12 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -1568,
-        1408
+        -1504,
+        1488
       ],
-      "id": "d0296b6e-0f26-4f14-bd08-f018dc77de4d",
+      "id": "0a6a942a-e8cc-4e39-bba2-3985cf02415c",
       "name": "Send a text message2",
-      "webhookId": "38ed2665-2f96-4892-96a5-26eacb072035",
+      "webhookId": "909ce462-0ee5-4d7f-b3df-4262c971c7e8",
       "credentials": {
         "telegramApi": {
           "id": "ROwOUMXsZfZ2YTyn",
@@ -844,10 +846,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        -2208,
-        112
+        -2144,
+        192
       ],
-      "id": "60f3b397-121d-4cc6-8432-1e91e47a1e26",
+      "id": "a4ee0792-a786-4e51-b1c8-241686ebceeb",
       "name": "Message a model2",
       "alwaysOutputData": false,
       "credentials": {
@@ -925,10 +927,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1792,
-        96
+        -1728,
+        176
       ],
-      "id": "0319db57-5962-48e5-8317-f7e1ee71cded",
+      "id": "b0eb82d6-1658-490a-83a6-6a77e762aeb7",
       "name": "If"
     },
     {
@@ -943,7 +945,7 @@
           "conditions": [
             {
               "id": "fc4c6a12-4e19-4450-a5c6-d6fbc56bc982",
-              "leftValue": "={{ $('Get row(s) in sheet1').item.json['Company Name'] }}",
+              "leftValue": "={{ $('Select rows from a table2').item.json.company_name }}",
               "rightValue": "0",
               "operator": {
                 "type": "string",
@@ -959,10 +961,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -2320,
-        496
+        -2256,
+        576
       ],
-      "id": "d5ec26be-82c3-45a8-b7f6-61c3a795c2f7",
+      "id": "48e04a9f-0686-40d6-8155-4db283a13815",
       "name": "If2"
     },
     {
@@ -992,10 +994,10 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        -1488,
-        720
+        -1424,
+        800
       ],
-      "id": "4fc731c4-b1eb-4c21-bf89-73cdd6a23a79",
+      "id": "a831b294-6e90-49c9-9b7b-ded5c6f758c9",
       "name": "Message a model3",
       "alwaysOutputData": false,
       "credentials": {
@@ -1073,10 +1075,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1072,
-        800
+        -1008,
+        880
       ],
-      "id": "e450dcb0-ac76-425b-8fe1-73302227c5aa",
+      "id": "a2af1bcb-8610-47a2-9fda-fd8c68f6bc45",
       "name": "If1"
     },
     {
@@ -1091,7 +1093,7 @@
           "conditions": [
             {
               "id": "fc4c6a12-4e19-4450-a5c6-d6fbc56bc982",
-              "leftValue": "={{ $('Get row(s) in sheet').item.json['Company Name'] }}",
+              "leftValue": "={{ $json.company_name }}",
               "rightValue": "0",
               "operator": {
                 "type": "string",
@@ -1107,10 +1109,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1728,
-        1008
+        -1664,
+        1088
       ],
-      "id": "d32f4850-9804-4172-af8d-e37ca8c9b301",
+      "id": "030b3cef-6b26-490d-ba66-b8123be96dee",
       "name": "If3"
     },
     {
@@ -1127,11 +1129,1448 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -5456,
-        320
+        -5392,
+        400
       ],
-      "id": "d5a1a548-6599-44b1-95f4-af1daedf62a0",
+      "id": "5b31e633-171c-4dfd-8e77-cc1024b0d07a",
       "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "92d49b70-e031-4987-bc66-f9e7259bb769",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -5456,
+        768
+      ],
+      "id": "c20c093b-f69a-4694-9a28-8eb5a215c74f",
+      "name": "Webhook",
+      "webhookId": "92d49b70-e031-4987-bc66-f9e7259bb769"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -4576,
+        960
+      ],
+      "id": "92a2d5a0-6c52-4336-93c6-82f47ded3879",
+      "name": "Select rows from a table",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "vacancy_link",
+              "value": "={{ $json.Vacancy }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -3104,
+        1088
+      ],
+      "id": "67447881-a243-4434-bf49-3efb24b9ab5c",
+      "name": "Select rows from a table1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "vacancy_link",
+              "value": "={{ $json.Vacancy }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2784,
+        1040
+      ],
+      "id": "55c46a69-3262-48bd-921e-92f4d2de9621",
+      "name": "Delete table or rows",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "company_name",
+              "value": "={{ $json['Company name'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2416,
+        368
+      ],
+      "id": "1a33295c-b074-4c83-aeb0-0681cde77cba",
+      "name": "Select rows from a table2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "company_name": "={{ $('Fields - mapping vacancy detail').item.json[\"Company name\"] }}",
+            "detail": "={{ $('Fields - mapping vacancy detail').item.json.Detail }}",
+            "hiring_manager_name": "={{ $('Fields - mapping vacancy detail').item.json }}",
+            "workflow_execution_id": "={{ $execution.id }}",
+            "vacancy_link": "={{ $('Fields - mapping vacancy detail').item.json.Vacancy}}",
+            "company_linkedin_page": "={{ $('Fields - mapping vacancy detail').item.json[\"Company linkedin page\"] }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": false
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1600,
+        512
+      ],
+      "id": "b3a93713-6439-4cf6-8af8-235605d4feed",
+      "name": "Insert or update rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "company_name",
+              "value": "={{ $json['Company name'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1808,
+        880
+      ],
+      "id": "a4d98d7c-1320-4484-9dc9-6f0ffb0e9ce9",
+      "name": "Select rows from a table3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "where": {
+          "values": [
+            {
+              "column": "company_name",
+              "value": "={{ $json[\"Company name\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -2208,
+        1376
+      ],
+      "id": "966d511a-26aa-47b7-8386-7b9295b32a64",
+      "name": "Select rows from a table4",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "workflow_execution_id": 0,
+            "vacancy_link": "{{ $('Fields - mapping vacancy detail').item.json.Vacancy }}",
+            "title": "{{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "company_name": "{{ $('Fields - mapping vacancy detail').item.json['Company name'] }}",
+            "detail": "{{ $('Fields - mapping vacancy detail').item.json.Detail }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1840,
+        1456
+      ],
+      "id": "99a37665-2c0e-4f15-bf4e-08317843b738",
+      "name": "Insert or update rows in a table1",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "vacancy_link": "{{ $json['Vacancy Link'] }}",
+            "title": "{{ $json['Vacancy Title'] }}",
+            "company_name": "{{ $json['Company Name'] }}",
+            "hiring_manager_name": "{{ $json['Hiring Manager Name'] }}",
+            "hiring_manager_position": "{{ $json['Hiring Manager Position'] }}",
+            "hiring_manager_url": "{{ $json['Hiring Manager Linkedin URL'] }}",
+            "company_page_url": "{{ $json['LinkedIn Company Page URL'] }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -512,
+        160
+      ],
+      "id": "83eb9f56-9738-4ca0-9154-76674b94434e",
+      "name": "Insert or update rows in a table5",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "vacancy_link": "{{ $('Fields - mapping vacancy detail').item.json.Vacancy }}",
+            "title": "{{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "company_name": "{{ $('Fields - mapping vacancy detail').item.json['Company name'] }}",
+            "hiring_manager_name": "{{ $json['Hiring Manager Name'] }}",
+            "hiring_manager_url": "{{ $json['Hiring Manager Linkedin URL'] }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -256,
+        64
+      ],
+      "id": "3122dc30-acf7-4be2-83bc-99c4089def40",
+      "name": "Insert or update rows in a table6",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "vacancy_link": "={{ $json.vacancy_link }}",
+            "title": "={{ $json.title }}",
+            "detail": "={{ $json.detail }}",
+            "hiring_manager_name": "={{ $json.hiring_manager_name }}",
+            "workflow_execution_id": 0,
+            "company_name": "={{ $json.company_name}}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -768,
+        1136
+      ],
+      "id": "8ebed1b0-76f0-4609-88cb-8a8d8aea4871",
+      "name": "Insert or update rows in a table7",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "vacancy_link": "{{ $json['Vacancy Link'] }}",
+            "title": "{{ $json['Vacancy Title'] }}",
+            "company_name": "{{ $json['Company Name'] }}",
+            "hiring_manager_name": "{{ $json['Hiring Manager Name'] }}",
+            "hiring_manager_position": "{{ $json['Hiring Manager Position'] }}",
+            "hiring_manager_url": "{{ $json['Hiring Manager Linkedin URL'] }}",
+            "company_page_url": "{{ $json['LinkedIn Company Page URL'] }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false,
+              "removed": true
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        160,
+        848
+      ],
+      "id": "c6be43a1-d519-4458-890b-123a569d7865",
+      "name": "Insert or update rows in a table8",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "linkedin_results",
+          "mode": "list",
+          "cachedResultName": "linkedin_results"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "vacancy_link": "{{ $('Fields - mapping vacancy detail').item.json.Vacancy }}",
+            "title": "{{ $('Fields - mapping vacancy detail').item.json.Title }}",
+            "company_name": "{{ $('Fields - mapping vacancy detail').item.json['Company name'] }}",
+            "hiring_manager_name": "{{ $json['Hiring Manager Name'] }}",
+            "hiring_manager_url": "{{ $json['Hiring Manager Linkedin URL'] }}"
+          },
+          "matchingColumns": [
+            "vacancy_link"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "workflow_execution_id",
+              "displayName": "workflow_execution_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "vacancy_link",
+              "displayName": "vacancy_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_linkedin_page",
+              "displayName": "company_linkedin_page",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "detail",
+              "displayName": "detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_name",
+              "displayName": "hiring_manager_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_position",
+              "displayName": "hiring_manager_position",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "hiring_manager_url",
+              "displayName": "hiring_manager_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "company_page_url",
+              "displayName": "company_page_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        416,
+        752
+      ],
+      "id": "554c68ac-4805-4e1b-9d35-a714f337ecf3",
+      "name": "Insert or update rows in a table9",
+      "credentials": {
+        "postgres": {
+          "id": "xnHYJdiqt6fBfr0P",
+          "name": "Postgres account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1149,7 +2588,7 @@
         [],
         [
           {
-            "node": "Sheets - get vacancies after compare",
+            "node": "Select rows from a table1",
             "type": "main",
             "index": 0
           }
@@ -1171,12 +2610,12 @@
       "main": [
         [
           {
-            "node": "Sheets - list of vacancies",
+            "node": "HTTP Request - get vacancies",
             "type": "main",
             "index": 0
           },
           {
-            "node": "HTTP Request - get vacancies",
+            "node": "Select rows from a table",
             "type": "main",
             "index": 0
           }
@@ -1188,17 +2627,6 @@
         [
           {
             "node": "Fields - mapping vacancies from code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sheets - list of vacancies": {
-      "main": [
-        [
-          {
-            "node": "Fields - mapping vacancies from sheet",
             "type": "main",
             "index": 0
           }
@@ -1221,17 +2649,6 @@
         [
           {
             "node": "Compare Datasets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sheets - get vacancies after compare": {
-      "main": [
-        [
-          {
-            "node": "Sheets - delete closed vacancy",
             "type": "main",
             "index": 0
           }
@@ -1267,22 +2684,11 @@
         ]
       ]
     },
-    "Sheets - write vacancy details": {
-      "main": [
-        [
-          {
-            "node": "Send a text message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code": {
       "main": [
         [
           {
-            "node": "Sheets - write vacancy details2",
+            "node": "Insert or update rows in a table5",
             "type": "main",
             "index": 0
           }
@@ -1315,7 +2721,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet1",
+            "node": "Select rows from a table2",
             "type": "main",
             "index": 0
           }
@@ -1348,18 +2754,7 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sheets - write vacancy details1": {
-      "main": [
-        [
-          {
-            "node": "Send a text message1",
+            "node": "Select rows from a table3",
             "type": "main",
             "index": 0
           }
@@ -1377,7 +2772,7 @@
         ],
         [
           {
-            "node": "Sheets - write vacancy details4",
+            "node": "Select rows from a table4",
             "type": "main",
             "index": 0
           }
@@ -1395,22 +2790,11 @@
         ]
       ]
     },
-    "Sheets - write vacancy details2": {
-      "main": [
-        [
-          {
-            "node": "Sheets - write vacancy details",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code1": {
       "main": [
         [
           {
-            "node": "Sheets - write vacancy details3",
+            "node": "Insert or update rows in a table8",
             "type": "main",
             "index": 0
           }
@@ -1450,39 +2834,6 @@
         ]
       ]
     },
-    "Sheets - write vacancy details3": {
-      "main": [
-        [
-          {
-            "node": "Sheets - write vacancy details1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sheets - write vacancy details4": {
-      "main": [
-        [
-          {
-            "node": "Sheets - write vacancy details5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Sheets - write vacancy details5": {
-      "main": [
-        [
-          {
-            "node": "Send a text message2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Message a model2": {
       "main": [
         [
@@ -1505,7 +2856,7 @@
         ],
         [
           {
-            "node": "Sheets - write vacancy details7",
+            "node": "Insert or update rows in a table",
             "type": "main",
             "index": 0
           }
@@ -1523,18 +2874,7 @@
         ],
         [
           {
-            "node": "Sheets - write vacancy details7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get row(s) in sheet1": {
-      "main": [
-        [
-          {
-            "node": "If2",
+            "node": "Insert or update rows in a table",
             "type": "main",
             "index": 0
           }
@@ -1563,7 +2903,7 @@
         ],
         [
           {
-            "node": "Sheets - write vacancy details8",
+            "node": "Insert or update rows in a table7",
             "type": "main",
             "index": 0
           }
@@ -1581,18 +2921,128 @@
         ],
         [
           {
-            "node": "Sheets - write vacancy details8",
+            "node": "Insert or update rows in a table7",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get row(s) in sheet": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Fields - Service provider and website",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "Fields - mapping vacancies from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table1": {
+      "main": [
+        [
+          {
+            "node": "Delete table or rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table3": {
       "main": [
         [
           {
             "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table4": {
+      "main": [
+        [
+          {
+            "node": "Insert or update rows in a table1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table5": {
+      "main": [
+        [
+          {
+            "node": "Insert or update rows in a table6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table6": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table8": {
+      "main": [
+        [
+          {
+            "node": "Insert or update rows in a table9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert or update rows in a table9": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
             "type": "main",
             "index": 0
           }
@@ -1611,15 +3061,14 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "56db763e-7221-41a8-bf91-f7837e6d7b29",
+  "versionId": "4a0f5f02-c1ff-4087-84e6-97e5152d3cbd",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "5927f46dd257f09db65b35605841f40836469ce4fa8917d990162d4d8e24dbe1"
   },
-  "id": "HktEMZCrvc7shbAF",
+  "id": "VPqNg7zvYswHS3Y1",
   "tags": []
 }
