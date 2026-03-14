@@ -88,21 +88,24 @@ def create_token_for_user(user: User) -> str:
     return access_token
 
 
+def _build_user_dict(user: User) -> dict:
+    return {
+        "id": user.id,
+        "email": user.email,
+        "created_at": user.created_at.isoformat() if user.created_at else "",
+    }
+
+
 class AuthService:
     @staticmethod
     def register_user(db: Session, user_data: UserCreate) -> dict:
         """Register a new user and return auth response"""
         user = create_user(db, user_data)
         access_token = create_token_for_user(user)
-
         return {
             "access_token": access_token,
             "token_type": "bearer",
-            "user": {
-                "id": user.id,
-                "email": user.email,
-                "created_at": user.created_at.isoformat() if user.created_at else "",
-            },
+            "user": _build_user_dict(user),
         }
 
     @staticmethod
@@ -111,24 +114,14 @@ class AuthService:
         user = authenticate_user(db, email, password)
         if not user:
             return None
-
         access_token = create_token_for_user(user)
-
         return {
             "access_token": access_token,
             "token_type": "bearer",
-            "user": {
-                "id": user.id,
-                "email": user.email,
-                "created_at": user.created_at.isoformat() if user.created_at else "",
-            },
+            "user": _build_user_dict(user),
         }
 
     @staticmethod
     def get_user_profile(user: User) -> dict:
         """Get user profile data"""
-        return {
-            "id": user.id,
-            "email": user.email,
-            "created_at": user.created_at.isoformat() if user.created_at else "",
-        }
+        return _build_user_dict(user)

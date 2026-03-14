@@ -20,6 +20,7 @@ class WorkflowExecution(Base):
     keywords = Column(Text, nullable=False) 
     location = Column(String, nullable=False)
     n8n_execution_id = Column(String, nullable=True, index=True)
+    instance_n8n_workflow_id = Column(String, nullable=True, index=True)
     status = Column(
         String, nullable=False, default="pending"
     )  # pending/running/success/error
@@ -35,5 +36,7 @@ class WorkflowExecution(Base):
         "WorkflowConfig", back_populates="workflow_executions"
     )
     linkedin_results = relationship(
-        "LinkedinResult", back_populates="execution", cascade="all, delete-orphan"
+        "LinkedinResult",
+        primaryjoin="WorkflowExecution.id == foreign(LinkedinResult.workflow_execution_id)",
+        viewonly=True,
     )

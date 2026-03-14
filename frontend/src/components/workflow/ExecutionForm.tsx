@@ -100,13 +100,13 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
               borderColor="gray.300"
               bg="white"
               pr="5rem"
-              focusBorderColor="red.500"
+              focusBorderColor="brand.500"
               _hover={{
                 borderColor: 'gray.400',
               }}
               _focus={{
-                borderColor: 'red.500',
-                boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+                borderColor: 'brand.500',
+                boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
               }}
             />
             <InputRightElement width="5rem" pr={2}>
@@ -114,10 +114,10 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
                 h="1.75rem" 
                 size="sm" 
                 onClick={addKeyword}
-                bg="red.500"
+                bg="brand.500"
                 color="white"
                 _hover={{
-                  bg: 'red.600',
+                  bg: 'brand.600',
                 }}
               >
                 Add
@@ -127,7 +127,7 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
           {keywordsList.length > 0 && (
             <HStack spacing={2} mt={2} flexWrap="wrap">
               {keywordsList.map((keyword, index) => (
-                <Tag key={index} size="md" colorScheme="red" borderRadius="full">
+                <Tag key={index} size="md" colorScheme="purple" borderRadius="full">
                   <TagLabel>{keyword}</TagLabel>
                   <TagCloseButton onClick={() => removeKeyword(index)} />
                 </Tag>
@@ -145,13 +145,13 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
@@ -174,13 +174,13 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
@@ -198,8 +198,8 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
           border="1px solid"
           borderColor="gray.200"
           _hover={{
-            borderColor: 'red.200',
-            bg: 'red.50',
+            borderColor: 'brand.200',
+            bg: 'brand.50',
           }}
           transition="all 0.2s"
         >
@@ -218,21 +218,21 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
                 bg: 'white',
                 transition: 'all 0.2s ease',
                 _checked: {
-                  bg: 'red.500',
-                  borderColor: 'red.500',
+                  bg: 'brand.500',
+                  borderColor: 'brand.500',
                   _hover: {
-                    bg: 'red.600',
-                    borderColor: 'red.600',
+                    bg: 'brand.600',
+                    borderColor: 'brand.600',
                     transform: 'scale(1.05)',
                   },
                 },
                 _hover: {
-                  borderColor: 'red.400',
-                  bg: 'red.50',
+                  borderColor: 'brand.400',
+                  bg: 'brand.50',
                   transform: 'scale(1.05)',
                 },
                 _focus: {
-                  boxShadow: '0 0 0 3px rgba(229, 62, 62, 0.1)',
+                  boxShadow: '0 0 0 3px rgba(239, 68, 68, 0.15)',
                 },
               },
               '& .chakra-checkbox__icon': {
@@ -265,13 +265,13 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
               border="1px solid"
               borderColor="gray.300"
               bg="white"
-              focusBorderColor="red.500"
+              focusBorderColor="brand.500"
               _hover={{
                 borderColor: 'gray.400',
               }}
               _focus={{
-                borderColor: 'red.500',
-                boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+                borderColor: 'brand.500',
+                boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
               }}
             />
               <FormHelperText color="gray.600" fontSize="sm" mt={1}>
@@ -284,18 +284,18 @@ export const ExecutionForm: React.FC<ExecutionFormProps> = ({
 
         <Button
           type="submit"
-          bg="red.500"
+          bgGradient="linear(to-r, brand.500, brand.600)"
           color="white"
           size="md"
           width="full"
           isLoading={loading}
           loadingText="Running..."
-          borderRadius="lg"
+          borderRadius="xl"
           fontWeight="600"
           _hover={{
-            bg: 'red.600',
+            bgGradient: 'linear(to-r, brand.600, brand.700)',
             transform: 'translateY(-1px)',
-            boxShadow: 'md',
+            shadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
           }}
           _active={{
             transform: 'translateY(0)',

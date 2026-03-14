@@ -55,8 +55,9 @@ export const LoginForm: React.FC = () => {
         <Heading 
           size="lg" 
           textAlign="center" 
-          color="gray.800"
-          fontWeight="600"
+          bgGradient="linear(to-r, brand.600, accent.600)"
+          bgClip="text"
+          fontWeight="700"
           letterSpacing="-0.5px"
         >
           Welcome!
@@ -65,7 +66,7 @@ export const LoginForm: React.FC = () => {
         {error && (
           <Alert 
             status="error" 
-            borderRadius="lg"
+            borderRadius="xl"
             bg="red.50"
             border="1px solid"
             borderColor="red.200"
@@ -90,13 +91,13 @@ export const LoginForm: React.FC = () => {
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
         </FormControl>
@@ -116,13 +117,13 @@ export const LoginForm: React.FC = () => {
               border="1px solid"
               borderColor="gray.300"
               bg="white"
-              focusBorderColor="red.500"
+              focusBorderColor="brand.500"
               _hover={{
                 borderColor: 'gray.400',
               }}
               _focus={{
-                borderColor: 'red.500',
-                boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+                borderColor: 'brand.500',
+                boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
               }}
             />
             <InputRightElement width="4.5rem">
@@ -135,7 +136,7 @@ export const LoginForm: React.FC = () => {
                 color="gray.500"
                 _hover={{
                   bg: 'gray.100',
-                  color: 'red.500',
+                  color: 'brand.500',
                 }}
               />
             </InputRightElement>
@@ -144,18 +145,18 @@ export const LoginForm: React.FC = () => {
 
         <Button
           type="submit"
-          bg="red.500"
+          bgGradient="linear(to-r, brand.500, brand.600)"
           color="white"
           size="lg"
           width="full"
           isLoading={loading}
           loadingText="Login..."
-          borderRadius="lg"
+          borderRadius="xl"
           fontWeight="600"
           _hover={{
-            bg: 'red.600',
+            bgGradient: 'linear(to-r, brand.600, brand.700)',
             transform: 'translateY(-1px)',
-            boxShadow: 'md',
+            shadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
           }}
           _active={{
             transform: 'translateY(0)',

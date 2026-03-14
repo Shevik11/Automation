@@ -57,14 +57,14 @@ export const PresetsList: React.FC<PresetsListProps> = ({
           border="1px solid"
           borderColor="gray.200"
           borderRadius="xl"
-          shadow="sm"
+          shadow="card"
           onClick={() => onSelectPreset(preset)}
           _hover={{ 
-            shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            shadow: 'cardHover',
             transform: 'translateY(-3px)',
-            borderColor: 'red.300',
+            borderColor: 'brand.200',
           }}
-          transition="all 0.3s ease"
+          transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
           position="relative"
           overflow="hidden"
           _before={{
@@ -74,18 +74,18 @@ export const PresetsList: React.FC<PresetsListProps> = ({
             top: 0,
             bottom: 0,
             width: '4px',
-            bg: 'red.500',
+            bgGradient: 'linear(to-b, brand.500, brand.600)',
           }}
         >
           <CardBody p={5}>
             <VStack align="stretch" spacing={3}>
               <HStack justify="space-between" align="start">
-                <Heading size="sm" color="red.600" fontWeight="700">
+                <Heading size="sm" color="brand.600" fontWeight="700">
                   {preset.preset_name}
                 </Heading>
                 <Badge 
-                  bg="red.100" 
-                  color="red.700" 
+                  bg="brand.100" 
+                  color="brand.700"
                   fontSize="xs"
                   px={2}
                   py={1}

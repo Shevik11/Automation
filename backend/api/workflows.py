@@ -9,6 +9,7 @@ from schemas.workflow import (
     WorkflowActivate,
     WorkflowConfigCreate,
     WorkflowConfigResponse,
+    WorkflowDuplicate,
     WorkflowFileImport,
     WorkflowJsonExport,
 )
@@ -22,10 +23,13 @@ router = APIRouter(prefix="/workflows", tags=["workflows"])
 
 @router.get("", response_model=List[WorkflowConfigResponse])
 async def get_workflows(
-    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    limit: int = 50,
+    offset: int = 0,
 ):
-    """Get all workflow configs for current user. Auto-creates default workflow if missing"""
-    return WorkflowService.get_user_workflows_with_auto_create(db, current_user)
+    """Get all workflow configs for current user with pagination. Auto-creates default workflow if missing"""
+    return WorkflowService.get_user_workflows_with_auto_create(db, current_user, limit=limit, offset=offset)
 
 
 @router.post(
@@ -41,10 +45,13 @@ async def create_workflow(
 
 @router.get("/active", response_model=List[WorkflowConfigResponse])
 async def get_active_workflows(
-    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    limit: int = 50,
+    offset: int = 0,
 ):
-    """Get all active workflow configs for current user"""
-    return WorkflowService.get_active_workflows(db, current_user)
+    """Get all active workflow configs for current user with pagination"""
+    return WorkflowService.get_active_workflows(db, current_user, limit=limit, offset=offset)
 
 
 @router.get("/default", response_model=WorkflowConfigResponse)
@@ -125,7 +132,7 @@ async def activate_workflow_endpoint(
     db: Session = Depends(get_db),
 ):
     """Activate or deactivate workflow"""
-    return WorkflowService.toggle_workflow_active(
+    return await WorkflowService.toggle_workflow_active(
         db, workflow_id, current_user.id, activate_data.is_active
     )
 
@@ -147,8 +154,23 @@ async def delete_workflow(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Delete workflow config"""
-    WorkflowService.delete_workflow(db, workflow_id, current_user.id)
+    """Delete workflow config and its n8n instance"""
+    await WorkflowService.delete_workflow(db, workflow_id, current_user.id)
+
+
+@router.post(
+    "/{workflow_id}/duplicate",
+    response_model=WorkflowConfigResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def duplicate_workflow(
+    workflow_id: int,
+    data: WorkflowDuplicate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Duplicate a workflow: creates a new n8n workflow from the source template"""
+    return await WorkflowService.duplicate_workflow(db, current_user, workflow_id, data.workflow_name)
 
 
 @router.get("/{workflow_id}", response_model=WorkflowConfigResponse)

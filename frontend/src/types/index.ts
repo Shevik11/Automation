@@ -89,13 +89,14 @@ export interface Execution {
   keywords: string; // JSON або текст
   location: string;
   n8n_execution_id: string | null;
+  instance_n8n_workflow_id: string | null;
   status: ExecutionStatus;
   result: Record<string, any> | null;
   created_at: string;
   completed_at: string | null;
 }
 
-export type ExecutionStatus = 'pending' | 'running' | 'success' | 'error';
+export type ExecutionStatus = 'pending' | 'running' | 'success' | 'error' | 'cancelled';
 
 export interface ExecutionCreate {
   workflow_config_id?: number; // Optional - will use default if not provided

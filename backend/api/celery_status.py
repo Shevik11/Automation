@@ -7,8 +7,12 @@ from app.database import get_db
 from fastapi import APIRouter, Depends, HTTPException, status
 from models.user import User
 from sqlalchemy.orm import Session
+from utils.logger import setup_logging
 
 router = APIRouter()
+
+logger = setup_logging()
+
 
 
 @router.get("/celery/status")
@@ -26,7 +30,6 @@ async def check_celery_status(current_user: User = Depends(get_current_user)):
     except Exception as e:
         redis_status = "connection_failed"
         # Log the actual error for debugging but don't expose it
-        logger = logging.getLogger(__name__)
         logger.error(f"Redis connection failed: {str(e)}")
     finally:
         # Ensure Redis client is properly closed to prevent connection pool exhaustion
@@ -57,7 +60,6 @@ async def check_celery_status(current_user: User = Depends(get_current_user)):
         active_workers = None
         registered_workers = None
         # Log the actual error for debugging but don't expose it
-        logger = logging.getLogger(__name__)
         logger.error(f"Celery worker check failed: {str(e)}")
 
     return {
@@ -94,7 +96,6 @@ async def get_celery_tasks(current_user: User = Depends(get_current_user)):
         }
     except Exception as e:
         # Log the actual error for debugging but don't expose it in the API response
-        logger = logging.getLogger(__name__)
         logger.error(f"Failed to get Celery tasks: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -17,10 +17,13 @@ router = APIRouter(prefix="/presets", tags=["presets"])
 
 @router.get("", response_model=List[SavedPresetResponse])
 async def get_presets(
-    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    limit: int = 50,
+    offset: int = 0,
 ):
-    """Get all saved presets for current user"""
-    presets = get_saved_presets_by_user(db, current_user.id)
+    """Get all saved presets for current user with pagination"""
+    presets = get_saved_presets_by_user(db, current_user.id, limit=limit, offset=offset)
     return presets
 
 

@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     N8N_API_URL: Optional[str] = None
     N8N_API_KEY: Optional[str] = None
     N8N_WEBHOOK_URL: str
+    N8N_PROJECT_ID: Optional[str] = None
+    N8N_FOLDER_ID: Optional[str] = None
 
     model_config = {
         "env_file": ".env",

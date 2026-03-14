@@ -26,22 +26,18 @@ from utils.workflow_validator import (
     sanitize_workflow_json,
     validate_workflow_for_import,
 )
-from models.user import User
-from models.workflow import SavedPreset, WorkflowConfig
-from schemas.workflow import SavedPresetCreate, WorkflowConfigCreate
-from sqlalchemy.orm import Session
-from utils.workflow_validator import (
-    InvalidWorkflowJsonError,
-    WorkflowImportError,
-    extract_workflow_metadata,
-    sanitize_workflow_json,
-    validate_workflow_for_import,
-)
 
 
-def get_workflow_configs_by_user(db: Session, user_id: int) -> List[WorkflowConfig]:
-    """Get all workflow configs for a user"""
-    return db.query(WorkflowConfig).filter(WorkflowConfig.user_id == user_id).all()
+def get_workflow_configs_by_user(db: Session, user_id: int, limit: int = 50, offset: int = 0) -> List[WorkflowConfig]:
+    """Get workflow configs for a user with pagination"""
+    return (
+        db.query(WorkflowConfig)
+        .filter(WorkflowConfig.user_id == user_id)
+        .order_by(WorkflowConfig.created_at.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
 
 
 def get_default_workflow_for_user(
@@ -146,9 +142,16 @@ def create_workflow_config(
     return db_workflow
 
 
-def get_saved_presets_by_user(db: Session, user_id: int) -> List[SavedPreset]:
-    """Get all saved presets for a user"""
-    return db.query(SavedPreset).filter(SavedPreset.user_id == user_id).all()
+def get_saved_presets_by_user(db: Session, user_id: int, limit: int = 50, offset: int = 0) -> List[SavedPreset]:
+    """Get saved presets for a user with pagination"""
+    return (
+        db.query(SavedPreset)
+        .filter(SavedPreset.user_id == user_id)
+        .order_by(SavedPreset.created_at.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
 
 
 def get_saved_preset_by_id(
@@ -364,9 +367,9 @@ class WorkflowService:
     """Service class for workflow operations"""
 
     @staticmethod
-    def get_user_workflows_with_auto_create(db: Session, user: User) -> List[WorkflowConfig]:
-        """Get workflows for user, auto-create default if none exist"""
-        workflows = get_workflow_configs_by_user(db, user.id)
+    def get_user_workflows_with_auto_create(db: Session, user: User, limit: int = 50, offset: int = 0) -> List[WorkflowConfig]:
+        """Get workflows for user with pagination, auto-create default if none exist"""
+        workflows = get_workflow_configs_by_user(db, user.id, limit=limit, offset=offset)
 
         # If no workflows exist, auto-create the default one from automation.json
         if not workflows:
@@ -391,14 +394,17 @@ class WorkflowService:
         return workflow
 
     @staticmethod
-    def get_active_workflows(db: Session, user: User) -> List[WorkflowConfig]:
-        """Get all active workflows for user"""
+    def get_active_workflows(db: Session, user: User, limit: int = 50, offset: int = 0) -> List[WorkflowConfig]:
+        """Get active workflows for user with pagination"""
 
         return (
             db.query(WorkflowConfig)
             .filter(
                 WorkflowConfig.user_id == user.id, WorkflowConfig.is_active == True
             )
+            .order_by(WorkflowConfig.created_at.desc())
+            .offset(offset)
+            .limit(limit)
             .all()
         )
 
@@ -406,6 +412,62 @@ class WorkflowService:
     def create_workflow(db: Session, user: User, workflow_data: WorkflowConfigCreate) -> WorkflowConfig:
         """Create a new workflow for user"""
         return create_workflow_config(db, user, workflow_data)
+
+    @staticmethod
+    async def duplicate_workflow(db: Session, user: User, source_workflow_id: int, new_name: str) -> WorkflowConfig:
+        """Duplicate a workflow: create a new n8n workflow from the source template and save as new config"""
+        import logging
+        from services.n8n_service import N8NService
+
+        logger = logging.getLogger(__name__)
+
+        source = get_workflow_config_by_id(db, source_workflow_id, user.id)
+        if not source:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Source workflow not found"
+            )
+
+        if not source.workflow_config_json:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Source workflow has no configuration data",
+            )
+
+        # Create new n8n workflow from template JSON
+        n8n_service = N8NService()
+        workflow_json = dict(source.workflow_config_json)
+        workflow_json["name"] = new_name
+
+        created = await n8n_service.create_workflow_from_json(workflow_json, active=False)
+        new_n8n_id = created.get("id")
+        if not new_n8n_id:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create n8n workflow",
+            )
+
+        # Move to folder if configured
+        if n8n_service.folder_id:
+            await n8n_service.move_workflow_to_folder(new_n8n_id, n8n_service.folder_id)
+
+        logger.info("Created new n8n workflow %s (duplicated from %s)", new_n8n_id, source.n8n_workflow_id)
+
+        # Save new workflow config
+        db_workflow = WorkflowConfig(
+            user_id=user.id,
+            workflow_name=new_name,
+            n8n_workflow_id=new_n8n_id,
+            workflow_config_json=workflow_json,
+            workflow_version=source.workflow_version,
+            is_active=False,
+            run_interval_minutes=source.run_interval_minutes,
+            description=source.description,
+            source_file=source.source_file,
+        )
+        db.add(db_workflow)
+        db.commit()
+        db.refresh(db_workflow)
+        return db_workflow
 
     @staticmethod
     def update_workflow(db: Session, workflow_id: int, user_id: int, workflow_data: WorkflowConfigCreate) -> WorkflowConfig:
@@ -419,25 +481,102 @@ class WorkflowService:
         return workflow
 
     @staticmethod
-    def delete_workflow(db: Session, workflow_id: int, user_id: int) -> bool:
-        """Delete workflow"""
+    async def delete_workflow(db: Session, workflow_id: int, user_id: int) -> bool:
+        """Delete workflow and its n8n instance"""
+        import logging
+        from services.n8n_service import N8NService
 
-        success = delete_workflow_config(db, workflow_id, user_id)
-        if not success:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Workflow not found"
-            )
-        return success
+        logger = logging.getLogger(__name__)
 
-    @staticmethod
-    def toggle_workflow_active(db: Session, workflow_id: int, user_id: int, is_active: bool) -> WorkflowConfig:
-        """Toggle workflow active status"""
-
-        workflow = update_workflow_active_status(db, workflow_id, user_id, is_active)
+        workflow = get_workflow_config_by_id(db, workflow_id, user_id)
         if not workflow:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Workflow not found"
             )
+
+        # Delete n8n workflow if it exists
+        if workflow.n8n_workflow_id:
+            try:
+                n8n_service = N8NService()
+                await n8n_service.deactivate_n8n_workflow(workflow.n8n_workflow_id)
+                await n8n_service.delete_workflow(workflow.n8n_workflow_id)
+                logger.info("Deleted n8n workflow %s for workflow config %s", workflow.n8n_workflow_id, workflow_id)
+            except Exception as e:
+                logger.warning("Failed to delete n8n workflow %s: %s", workflow.n8n_workflow_id, str(e))
+
+        db.delete(workflow)
+        db.commit()
+        return True
+
+    @staticmethod
+    async def toggle_workflow_active(db: Session, workflow_id: int, user_id: int, is_active: bool) -> WorkflowConfig:
+        """Toggle workflow active status and sync with n8n by recreating workflow"""
+        import logging
+        from app.config import settings
+        from services.n8n_service import N8NService
+
+        logger = logging.getLogger(__name__)
+
+        workflow = get_workflow_config_by_id(db, workflow_id, user_id)
+        if not workflow:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Workflow not found"
+            )
+
+        # Get workflow JSON for recreation
+        workflow_json = workflow.workflow_config_json
+        if not workflow_json:
+            logger.error(
+                "Workflow %s has no workflow_config_json, cannot sync with n8n",
+                workflow_id,
+            )
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Workflow has no configuration data",
+            )
+
+        # Sync activation with n8n by recreating workflow
+        n8n_service = N8NService()
+        
+        logger.info(
+            "Syncing workflow %s (n8n_id=%s) active status to %s with n8n",
+            workflow_id, workflow.n8n_workflow_id, is_active,
+        )
+        
+        success, new_workflow_id = await n8n_service.activate_workflow(
+            workflow_id=workflow.n8n_workflow_id,
+            active=is_active,
+            workflow_json=workflow_json,
+        )
+        
+        if not success:
+            logger.error(
+                "Failed to sync workflow %s activation with n8n",
+                workflow_id,
+            )
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Failed to {'activate' if is_active else 'deactivate'} workflow on n8n",
+            )
+        
+        # Update workflow with new ID if it was created (activation only)
+        if is_active and new_workflow_id and new_workflow_id != workflow.n8n_workflow_id:
+            logger.info(
+                "Updating workflow %s n8n_workflow_id from %s to %s",
+                workflow_id, workflow.n8n_workflow_id, new_workflow_id,
+            )
+            workflow.n8n_workflow_id = new_workflow_id
+        
+        # Update local active status
+        workflow.is_active = is_active
+        db.commit()
+        db.refresh(workflow)
+        
+        action = "activated" if is_active else "deactivated (deleted from n8n)"
+        logger.info(
+            "Successfully %s workflow %s (n8n_id=%s)",
+            action, workflow_id, new_workflow_id if is_active else "deleted",
+        )
         return workflow
 
     @staticmethod

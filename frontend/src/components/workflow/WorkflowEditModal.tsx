@@ -170,11 +170,9 @@ export const WorkflowEditModal: React.FC<WorkflowEditModalProps> = ({
             </Button>
             <Button
               type="submit"
-              bg="red.500"
-              color="white"
+              variant="brand"
               isLoading={loading}
               loadingText="Saving..."
-              _hover={{ bg: 'red.600' }}
             >
               Save
             </Button>

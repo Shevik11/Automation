@@ -27,6 +27,7 @@ const statusColors: Record<Status, string> = {
   running: 'blue',
   success: 'green',
   error: 'red',
+  cancelled: 'gray',
 };
 
 const statusLabels: Record<Status, string> = {
@@ -34,6 +35,7 @@ const statusLabels: Record<Status, string> = {
   running: 'Running',
   success: 'Success',
   error: 'Error',
+  cancelled: 'Cancelled',
 };
 
 export const ExecutionStatus: React.FC<ExecutionStatusProps> = ({

@@ -25,11 +25,3 @@ async def get_linkedin_results(
     return LinkedinService.get_user_linkedin_results(
         db=db, user=current_user, limit=limit, offset=offset
     )
-
-
-@router.get("/debug")
-async def get_all_linkedin_results_debug(db: Session = Depends(get_db)) -> List[LinkedinResult]:
-    """
-    Get all LinkedIn results for debugging purposes
-    """
-    return LinkedinService.get_all_linkedin_results(db=db)
