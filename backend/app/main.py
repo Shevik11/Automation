@@ -12,8 +12,10 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import text, func
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from utils.errors import (
-    app_exception_handler,
     create_error_response,
     generic_exception_handler,
     validation_exception_handler,
@@ -28,11 +30,17 @@ from utils.workflow_validator import (
 logger = setup_logging()
 logger.info("🔧 API modules imported successfully")
 
+# Rate limiter: 100 requests/minute per IP by default
+limiter = Limiter(key_func=get_remote_address, default_limits=["100/minute"])
+
 app = FastAPI(
     title="N8N Automation API",
     description="API for managing n8n workflow executions",
     version="1.0.0",
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
 app.add_middleware(

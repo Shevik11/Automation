@@ -38,7 +38,7 @@ export const DashboardPage: React.FC = () => {
   const [executionsLoading, setExecutionsLoading] = useState(false);
   const [activeWorkflows, setActiveWorkflows] = useState<WorkflowConfig[]>([]);
   const [activeWorkflowsLoading, setActiveWorkflowsLoading] = useState(false);
-  const [showRecentExecutions, setShowRecentExecutions] = useState(false);
+  const [showRecentExecutions, setShowRecentExecutions] = useState(true);
   const toast = useToast();
 
   const handleExecutionComplete = useCallback((exec: Execution) => {
@@ -128,9 +128,8 @@ export const DashboardPage: React.FC = () => {
   const fetchRecentExecutions = useCallback(async () => {
     setExecutionsLoading(true);
     try {
-      const data = await workflowService.getExecutions();
-      // Показуємо тільки останні 5
-      setRecentExecutions(data.slice(0, 5));
+      const data = await workflowService.getExecutions(10);
+      setRecentExecutions(data);
     } catch (error) {
       console.error('Failed to fetch executions:', error);
     } finally {
@@ -149,35 +148,22 @@ export const DashboardPage: React.FC = () => {
     fetchActiveWorkflows();
   }, [workflowId, fetchWorkflow, fetchDefaultWorkflow, fetchPresets, fetchRecentExecutions, fetchActiveWorkflows]);
 
-  const handleUnifiedSubmit = useCallback(async (data: { workflow_name: string; keywords: string; location: string }) => {
+  const handleUnifiedSubmit = useCallback(async (data: { keywords: string; location: string }) => {
+    if (!defaultWorkflow) {
+      toast({
+        title: 'Error',
+        description: 'Workflow not found. Please update the page',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     setExecutionLoading(true);
     try {
-      // Спочатку перевіряємо чи існує workflow з такою назвою
-      let workflowToUse: WorkflowConfig | null = null;
-      
-      // Шукаємо workflow за назвою
-      const existingWorkflows = await workflowService.getWorkflows();
-      workflowToUse = existingWorkflows.find(w => w.workflow_name === data.workflow_name) || null;
-      
-      // Якщо workflow не знайдено, використовуємо default workflow
-      if (!workflowToUse) {
-        if (defaultWorkflow) {
-          workflowToUse = defaultWorkflow;
-        } else {
-          toast({
-            title: 'Error',
-            description: 'Workflow not found. Please update the page',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-          return;
-        }
-      }
-      
-      // Створюємо execution з даними форми
       const executionData: ExecutionCreate = {
-        workflow_config_id: workflowToUse.id,
+        workflow_config_id: defaultWorkflow.id,
         keywords: data.keywords,
         location: data.location,
       };
@@ -186,20 +172,22 @@ export const DashboardPage: React.FC = () => {
       setCurrentExecution(execution);
       setSelectedPreset(null);
       
-      // Оновлюємо список executions
+      // Refresh executions and workflows (auto-activation may have changed status)
       await fetchRecentExecutions();
+      await fetchActiveWorkflows();
+      setShowRecentExecutions(true);
       
       toast({
         title: 'Success!',
-        description: 'Automation successfully started',
+        description: `Execution #${execution.id} started. Workflow activated on n8n.`,
         status: 'success',
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
       });
     } catch (error: any) {
       toast({
         title: 'Error',
-        description: error.message || 'Failed to start automation',
+        description: error?.response?.data?.detail || error.message || 'Failed to start automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -207,7 +195,7 @@ export const DashboardPage: React.FC = () => {
     } finally {
       setExecutionLoading(false);
     }
-  }, [defaultWorkflow, toast, fetchRecentExecutions]);
+  }, [defaultWorkflow, toast, fetchRecentExecutions, fetchActiveWorkflows]);
 
   const handleSelectPreset = useCallback((preset: WorkflowPreset) => {
     setSelectedPreset(preset);
@@ -252,15 +240,12 @@ export const DashboardPage: React.FC = () => {
   const initialFormData = useMemo(() => {
     if (selectedPreset) {
       return {
-        workflow_name: defaultWorkflow?.workflow_name || '',
         keywords: selectedPreset.keywords,
         location: selectedPreset.location,
       };
     }
-    return {
-      workflow_name: defaultWorkflow?.workflow_name || '',
-    };
-  }, [selectedPreset, defaultWorkflow?.workflow_name]);
+    return {};
+  }, [selectedPreset]);
 
   const hasRecentExecutions = useMemo(() => recentExecutions.length > 0, [recentExecutions.length]);
 
@@ -284,86 +269,54 @@ export const DashboardPage: React.FC = () => {
                 Manage automation and run executions
               </Text>
             </Box>
-            <Button
-              onClick={handleBack}
-              variant="outline"
-              colorScheme="gray"
-              size="sm"
-            >
-              ← Back to list
-            </Button>
+            <HStack spacing={3}>
+              <Button
+                as={RouterLink}
+                to="/executions"
+                colorScheme="red"
+                variant="solid"
+                size="sm"
+              >
+                View data
+              </Button>
+              <Button
+                onClick={handleBack}
+                variant="outline"
+                colorScheme="gray"
+                size="sm"
+              >
+                ← Back to list
+              </Button>
+            </HStack>
           </HStack>
         </Box>
 
         <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} gap={8}>
-          <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <Card
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="gray.200"
-              bg="white"
-            >
-              <CardBody>
-                <Heading size="md" mb={3} color="gray.800">
-                  Execution data
-                </Heading>
-                <Text color="gray.600" mb={4}>
-                  Review execution history and download CSV/Excel from the database.
-                </Text>
-                <HStack>
-                  <Button
-                    as={RouterLink}
-                    to="/executions"
-                    colorScheme="red"
-                    variant="solid"
-                  >
-                    View data
-                  </Button>
-                </HStack>
-              </CardBody>
-            </Card>
-          </GridItem>
-
           <GridItem>
             <Card 
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+              shadow="card"
               borderRadius="2xl" 
               border="1px solid"
-              borderColor="gray.200"
+              borderColor="gray.100"
               bg="white"
               _hover={{
-                shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                shadow: 'cardHover',
                 transform: 'translateY(-2px)',
               }}
-              transition="all 0.3s ease"
+              transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             >
               <CardHeader
                 borderBottom="1px solid"
                 borderColor="gray.100"
-                bgGradient="linear(to-r, white, gray.50)"
+                bg="gray.50"
               >
                 <HStack justify="space-between" align="center">
-                  <Heading size="md" color="gray.800" fontWeight="600">
+                  <Heading size="md" color="gray.800" fontWeight="700">
                     Run Workflow
                   </Heading>
                   <Button
                     size="sm"
-                    variant="outline"
-                    borderColor="gray.300"
-                    color="gray.700"
-                    borderRadius="lg"
-                    fontWeight="500"
-                    _hover={{
-                      bg: 'red.50',
-                      borderColor: 'red.400',
-                      color: 'red.600',
-                      transform: 'scale(1.05)',
-                    }}
-                    _active={{
-                      transform: 'scale(0.98)',
-                    }}
-                    transition="all 0.2s"
+                    variant="brandOutline"
                     onClick={handleTogglePresets}
                   >
                     {showPresets ? 'Hide' : 'Show'} Presets
@@ -377,18 +330,22 @@ export const DashboardPage: React.FC = () => {
                     onSelectPreset={handleSelectPreset}
                     loading={presetsLoading}
                   />
-                ) : !currentExecution ? (
-                  <UnifiedWorkflowForm
-                    onSubmit={handleUnifiedSubmit}
-                    initialData={initialFormData}
-                    loading={executionLoading}
-                  />
                 ) : (
-                  <ExecutionStatus
-                    execution={execution || currentExecution}
-                    loading={executionStatusLoading}
-                    onCancel={handleCancelExecution}
-                  />
+                  <VStack spacing={6} align="stretch">
+                    <UnifiedWorkflowForm
+                      onSubmit={handleUnifiedSubmit}
+                      workflowName={defaultWorkflow?.workflow_name}
+                      initialData={initialFormData}
+                      loading={executionLoading}
+                    />
+                    {currentExecution && (
+                      <ExecutionStatus
+                        execution={execution || currentExecution}
+                        loading={executionStatusLoading}
+                        onCancel={handleCancelExecution}
+                      />
+                    )}
+                  </VStack>
                 )}
               </CardBody>
             </Card>
@@ -396,23 +353,23 @@ export const DashboardPage: React.FC = () => {
 
           <GridItem>
             <Card
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+              shadow="card"
               borderRadius="2xl"
               border="1px solid"
-              borderColor="gray.200"
+              borderColor="gray.100"
               bg="white"
               _hover={{
-                shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                shadow: 'cardHover',
                 transform: 'translateY(-2px)',
               }}
-              transition="all 0.3s ease"
+              transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             >
               <CardHeader
                 borderBottom="1px solid"
                 borderColor="gray.100"
-                bgGradient="linear(to-r, white, gray.50)"
+                bg="gray.50"
               >
-                <Heading size="md" color="gray.800" fontWeight="600">
+                <Heading size="md" color="gray.800" fontWeight="700">
                   My Workflows
                 </Heading>
               </CardHeader>
@@ -452,9 +409,9 @@ export const DashboardPage: React.FC = () => {
                     borderRadius="lg"
                     fontWeight="500"
                     _hover={{
-                      bg: 'red.50',
-                      borderColor: 'red.400',
-                      color: 'red.600',
+                      bg: 'brand.50',
+                      borderColor: 'brand.400',
+                      color: 'brand.600',
                       transform: 'scale(1.05)',
                     }}
                     _active={{

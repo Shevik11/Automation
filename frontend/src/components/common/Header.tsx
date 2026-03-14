@@ -27,70 +27,70 @@ export const Header: React.FC = React.memo(() => {
       as="header"
       bg="white"
       borderBottom="1px solid"
-      borderColor="gray.200"
-      boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+      borderColor="gray.100"
+      boxShadow="soft"
       position="sticky"
       top={0}
       zIndex={1000}
-      backdropFilter="blur(10px)"
-      bgGradient="linear(to-r, white, gray.50)"
+      backdropFilter="blur(12px)"
+      bgColor="rgba(255, 255, 255, 0.85)"
     >
       <Flex
         maxW="7xl"
         mx="auto"
         px={6}
-        py={5}
+        py={4}
         align="center"
         justify="space-between"
       >
-        <Heading 
-          size="lg" 
-          color="red.500" 
-          cursor="pointer" 
-          onClick={handleLogoClick}
-          fontWeight="700"
-          letterSpacing="-0.5px"
-          _hover={{
-            color: 'red.600',
-            transform: 'scale(1.02)',
-          }}
-          transition="all 0.2s"
-        >
-          N8N Automation
-        </Heading>
+        <Flex align="center" gap={3} cursor="pointer" onClick={handleLogoClick}>
+          <Box
+            w="36px"
+            h="36px"
+            borderRadius="xl"
+            bgGradient="linear(135deg, brand.500, accent.500)"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            shadow="0 2px 8px rgba(239, 68, 68, 0.3)"
+          >
+            <Text fontSize="md" fontWeight="800" color="white">N8</Text>
+          </Box>
+          <Heading
+            size="md"
+            bgGradient="linear(to-r, brand.600, accent.600)"
+            bgClip="text"
+            fontWeight="700"
+            letterSpacing="-0.5px"
+            _hover={{
+              bgGradient: 'linear(to-r, brand.700, accent.700)',
+            }}
+            transition="all 0.2s"
+          >
+            Automation
+          </Heading>
+        </Flex>
         {isAuthenticated && (
-          <Flex align="center" gap={4}>
+          <Flex align="center" gap={3}>
             {user && (
               <Box
-                px={3}
+                px={4}
                 py={1.5}
-                bg="gray.50"
+                bg="brand.50"
                 borderRadius="full"
                 border="1px solid"
-                borderColor="gray.200"
+                borderColor="brand.100"
               >
-                <Text color="gray.700" fontSize="sm" fontWeight="500">
+                <Text color="brand.700" fontSize="sm" fontWeight="500">
                   {user.email}
                 </Text>
               </Box>
             )}
             <Button
-              bg="red.500"
-              color="white"
-              variant="solid"
+              variant="brand"
               size="sm"
               onClick={handleLogout}
-              borderRadius="lg"
-              fontWeight="600"
-              _hover={{
-                bg: 'red.600',
-                transform: 'translateY(-1px)',
-                boxShadow: 'md',
-              }}
-              _active={{
-                transform: 'translateY(0)',
-              }}
-              transition="all 0.2s"
+              px={5}
             >
               Вийти
             </Button>

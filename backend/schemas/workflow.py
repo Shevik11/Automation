@@ -73,5 +73,9 @@ class WorkflowActivate(BaseModel):
     is_active: bool
 
 
+class WorkflowDuplicate(BaseModel):
+    workflow_name: str
+
+
 class StaticFilesList(BaseModel):
     files: List[str]

@@ -1,7 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
 
-from models.execution import WorkflowExecution
 from models.linkedin_result import LinkedinResult
 from models.user import User
 
@@ -12,13 +11,12 @@ class LinkedinService:
         db: Session, user: User, limit: int = 50, offset: int = 0
     ) -> List[LinkedinResult]:
         """
-        Get LinkedIn results for a specific user with pagination
-        Uses join to avoid N+1 query problem
+        Get LinkedIn results for a specific user with pagination.
+        Filters by user_id so each user only sees data from their own workflows.
         """
         return (
             db.query(LinkedinResult)
-            .join(WorkflowExecution)
-            .filter(WorkflowExecution.user_id == user.id)
+            .filter(LinkedinResult.user_id == user.id)
             .order_by(LinkedinResult.id.desc())
             .offset(offset)
             .limit(limit)
@@ -31,3 +29,4 @@ class LinkedinService:
         Get all LinkedIn results (debug endpoint)
         """
         return db.query(LinkedinResult).order_by(LinkedinResult.id.desc()).all()
+

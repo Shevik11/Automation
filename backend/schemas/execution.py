@@ -25,7 +25,8 @@ class WorkflowExecutionResponse(BaseModel):
     keywords: str
     location: str
     n8n_execution_id: Optional[str] = None
-    status: str  # pending/running/success/error
+    instance_n8n_workflow_id: Optional[str] = None
+    status: str  # pending/running/success/error/cancelled
     result: Optional[dict] = None
     created_at: datetime
     completed_at: Optional[datetime] = None

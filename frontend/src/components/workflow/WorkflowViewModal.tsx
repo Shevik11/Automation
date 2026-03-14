@@ -33,11 +33,12 @@ export const WorkflowViewModal: React.FC<WorkflowViewModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} size="xl" scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>
+        <ModalHeader borderBottom="1px solid" borderColor="gray.100">
           <HStack spacing={3}>
-            <Text>Automation parameters</Text>
+            <Text fontWeight="700">Automation parameters</Text>
             <Badge
               colorScheme={workflow.is_active ? 'green' : 'gray'}
+              variant="subtle"
               borderRadius="full"
               px={3}
               py={1}

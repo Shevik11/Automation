@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   Box,
   Container,
@@ -21,20 +21,29 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  Badge,
   Tooltip,
+  Spinner,
+  Badge,
+  Divider,
+  Progress,
 } from '@chakra-ui/react';
-import { ViewIcon, EditIcon, DeleteIcon, CheckIcon, CloseIcon, TimeIcon } from '@chakra-ui/icons';
+import { ViewIcon, EditIcon, DeleteIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { Header } from '../components/common/Header';
 import { UnifiedWorkflowForm } from '../components/workflow/UnifiedWorkflowForm';
 import { PresetsList } from '../components/workflow/PresetsList';
-import { ExecutionStatus } from '../components/workflow/ExecutionStatus';
 import { WorkflowViewModal } from '../components/workflow/WorkflowViewModal';
 import { WorkflowEditModal } from '../components/workflow/WorkflowEditModal';
 import { Link as RouterLink, useParams, useNavigate } from 'react-router-dom';
-import { useExecutionStatus } from '../hooks/useExecutionStatus';
 import { workflowService } from '../services/workflow.service';
 import type { WorkflowConfig, WorkflowPreset, Execution, ExecutionCreate, WorkflowConfigCreate } from '../types';
+
+const STATUS_COLORS: Record<string, { bg: string; color: string; icon: string }> = {
+  success: { bg: 'green.50', color: 'green.600', icon: '✅' },
+  error: { bg: 'red.50', color: 'red.600', icon: '❌' },
+  running: { bg: 'blue.50', color: 'blue.600', icon: '🔄' },
+  cancelled: { bg: 'gray.50', color: 'gray.600', icon: '⏹️' },
+  pending: { bg: 'yellow.50', color: 'yellow.600', icon: '⏳' },
+};
 
 export const WorkflowPage: React.FC = () => {
   const { workflowId } = useParams<{ workflowId: string }>();
@@ -42,28 +51,31 @@ export const WorkflowPage: React.FC = () => {
   const [defaultWorkflow, setDefaultWorkflow] = useState<WorkflowConfig | null>(null);
   const [presets, setPresets] = useState<WorkflowPreset[]>([]);
   const [presetsLoading, setPresetsLoading] = useState(false);
-  const [currentExecution, setCurrentExecution] = useState<Execution | null>(null);
   const [showPresets, setShowPresets] = useState(false);
   const [executionLoading, setExecutionLoading] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState<WorkflowPreset | null>(null);
-  const [recentExecutions, setRecentExecutions] = useState<Execution[]>([]);
+  const [workflowExecutions, setWorkflowExecutions] = useState<Execution[]>([]);
   const [executionsLoading, setExecutionsLoading] = useState(false);
-  const [showRecentExecutions, setShowRecentExecutions] = useState(false);
+  const [deactivatingId, setDeactivatingId] = useState<number | null>(null);
   const [deleteWorkflowId, setDeleteWorkflowId] = useState<number | null>(null);
   const toast = useToast();
+  const pollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { isOpen: isViewOpen, onOpen: onViewOpen, onClose: onViewClose } = useDisclosure();
   const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
   const cancelRef = React.useRef<HTMLButtonElement>(null);
 
-  const { execution, loading: executionStatusLoading, cancelExecution } = useExecutionStatus({
-    executionId: currentExecution?.id || 0,
-    pollInterval: 2000,
-    onComplete: (exec) => {
-      setCurrentExecution(exec);
-    },
-  });
+  // Split executions into running and completed
+  const runningExecutions = useMemo(
+    () => workflowExecutions.filter(e => e.status === 'running' || e.status === 'pending'),
+    [workflowExecutions],
+  );
+
+  const completedExecutions = useMemo(
+    () => workflowExecutions.filter(e => e.status === 'success' || e.status === 'error' || e.status === 'cancelled'),
+    [workflowExecutions],
+  );
 
   const fetchWorkflow = useCallback(async (id: number) => {
     try {
@@ -73,8 +85,8 @@ export const WorkflowPage: React.FC = () => {
         setDefaultWorkflow(workflow);
       } else {
         toast({
-          title: 'Помилка',
-          description: 'Workflow не знайдено',
+          title: 'Error',
+          description: 'Workflow not found',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -84,8 +96,8 @@ export const WorkflowPage: React.FC = () => {
     } catch (error: any) {
       console.error('Failed to fetch workflow:', error);
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося завантажити workflow',
+        title: 'Error',
+        description: error.message || 'Failed to load workflow',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -100,8 +112,8 @@ export const WorkflowPage: React.FC = () => {
     } catch (error: any) {
       console.error('Failed to fetch default workflow:', error);
       toast({
-        title: 'Помилка',
-        description: error.message || 'Не вдалося завантажити workflow',
+        title: 'Error',
+        description: error.message || 'Failed to load workflow',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -121,18 +133,63 @@ export const WorkflowPage: React.FC = () => {
     }
   }, []);
 
-  const fetchRecentExecutions = useCallback(async () => {
+  const fetchWorkflowExecutions = useCallback(async () => {
+    if (!workflowId) return;
     setExecutionsLoading(true);
     try {
-      const data = await workflowService.getExecutions();
-      // Показуємо тільки останні 5
-      setRecentExecutions(data.slice(0, 5));
+      const data = await workflowService.getExecutionsByWorkflow(parseInt(workflowId));
+      setWorkflowExecutions(data);
     } catch (error) {
       console.error('Failed to fetch executions:', error);
     } finally {
       setExecutionsLoading(false);
     }
-  }, []);
+  }, [workflowId]);
+
+  // Check status of all running executions via n8n API and refresh list
+  const checkRunningExecutionsStatus = useCallback(async () => {
+    const activeExecs = workflowExecutions.filter(e => e.status === 'running' || e.status === 'pending');
+    if (activeExecs.length === 0) return;
+
+    try {
+      const results = await Promise.allSettled(
+        activeExecs.map(exec => workflowService.checkExecutionStatus(exec.id))
+      );
+
+      // If any execution changed status, refresh the full list
+      const anyChanged = results.some((r, i) => {
+        if (r.status === 'fulfilled') {
+          return r.value.status !== activeExecs[i].status;
+        }
+        return false;
+      });
+
+      if (anyChanged) {
+        await fetchWorkflowExecutions();
+      }
+    } catch (error) {
+      console.error('Failed to check execution statuses:', error);
+    }
+  }, [workflowExecutions, fetchWorkflowExecutions]);
+
+  // Auto-poll while any execution is running or pending
+  const hasActiveExecutions = useMemo(
+    () => workflowExecutions.some(e => e.status === 'running' || e.status === 'pending'),
+    [workflowExecutions],
+  );
+
+  useEffect(() => {
+    if (pollTimerRef.current) clearTimeout(pollTimerRef.current);
+    if (hasActiveExecutions) {
+      pollTimerRef.current = setTimeout(() => {
+        checkRunningExecutionsStatus();
+        fetchWorkflowExecutions();
+      }, 5000);
+    }
+    return () => {
+      if (pollTimerRef.current) clearTimeout(pollTimerRef.current);
+    };
+  }, [hasActiveExecutions, workflowExecutions, fetchWorkflowExecutions, checkRunningExecutionsStatus]);
 
   useEffect(() => {
     if (workflowId) {
@@ -141,14 +198,14 @@ export const WorkflowPage: React.FC = () => {
       fetchDefaultWorkflow();
     }
     fetchPresets();
-    fetchRecentExecutions();
-  }, [workflowId, fetchWorkflow, fetchDefaultWorkflow, fetchPresets, fetchRecentExecutions]);
+    fetchWorkflowExecutions();
+  }, [workflowId, fetchWorkflow, fetchDefaultWorkflow, fetchPresets, fetchWorkflowExecutions]);
 
-  const handleUnifiedSubmit = useCallback(async (data: { workflow_name: string; keywords: string; location: string }) => {
+  const handleUnifiedSubmit = useCallback(async (data: { keywords: string; location: string }) => {
     if (!defaultWorkflow) {
       toast({
         title: 'Error',
-        description: 'Workflow not loaded. Please update the page',
+        description: 'Workflow not loaded. Please refresh the page',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -158,31 +215,28 @@ export const WorkflowPage: React.FC = () => {
 
     setExecutionLoading(true);
     try {
-      // Створюємо execution з даними форми, використовуючи поточний workflow
       const executionData: ExecutionCreate = {
         workflow_config_id: defaultWorkflow.id,
         keywords: data.keywords,
         location: data.location,
       };
-      
+
       const execution = await workflowService.createExecution(executionData);
-      setCurrentExecution(execution);
       setSelectedPreset(null);
-      
-      // Оновлюємо список executions
-      await fetchRecentExecutions();
-      
+
+      await fetchWorkflowExecutions();
+
       toast({
-        title: 'Success!',
-        description: 'Automation successfully started',
+        title: 'Automation Started!',
+        description: `Execution #${execution.id} — n8n workflow created and activated.`,
         status: 'success',
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
       });
     } catch (error: any) {
       toast({
         title: 'Error',
-        description: error.message || 'Failed to start automation',
+        description: error?.response?.data?.detail || error.message || 'Failed to start automation',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -190,35 +244,37 @@ export const WorkflowPage: React.FC = () => {
     } finally {
       setExecutionLoading(false);
     }
-  }, [defaultWorkflow, toast, fetchRecentExecutions]);
+  }, [defaultWorkflow, toast, fetchWorkflowExecutions]);
 
   const handleSelectPreset = useCallback((preset: WorkflowPreset) => {
     setSelectedPreset(preset);
     setShowPresets(false);
   }, []);
 
-  const handleCancelExecution = useCallback(async () => {
-    if (currentExecution) {
-      try {
-        await cancelExecution();
-        toast({
-          title: 'Cancelled',
-          description: 'Execution cancelled',
-          status: 'info',
-          duration: 3000,
-          isClosable: true,
-        });
-      } catch (error: any) {
-        toast({
-          title: 'Error',
-          description: error.message || 'Failed to cancel execution',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
+  const handleStopExecution = useCallback(async (execId: number) => {
+    setDeactivatingId(execId);
+    try {
+      await workflowService.deactivateExecution(execId);
+      await fetchWorkflowExecutions();
+      toast({
+        title: 'Workflow Stopped',
+        description: `Execution #${execId} stopped — n8n workflow deleted.`,
+        status: 'info',
+        duration: 4000,
+        isClosable: true,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error?.response?.data?.detail || error.message || 'Failed to stop execution',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setDeactivatingId(null);
     }
-  }, [currentExecution, cancelExecution, toast]);
+  }, [fetchWorkflowExecutions, toast]);
 
   const handleView = useCallback(() => {
     if (defaultWorkflow) {
@@ -267,13 +323,13 @@ export const WorkflowPage: React.FC = () => {
 
   const handleToggleActive = useCallback(async () => {
     if (!defaultWorkflow) return;
-    
+
     try {
       const updated = await workflowService.updateWorkflowActiveStatus(defaultWorkflow.id, !defaultWorkflow.is_active);
       setDefaultWorkflow(updated);
       toast({
         title: 'Success!',
-        description: `Automation ${updated.is_active ? 'activated' : 'deactivated'}`,
+        description: `Automation ${updated.is_active ? 'activated — n8n workflow created' : 'deactivated — n8n workflow deleted'}`,
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -321,361 +377,507 @@ export const WorkflowPage: React.FC = () => {
     setShowPresets(prev => !prev);
   }, []);
 
-  const handleToggleRecentExecutions = useCallback(() => {
-    setShowRecentExecutions(prev => !prev);
-  }, []);
-
   const initialFormData = useMemo(() => {
     if (selectedPreset) {
       return {
-        workflow_name: defaultWorkflow?.workflow_name || '',
         keywords: selectedPreset.keywords,
         location: selectedPreset.location,
       };
     }
-    return {
-      workflow_name: defaultWorkflow?.workflow_name || '',
-    };
-  }, [selectedPreset, defaultWorkflow?.workflow_name]);
+    return {};
+  }, [selectedPreset]);
 
-  const hasRecentExecutions = useMemo(() => recentExecutions.length > 0, [recentExecutions.length]);
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleString();
+  };
+
+  const getElapsedTime = (createdAt: string) => {
+    const diff = Date.now() - new Date(createdAt).getTime();
+    const mins = Math.floor(diff / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    if (mins > 0) return `${mins}m ${secs}s`;
+    return `${secs}s`;
+  };
 
   return (
     <Box minH="100vh" bg="gray.50">
       <Header />
       <Container maxW="7xl" py={10}>
-        <Box mb={10}>
+        {/* Page Header */}
+        <Box mb={8}>
           <HStack justify="space-between" align="center" mb={2}>
             <Box flex={1}>
-              <Heading 
-                size="xl" 
-                color="gray.800" 
-                fontWeight="700" 
+              <Heading
+                size="xl"
+                bgGradient="linear(to-r, gray.800, gray.600)"
+                bgClip="text"
+                fontWeight="800"
                 letterSpacing="-0.5px"
                 mb={2}
               >
                 {defaultWorkflow?.workflow_name || 'Workflow'}
               </Heading>
-              <Text color="gray.600" fontSize="md">
-                Manage automation and run executions
+              <Text color="gray.500" fontSize="md">
+                Start automation to create n8n workflow • Stop to delete it from n8n
               </Text>
             </Box>
-            <Button
-              onClick={handleBack}
-              variant="outline"
-              colorScheme="gray"
-              size="sm"
-            >
-              ← Back to list
-            </Button>
+            <HStack spacing={2}>
+              {defaultWorkflow && (
+                <>
+                  <Tooltip label="View parameters">
+                    <IconButton
+                      aria-label="View"
+                      icon={<ViewIcon />}
+                      size="sm"
+                      variant="outline"
+                      colorScheme="purple"
+                      borderRadius="xl"
+                      onClick={handleView}
+                    />
+                  </Tooltip>
+                  <Tooltip label="Edit">
+                    <IconButton
+                      aria-label="Edit"
+                      icon={<EditIcon />}
+                      size="sm"
+                      variant="outline"
+                      colorScheme="blue"
+                      borderRadius="xl"
+                      onClick={handleEdit}
+                    />
+                  </Tooltip>
+                  <Tooltip label={defaultWorkflow.is_active ? 'Deactivate template' : 'Activate template'}>
+                    <IconButton
+                      aria-label={defaultWorkflow.is_active ? 'Deactivate' : 'Activate'}
+                      icon={defaultWorkflow.is_active ? <CloseIcon /> : <CheckIcon />}
+                      size="sm"
+                      variant={defaultWorkflow.is_active ? 'outline' : 'solid'}
+                      colorScheme={defaultWorkflow.is_active ? 'orange' : 'green'}
+                      borderRadius="xl"
+                      onClick={handleToggleActive}
+                    />
+                  </Tooltip>
+                  <Tooltip label="Delete">
+                    <IconButton
+                      aria-label="Delete"
+                      icon={<DeleteIcon />}
+                      size="sm"
+                      variant="outline"
+                      colorScheme="red"
+                      borderRadius="xl"
+                      onClick={handleDeleteClick}
+                    />
+                  </Tooltip>
+                </>
+              )}
+              <Button
+                onClick={handleBack}
+                variant="brandOutline"
+                size="sm"
+              >
+                ← Back to list
+              </Button>
+            </HStack>
           </HStack>
         </Box>
 
-        <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} gap={8}>
-          <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <Card
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="gray.200"
-              bg="white"
+        {/* Global Execution Data Button */}
+        {completedExecutions.length > 0 && (
+          <Box mb={6} display="flex" justifyContent="flex-end">
+            <Button
+              as={RouterLink}
+              to="/executions"
+              variant="outline"
+              colorScheme="red"
+              size="xs"
+              borderRadius="full"
+              rightIcon={<Text as="span">→</Text>}
             >
-              <CardBody>
-                <Heading size="md" mb={3} color="gray.800">
-                  Execution data
+              View all execution data
+            </Button>
+          </Box>
+        )}
+
+        {/* Run Workflow Form */}
+        <Card
+          shadow="card"
+          borderRadius="2xl"
+          border="1px solid"
+          borderColor="gray.100"
+          bg="white"
+          mb={8}
+          overflow="hidden"
+          position="relative"
+        >
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            h="3px"
+            bgGradient="linear(to-r, brand.400, accent.400)"
+          />
+          <CardHeader
+            borderBottom="1px solid"
+            borderColor="gray.100"
+            bg="gray.50"
+          >
+            <HStack justify="space-between" align="center">
+              <VStack align="flex-start" spacing={1}>
+                <Heading size="md" color="gray.800" fontWeight="700">
+                  🚀 Run Automation
                 </Heading>
-                <Text color="gray.600" mb={4}>
-                  Review execution history and download CSV/Excel from the database.
+                <Text fontSize="sm" color="gray.500">
+                  Creates a new n8n workflow, activates it, and triggers execution
                 </Text>
-                <HStack>
-                  <Button
-                    as={RouterLink}
-                    to="/executions"
-                    colorScheme="red"
-                    variant="solid"
-                  >
-                    View data
-                  </Button>
-                </HStack>
-              </CardBody>
-            </Card>
-          </GridItem>
+              </VStack>
+              <HStack spacing={2}>
+                <Button
+                  size="sm"
+                  variant="brandOutline"
+                  onClick={handleTogglePresets}
+                >
+                  {showPresets ? 'Hide' : 'Show'} Presets
+                </Button>
+              </HStack>
+            </HStack>
+          </CardHeader>
+          <CardBody>
+            {showPresets ? (
+              <PresetsList
+                presets={presets}
+                onSelectPreset={handleSelectPreset}
+                loading={presetsLoading}
+              />
+            ) : (
+              <UnifiedWorkflowForm
+                onSubmit={handleUnifiedSubmit}
+                workflowName={defaultWorkflow?.workflow_name}
+                initialData={initialFormData}
+                loading={executionLoading}
+              />
+            )}
+          </CardBody>
+        </Card>
 
+        {/* Two-panel layout: Running Workflows | Results */}
+        <Grid templateColumns="1fr" gap={8}>
+          {/* LEFT: Running Workflows */}
           <GridItem>
-            <Card 
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-              borderRadius="2xl" 
+            <Card
+              shadow="card"
+              borderRadius="2xl"
               border="1px solid"
-              borderColor="gray.200"
+              borderColor="gray.100"
               bg="white"
-              _hover={{
-                shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                transform: 'translateY(-2px)',
-              }}
-              transition="all 0.3s ease"
+              overflow="hidden"
+              position="relative"
+              h="100%"
             >
+              <Box
+                position="absolute"
+                top={0}
+                left={0}
+                right={0}
+                h="3px"
+                bgGradient="linear(to-r, blue.400, cyan.400)"
+              />
               <CardHeader
                 borderBottom="1px solid"
                 borderColor="gray.100"
-                bgGradient="linear(to-r, white, gray.50)"
+                bg="blue.50"
               >
                 <HStack justify="space-between" align="center">
-                  <Heading size="md" color="gray.800" fontWeight="600">
-                    Run Workflow
-                  </Heading>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    borderColor="gray.300"
-                    color="gray.700"
-                    borderRadius="lg"
-                    fontWeight="500"
-                    _hover={{
-                      bg: 'red.50',
-                      borderColor: 'red.400',
-                      color: 'red.600',
-                      transform: 'scale(1.05)',
-                    }}
-                    _active={{
-                      transform: 'scale(0.98)',
-                    }}
-                    transition="all 0.2s"
-                    onClick={handleTogglePresets}
-                  >
-                    {showPresets ? 'Hide' : 'Show'} Presets
-                  </Button>
+                  <HStack spacing={3}>
+                    <Text fontSize="xl">⚡</Text>
+                    <VStack align="flex-start" spacing={0}>
+                      <Heading size="md" color="gray.800" fontWeight="700">
+                        Running Workflows
+                      </Heading>
+                      <Text fontSize="xs" color="gray.500">
+                        Active n8n workflow instances
+                      </Text>
+                    </VStack>
+                  </HStack>
+                  {runningExecutions.length > 0 && (
+                    <Badge
+                      colorScheme="blue"
+                      variant="solid"
+                      borderRadius="full"
+                      px={3}
+                      py={1}
+                      fontSize="sm"
+                    >
+                      {runningExecutions.length} active
+                    </Badge>
+                  )}
                 </HStack>
               </CardHeader>
               <CardBody>
-                {showPresets ? (
-                  <PresetsList
-                    presets={presets}
-                    onSelectPreset={handleSelectPreset}
-                    loading={presetsLoading}
-                  />
-                ) : !currentExecution ? (
-                  <UnifiedWorkflowForm
-                    onSubmit={handleUnifiedSubmit}
-                    initialData={initialFormData}
-                    loading={executionLoading}
-                  />
-                ) : (
-                  <ExecutionStatus
-                    execution={execution || currentExecution}
-                    loading={executionStatusLoading}
-                    onCancel={handleCancelExecution}
-                  />
-                )}
-              </CardBody>
-            </Card>
-          </GridItem>
-
-          <GridItem>
-            <Card
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="gray.200"
-              bg="white"
-              _hover={{
-                shadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                transform: 'translateY(-2px)',
-              }}
-              transition="all 0.3s ease"
-            >
-              <CardHeader
-                borderBottom="1px solid"
-                borderColor="gray.100"
-                bgGradient="linear(to-r, white, gray.50)"
-              >
-                <Heading size="md" color="gray.800" fontWeight="600">
-                  My Workflows
-                </Heading>
-              </CardHeader>
-              <CardBody>
-                {defaultWorkflow ? (
-                  <Box>
-                    <HStack justify="space-between" align="flex-start" spacing={4} mb={4}>
-                      <VStack align="flex-start" spacing={2} flex={1}>
-                        <HStack spacing={3}>
-                          <Heading size="sm" color="gray.800">
-                            {defaultWorkflow.workflow_name}
-                          </Heading>
-                          <Badge
-                            colorScheme={defaultWorkflow.is_active ? 'green' : 'gray'}
-                            borderRadius="full"
-                            px={3}
-                            py={1}
-                            fontSize="xs"
-                            fontWeight="600"
-                          >
-                            {defaultWorkflow.is_active ? 'ACTIVE' : 'INACTIVE'}
-                          </Badge>
-                        </HStack>
-                        <HStack spacing={4} fontSize="sm" color="gray.600">
-                          <HStack spacing={1}>
-                            <TimeIcon boxSize={4} />
-                            <Text>Every {defaultWorkflow.run_interval_minutes} minutes</Text>
-                          </HStack>
-                          <Text>
-                            Last execution: {defaultWorkflow.last_run_at 
-                              ? new Date(defaultWorkflow.last_run_at).toLocaleDateString('uk-UA')
-                              : 'Not executed yet'}
-                          </Text>
-                        </HStack>
-                      </VStack>
-                      <HStack spacing={2}>
-                        <Tooltip label="View parameters">
-                          <IconButton
-                            aria-label="View"
-                            icon={<ViewIcon />}
-                            size="sm"
-                            variant="outline"
-                            colorScheme="red"
-                            onClick={handleView}
-                          />
-                        </Tooltip>
-                        <Tooltip label="Edit">
-                          <IconButton
-                            aria-label="Edit"
-                            icon={<EditIcon />}
-                            size="sm"
-                            variant="outline"
-                            colorScheme="orange"
-                            onClick={handleEdit}
-                          />
-                        </Tooltip>
-                        <Tooltip label={defaultWorkflow.is_active ? 'Deactivate' : 'Activate'}>
-                          <IconButton
-                            aria-label={defaultWorkflow.is_active ? 'Deactivate' : 'Activate'}
-                            icon={defaultWorkflow.is_active ? <CloseIcon /> : <CheckIcon />}
-                            size="sm"
-                            variant={defaultWorkflow.is_active ? 'outline' : 'solid'}
-                            colorScheme={defaultWorkflow.is_active ? 'red' : 'green'}
-                            onClick={handleToggleActive}
-                          />
-                        </Tooltip>
-                        <Tooltip label="Delete">
-                          <IconButton
-                            aria-label="Delete"
-                            icon={<DeleteIcon />}
-                            size="sm"
-                            variant="outline"
-                            colorScheme="red"
-                            onClick={handleDeleteClick}
-                          />
-                        </Tooltip>
-                      </HStack>
-                    </HStack>
-                  </Box>
-                ) : (
-                  <Text color="gray.500" fontSize="md">
-                    Workflow not loaded
-                  </Text>
-                )}
-              </CardBody>
-            </Card>
-          </GridItem>
-
-
-          <GridItem colSpan={{ base: 1, lg: 2 }}>
-            <Card
-              shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-              borderRadius="2xl"
-              border="1px solid"
-              borderColor="gray.200"
-              bg="white"
-            >
-              <CardHeader 
-                borderBottom="1px solid" 
-                borderColor="gray.100"
-                bgGradient="linear(to-r, white, gray.50)"
-              >
-                <HStack justify="space-between" align="center">
-                  <Heading size="md" color="gray.800" fontWeight="600">
-                    Recent executions
-                  </Heading>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    borderColor="gray.300"
-                    color="gray.700"
-                    borderRadius="lg"
-                    fontWeight="500"
-                    _hover={{
-                      bg: 'red.50',
-                      borderColor: 'red.400',
-                      color: 'red.600',
-                      transform: 'scale(1.05)',
-                    }}
-                    _active={{
-                      transform: 'scale(0.98)',
-                    }}
-                    transition="all 0.2s"
-                    onClick={handleToggleRecentExecutions}
-                  >
-                    {showRecentExecutions ? 'Hide' : 'View'}
-                  </Button>
-                </HStack>
-              </CardHeader>
-              {showRecentExecutions && (
-                <CardBody>
-                  {executionsLoading ? (
+                {executionsLoading && workflowExecutions.length === 0 ? (
+                  <HStack justify="center" py={8}>
+                    <Spinner size="md" color="blue.500" />
                     <Text color="gray.500">Loading...</Text>
-                  ) : !hasRecentExecutions ? (
-                    <Text color="gray.500">No executions</Text>
-                  ) : (
-                    <VStack spacing={3} align="stretch">
-                      {recentExecutions.map((exec) => (
+                  </HStack>
+                ) : runningExecutions.length === 0 ? (
+                  <VStack py={10} spacing={3}>
+                    <Text fontSize="3xl">💤</Text>
+                    <Text color="gray.500" fontSize="md" textAlign="center">
+                      No running workflows
+                    </Text>
+                    <Text color="gray.400" fontSize="sm" textAlign="center">
+                      Start an automation above to create and activate an n8n workflow
+                    </Text>
+                  </VStack>
+                ) : (
+                  <VStack spacing={5} align="stretch">
+                    {runningExecutions.map((exec) => {
+                      const colors = STATUS_COLORS[exec.status] ?? STATUS_COLORS.pending;
+                      return (
                         <Box
                           key={exec.id}
                           p={4}
+                          minH="125px"
                           border="1px solid"
-                          borderColor="gray.200"
-                          borderRadius="lg"
-                          bg="gray.50"
+                          borderColor="blue.200"
+                          borderRadius="xl"
+                          bg="blue.50"
+                          position="relative"
+                          overflow="hidden"
                         >
-                          <HStack justify="space-between" mb={2}>
-                            <Text fontWeight="600" color="gray.700">
-                              ID: {exec.id}
-                            </Text>
-                            <Box
+                          {exec.status === 'running' && (
+                            <Progress
+                              size="xs"
+                              isIndeterminate
+                              colorScheme="blue"
+                              position="absolute"
+                              top={0}
+                              left={0}
+                              right={0}
+                              borderTopRadius="xl"
+                            />
+                          )}
+                          <HStack justify="space-between" mb={4} mt={exec.status === 'running' ? 1 : 0}>
+                            <HStack spacing={3}>
+                              <Text fontSize="xl">{colors.icon}</Text>
+                              <Text fontWeight="700" color="gray.800" fontSize="lg">
+                                Execution #{exec.id}
+                              </Text>
+                            </HStack>
+                            <HStack spacing={2}>
+                              <Badge
+                                colorScheme={exec.status === 'running' ? 'blue' : 'yellow'}
+                                variant="subtle"
+                                borderRadius="full"
+                                px={3}
+                                py={1}
+                                fontSize="xs"
+                                fontWeight="600"
+                              >
+                                {exec.status.toUpperCase()}
+                              </Badge>
+                              <Button
+                                size="sm"
+                                colorScheme="red"
+                                variant="solid"
+                                borderRadius="lg"
+                                isLoading={deactivatingId === exec.id}
+                                onClick={() => handleStopExecution(exec.id)}
+                                _hover={{ transform: 'translateY(-1px)', shadow: 'md' }}
+                                transition="all 0.2s"
+                              >
+                                ⏹ Stop
+                              </Button>
+                            </HStack>
+                          </HStack>
+                          <VStack align="stretch" spacing={3}>
+                            <HStack>
+                              <Text fontSize="md" color="gray.600" fontWeight="500">Keywords:</Text>
+                              <Text fontSize="md" color="gray.700" wordBreak="break-word">{exec.keywords}</Text>
+                            </HStack>
+                            <HStack>
+                              <Text fontSize="md" color="gray.600" fontWeight="500">Location:</Text>
+                              <Text fontSize="md" color="gray.700" wordBreak="break-word">{exec.location}</Text>
+                            </HStack>
+                            {exec.instance_n8n_workflow_id && (
+                              <HStack>
+                                <Text fontSize="md" color="gray.600" fontWeight="500">n8n ID:</Text>
+                                <Text fontSize="sm" color="blue.600" fontFamily="mono">
+                                  {exec.instance_n8n_workflow_id}
+                                </Text>
+                              </HStack>
+                            )}
+                            <HStack justify="space-between" mt={2}>
+                              <Text fontSize="sm" color="gray.400">
+                                Started: {formatDate(exec.created_at)}
+                              </Text>
+                              <Text fontSize="sm" color="blue.500" fontWeight="600">
+                                Running for {getElapsedTime(exec.created_at)}
+                              </Text>
+                            </HStack>
+                          </VStack>
+                        </Box>
+                      );
+                    })}
+                  </VStack>
+                )}
+              </CardBody>
+            </Card>
+          </GridItem>
+
+          {/* RIGHT: Results */}
+          <GridItem>
+            <Card
+              shadow="card"
+              borderRadius="2xl"
+              border="1px solid"
+              borderColor="gray.100"
+              bg="white"
+              overflow="hidden"
+              position="relative"
+              h="100%"
+            >
+              <Box
+                position="absolute"
+                top={0}
+                left={0}
+                right={0}
+                h="3px"
+                bgGradient="linear(to-r, green.400, green.300, red.400)"
+              />
+              <CardHeader
+                borderBottom="1px solid"
+                borderColor="gray.100"
+                bg="gray.50"
+              >
+                <HStack justify="space-between" align="center">
+                  <HStack spacing={3}>
+                    <Text fontSize="xl">📊</Text>
+                    <VStack align="flex-start" spacing={0}>
+                      <Heading size="md" color="gray.800" fontWeight="700">
+                        Results
+                      </Heading>
+                      <Text fontSize="xs" color="gray.500">
+                        Completed execution outcomes
+                      </Text>
+                    </VStack>
+                  </HStack>
+                  <HStack spacing={2}>
+                    {completedExecutions.filter(e => e.status === 'success').length > 0 && (
+                      <Badge colorScheme="green" variant="subtle" borderRadius="full" px={2} py={1} fontSize="xs">
+                        ✅ {completedExecutions.filter(e => e.status === 'success').length}
+                      </Badge>
+                    )}
+                    {completedExecutions.filter(e => e.status === 'error').length > 0 && (
+                      <Badge colorScheme="red" variant="subtle" borderRadius="full" px={2} py={1} fontSize="xs">
+                        ❌ {completedExecutions.filter(e => e.status === 'error').length}
+                      </Badge>
+                    )}
+                    {completedExecutions.filter(e => e.status === 'cancelled').length > 0 && (
+                      <Badge colorScheme="gray" variant="subtle" borderRadius="full" px={2} py={1} fontSize="xs">
+                        ⏹ {completedExecutions.filter(e => e.status === 'cancelled').length}
+                      </Badge>
+                    )}
+                  </HStack>
+                </HStack>
+              </CardHeader>
+              <CardBody>
+                {executionsLoading && workflowExecutions.length === 0 ? (
+                  <HStack justify="center" py={8}>
+                    <Spinner size="md" color="gray.400" />
+                    <Text color="gray.500">Loading...</Text>
+                  </HStack>
+                ) : completedExecutions.length === 0 ? (
+                  <VStack py={10} spacing={3}>
+                    <Text fontSize="3xl">📭</Text>
+                    <Text color="gray.500" fontSize="md" textAlign="center">
+                      No results yet
+                    </Text>
+                    <Text color="gray.400" fontSize="sm" textAlign="center">
+                      Completed executions will appear here with their status
+                    </Text>
+                  </VStack>
+                ) : (
+                  <VStack spacing={5} align="stretch">
+                    {completedExecutions.map((exec) => {
+                      const colors = STATUS_COLORS[exec.status] ?? STATUS_COLORS.pending;
+                      const isSuccess = exec.status === 'success';
+                      const isError = exec.status === 'error';
+                      return (
+                        <Box
+                          key={exec.id}
+                          p={4}
+                          minH="125px"
+                          border="1px solid"
+                          borderColor={isSuccess ? 'green.200' : isError ? 'red.200' : 'gray.200'}
+                          borderRadius="xl"
+                          bg={colors.bg}
+                        >
+                          <HStack justify="space-between" mb={3}>
+                            <HStack spacing={3}>
+                              <Text fontSize="xl">{colors.icon}</Text>
+                              <Text fontWeight="700" color="gray.800" fontSize="lg">
+                                Execution #{exec.id}
+                              </Text>
+                            </HStack>
+                            <Badge
+                              colorScheme={isSuccess ? 'green' : isError ? 'red' : 'gray'}
+                              variant="solid"
+                              borderRadius="full"
                               px={3}
                               py={1}
-                              borderRadius="md"
-                              bg={
-                                exec.status === 'success' ? 'green.100' :
-                                exec.status === 'error' ? 'red.100' :
-                                exec.status === 'running' ? 'blue.100' :
-                                'yellow.100'
-                              }
-                              color={
-                                exec.status === 'success' ? 'green.700' :
-                                exec.status === 'error' ? 'red.700' :
-                                exec.status === 'running' ? 'blue.700' :
-                                'yellow.700'
-                              }
-                              fontSize="sm"
-                              fontWeight="600"
+                              fontSize="xs"
+                              fontWeight="700"
+                              textTransform="uppercase"
                             >
-                              {exec.status.toUpperCase()}
-                            </Box>
+                              {exec.status}
+                            </Badge>
                           </HStack>
-                          <Text fontSize="sm" color="gray.600">
-                            Keywords: {exec.keywords}
-                          </Text>
-                          <Text fontSize="sm" color="gray.600">
-                            Location: {exec.location}
-                          </Text>
-                          <Text fontSize="sm" color="gray.500" mt={1}>
-                            {new Date(exec.created_at).toLocaleString()}
-                          </Text>
+                          <VStack align="stretch" spacing={3}>
+                            <HStack>
+                              <Text fontSize="md" color="gray.600" fontWeight="500">Keywords:</Text>
+                              <Text fontSize="md" color="gray.700" wordBreak="break-word">{exec.keywords}</Text>
+                            </HStack>
+                            <HStack>
+                              <Text fontSize="md" color="gray.600" fontWeight="500">Location:</Text>
+                              <Text fontSize="md" color="gray.700" wordBreak="break-word">{exec.location}</Text>
+                            </HStack>
+                            {exec.result && isError && (
+                              <Box mt={2} p={3} bg="red.100" borderRadius="md">
+                                <Text fontSize="sm" color="red.700" fontFamily="mono" wordBreak="break-word">
+                                  {typeof exec.result === 'object' && exec.result.error
+                                    ? exec.result.error
+                                    : JSON.stringify(exec.result)}
+                                </Text>
+                              </Box>
+                            )}
+                            {exec.result && isSuccess && (
+                              <Box mt={2} p={3} bg="green.100" borderRadius="md">
+                                <Text fontSize="sm" color="green.700" wordBreak="break-word">
+                                  {typeof exec.result === 'object'
+                                    ? JSON.stringify(exec.result).substring(0, 200)
+                                    : String(exec.result)}
+                                </Text>
+                              </Box>
+                            )}
+                            <Divider my={1} />
+                            <HStack justify="space-between">
+                              <Text fontSize="sm" color="gray.400">
+                                Started: {formatDate(exec.created_at)}
+                              </Text>
+                              {exec.completed_at && (
+                                <Text fontSize="sm" color="gray.400">
+                                  Finished: {formatDate(exec.completed_at)}
+                                </Text>
+                              )}
+                            </HStack>
+                          </VStack>
                         </Box>
-                      ))}
-                    </VStack>
-                  )}
-                </CardBody>
-              )}
+                      );
+                    })}
+                  </VStack>
+                )}
+              </CardBody>
             </Card>
           </GridItem>
         </Grid>

@@ -30,7 +30,8 @@ export const useExecutionStatus = (options: UseExecutionStatusOptions) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await workflowService.getExecution(executionId);
+      // Call check-status which queries n8n for real-time status, not just DB
+      const data = await workflowService.checkExecutionStatus(executionId);
       setExecution(data);
 
       // Check if execution is complete

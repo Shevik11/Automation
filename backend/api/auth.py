@@ -11,15 +11,21 @@ from utils.exceptions import raise_authentication_error, raise_registration_erro
 from utils.logger import auth_logger
 from sqlalchemy.orm import Session
 from utils.dependencies import get_current_user
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 logger = logging.getLogger(__name__)
+limiter = Limiter(key_func=get_remote_address)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/register", response_model=dict)
+@limiter.limit("10/minute")
 async def register(
-    user_data: RegisterRequest, db: Session = Depends(get_db), request: Request = None
+    request: Request,
+    user_data: RegisterRequest,
+    db: Session = Depends(get_db),
 ):
     """Register a new user"""
     try:
@@ -35,7 +41,8 @@ async def register(
 
 
 @router.post("/login", response_model=dict)
-async def login(credentials: LoginRequest, db: Session = Depends(get_db)):
+@limiter.limit("10/minute")
+async def login(request: Request, credentials: LoginRequest, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     try:
         result = AuthService.login_user(db, credentials.email, credentials.password)

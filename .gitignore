@@ -3,6 +3,11 @@
 .env.local
 .env.*.local
 
+.junie
+.junie/
+
+automation.json
+
 n8n.json
 node_modules/
 

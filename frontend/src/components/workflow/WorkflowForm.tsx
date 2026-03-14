@@ -55,13 +55,13 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
         </FormControl>
@@ -81,13 +81,13 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
@@ -111,13 +111,13 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
             border="1px solid"
             borderColor="gray.300"
             bg="white"
-            focusBorderColor="red.500"
+            focusBorderColor="brand.500"
             _hover={{
               borderColor: 'gray.400',
             }}
             _focus={{
-              borderColor: 'red.500',
-              boxShadow: '0 0 0 1px var(--chakra-colors-red-500)',
+              borderColor: 'brand.500',
+              boxShadow: '0 0 0 1px var(--chakra-colors-brand-500)',
             }}
           />
           <FormHelperText color="gray.600" fontSize="sm" mt={1}>
@@ -127,18 +127,18 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
 
         <Button
           type="submit"
-          bg="red.500"
+          bgGradient="linear(to-r, brand.500, brand.600)"
           color="white"
           size="md"
           width="full"
           isLoading={loading}
           loadingText="Saving..."
-          borderRadius="lg"
+          borderRadius="xl"
           fontWeight="600"
           _hover={{
-            bg: 'red.600',
+            bgGradient: 'linear(to-r, brand.600, brand.700)',
             transform: 'translateY(-1px)',
-            boxShadow: 'md',
+            shadow: '0 4px 12px rgba(239, 68, 68, 0.4)',
           }}
           _active={{
             transform: 'translateY(0)',

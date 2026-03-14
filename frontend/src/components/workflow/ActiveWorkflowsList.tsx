@@ -74,7 +74,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
   if (loading) {
     return (
       <Box textAlign="center" py={8}>
-        <Spinner size="lg" color="red.500" />
+        <Spinner size="lg" color="brand.500" />
       </Box>
     );
   }
@@ -100,7 +100,7 @@ export const ActiveWorkflowsList: React.FC<ActiveWorkflowsListProps> = ({
           borderRadius="lg"
           _hover={{
             shadow: 'md',
-            borderColor: 'red.300',
+            borderColor: 'brand.200',
           }}
           transition="all 0.2s"
         >

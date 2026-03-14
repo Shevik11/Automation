@@ -26,9 +26,9 @@ const TableRow = React.memo<{
   onSelect: (row: LinkedinResult) => void;
 }>(({ row, isSelected, onSelect }) => (
   <Tr
-    _hover={{ bg: 'blue.25', cursor: 'pointer', transform: 'scale(1.01)' }}
+    _hover={{ bg: 'brand.50', cursor: 'pointer' }}
     onClick={() => onSelect(row)}
-    bg={isSelected ? 'blue.100' : undefined}
+    bg={isSelected ? 'brand.50' : undefined}
     transition="all 0.2s"
     borderBottom="1px solid"
     borderColor="gray.100"
@@ -178,7 +178,7 @@ export const ExecutionsHistoryPage: React.FC = () => {
 
         <HStack spacing={4} mb={6}>
           <Button
-            colorScheme="red"
+            variant="brand"
             onClick={downloadCsv}
             isLoading={downloading}
           >
@@ -203,10 +203,10 @@ export const ExecutionsHistoryPage: React.FC = () => {
           </Button>
         </HStack>
 
-        <Box bg="white" borderRadius="xl" boxShadow="sm" p={4}>
+        <Box bg="white" borderRadius="2xl" boxShadow="card" border="1px solid" borderColor="gray.100" p={4}>
           {loading ? (
             <Box textAlign="center" py={10}>
-              <Spinner size="lg" color="red.500" />
+              <Spinner size="lg" color="brand.500" />
             </Box>
           ) : !hasRows ? (
             <Box textAlign="center" py={10} color="gray.500">
@@ -215,13 +215,13 @@ export const ExecutionsHistoryPage: React.FC = () => {
           ) : (
             <Box overflowX="auto" borderRadius="md" border="1px" borderColor="gray.200">
               <Table variant="simple" size="sm" colorScheme="gray">
-                <Thead bg="blue.50">
+                <Thead bg="brand.50">
                   <Tr>
-                    <Th fontWeight="bold" color="blue.700" borderColor="blue.200">ID</Th>
-                    <Th fontWeight="bold" color="blue.700" borderColor="blue.200">Execution ID</Th>
-                    <Th fontWeight="bold" color="blue.700" borderColor="blue.200" minW="300px">Job title</Th>
-                    <Th fontWeight="bold" color="blue.700" borderColor="blue.200">Job link</Th>
-                    <Th fontWeight="bold" color="blue.700" borderColor="blue.200">Creation date</Th>
+                    <Th fontWeight="600" color="brand.700" borderColor="brand.100">ID</Th>
+                    <Th fontWeight="600" color="brand.700" borderColor="brand.100">Execution ID</Th>
+                    <Th fontWeight="600" color="brand.700" borderColor="brand.100" minW="300px">Job title</Th>
+                    <Th fontWeight="600" color="brand.700" borderColor="brand.100">Job link</Th>
+                    <Th fontWeight="600" color="brand.700" borderColor="brand.100">Creation date</Th>
                   </Tr>
                 </Thead>
                 <Tbody>

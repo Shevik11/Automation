@@ -12,13 +12,18 @@ import type {
 
 export const workflowService = {
   // Workflow Configs
-  async getWorkflows(signal?: AbortSignal): Promise<WorkflowConfig[]> {
-    const response = await api.get<WorkflowConfig[]>('/workflows', { signal });
+  async getWorkflows(signal?: AbortSignal, limit = 50, offset = 0): Promise<WorkflowConfig[]> {
+    const response = await api.get<WorkflowConfig[]>('/workflows', {
+      signal,
+      params: { limit, offset },
+    });
     return response.data;
   },
 
-  async getActiveWorkflows(): Promise<WorkflowConfig[]> {
-    const response = await api.get<WorkflowConfig[]>('/workflows/active');
+  async getActiveWorkflows(limit = 50, offset = 0): Promise<WorkflowConfig[]> {
+    const response = await api.get<WorkflowConfig[]>('/workflows/active', {
+      params: { limit, offset },
+    });
     return response.data;
   },
 
@@ -46,24 +51,55 @@ export const workflowService = {
     await api.delete(`/workflows/${id}`);
   },
 
+  async duplicateWorkflow(sourceId: number, workflowName: string): Promise<WorkflowConfig> {
+    const response = await api.post<WorkflowConfig>(`/workflows/${sourceId}/duplicate`, { workflow_name: workflowName });
+    return response.data;
+  },
+
   // Presets
-  async getPresets(): Promise<WorkflowPreset[]> {
-    const response = await api.get<WorkflowPreset[]>('/workflows/presets');
+  async getPresets(limit = 50, offset = 0): Promise<WorkflowPreset[]> {
+    const response = await api.get<WorkflowPreset[]>('/presets', {
+      params: { limit, offset },
+    });
     return response.data;
   },
 
   async createPreset(data: WorkflowPresetCreate): Promise<WorkflowPreset> {
-    const response = await api.post<WorkflowPreset>('/workflows/presets', data);
+    const response = await api.post<WorkflowPreset>('/presets', data);
     return response.data;
   },
 
   async deletePreset(id: number): Promise<void> {
-    await api.delete(`/workflows/presets/${id}`);
+    await api.delete(`/presets/${id}`);
   },
 
   // Executions
-  async getExecutions(): Promise<Execution[]> {
-    const response = await api.get<Execution[]>('/executions');
+  async getExecutions(limit = 50, offset = 0): Promise<Execution[]> {
+    const response = await api.get<Execution[]>('/executions', {
+      params: { limit, offset },
+    });
+    return response.data;
+  },
+
+  async getExecutionsByWorkflow(workflowConfigId: number, limit = 50, offset = 0): Promise<Execution[]> {
+    const response = await api.get<Execution[]>('/executions', {
+      params: { workflow_config_id: workflowConfigId, limit, offset },
+    });
+    return response.data;
+  },
+
+  async deactivateExecution(id: number): Promise<Execution> {
+    const response = await api.post<Execution>(`/executions/${id}/deactivate`);
+    return response.data;
+  },
+
+  async checkExecutionStatus(id: number): Promise<Execution> {
+    const response = await api.post<Execution>(`/executions/${id}/check-status`);
+    return response.data;
+  },
+
+  async checkRunningExecutions(): Promise<Execution[]> {
+    const response = await api.post<Execution[]>('/executions/check-running');
     return response.data;
   },
 
@@ -75,8 +111,10 @@ export const workflowService = {
     return response.data;
   },
 
-  async getLinkedinResults(): Promise<LinkedinResult[]> {
-    const response = await api.get<LinkedinResult[]>('/linkedin-results');
+  async getLinkedinResults(limit = 50, offset = 0): Promise<LinkedinResult[]> {
+    const response = await api.get<LinkedinResult[]>('/linkedin-results', {
+      params: { limit, offset },
+    });
     return response.data;
   },
 
